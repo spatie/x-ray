@@ -22,8 +22,12 @@ composer require permafrost-dev/ray-scan
 
 ## Usage
 
+Specify either a valid path name or a valid filename to scan:
+
 ```bash
 ./vendor/bin/ray-scan /some/project/path/src
+./vendor/bin/ray-scan ./app
+./vendor/bin/ray-scan ./app/Models/User.php
 ```
 
 ## Sample Output
