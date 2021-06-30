@@ -1,8 +1,7 @@
 # ray-scan
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/permafrost-dev/ray-scan.svg?style=flat-square)](https://packagist.org/packages/permafrost-dev/ray-scan)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/permafrost-dev/ray-scan/run-tests?label=tests)](https://github.com/permafrost-dev/ray-scan/actions?query=workflow%3Arun-tests+branch%3Amain)
-
+[![GitHub Tests Action Status](https://github.com/permafrost-dev/ray-scan/actions/workflows/run-tests.yml/badge.svg?branch=main)](https://github.com/permafrost-dev/ray-scan/actions/workflows/run-tests.yml)
 ---
 
 Scan source code for calls to `ray()` and `rd()` from the [spatie/ray](https://github.com/spatie/ray) package.
