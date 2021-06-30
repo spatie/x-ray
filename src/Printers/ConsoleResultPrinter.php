@@ -7,17 +7,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleResultPrinter extends ResultPrinter
 {
-    public static function print(OutputInterface $output, ScanResult $result, bool $colorize = true)
+    public function print(OutputInterface $output, ScanResult $result, bool $colorize = true)
     {
-        self::printHeader($output, $result);
+        $this->printHeader($output, $result);
 
         foreach ($result->snippet->getCode() as $lineNum => $line) {
-            $line = self::standardizeLineLength($line);
-            $line = self::highlightTargetFunction($line, $lineNum, $result);
-            $line = self::highlightSyntax($line);
-            $line = self::highlightReservedKeywords($line);
-            $line = self::createOutputLine($line, $lineNum, $result);
-            $line = self::highlightTargetLineBackground($line, $lineNum, $result);
+            $line = $this->standardizeLineLength($line);
+            $line = $this->highlightTargetFunction($line, $lineNum, $result);
+            $line = $this->highlightSyntax($line);
+            $line = $this->highlightReservedKeywords($line);
+            $line = $this->createOutputLine($line, $lineNum, $result);
+            $line = $this->highlightTargetLineBackground($line, $lineNum, $result);
 
             if (! $colorize) {
                 $line = preg_replace('~\<.g=[^>]+\>~', '', $line);
@@ -30,7 +30,7 @@ class ConsoleResultPrinter extends ResultPrinter
         $output->writeln('');
     }
 
-    protected static function printHeader(OutputInterface $output, ScanResult $result): void
+    protected function printHeader(OutputInterface $output, ScanResult $result): void
     {
         $output->writeln('');
         $output->writeln(" Filename: {$result->location->filename}");
@@ -39,12 +39,12 @@ class ConsoleResultPrinter extends ResultPrinter
         $output->writeln(" ------");
     }
 
-    protected static function standardizeLineLength(string $line, int $length = 80): string
+    protected function standardizeLineLength(string $line, int $length = 80): string
     {
         return str_pad($line, $length, ' ');
     }
 
-    protected static function highlightTargetLineBackground(string $line, int $currentLineNum, ScanResult $result): string
+    protected function highlightTargetLineBackground(string $line, int $currentLineNum, ScanResult $result): string
     {
         $isTargetLine = $currentLineNum === $result->location->startLine;
 
@@ -57,7 +57,7 @@ class ConsoleResultPrinter extends ResultPrinter
     }
 
 
-    protected static function createOutputLine(string $line, int $currentLineNum, ScanResult $result): string
+    protected function createOutputLine(string $line, int $currentLineNum, ScanResult $result): string
     {
         $isTargetLine = $currentLineNum === $result->location->startLine;
         $lineNumColor = $isTargetLine ? '#ed64a6' : '#4a5568';
@@ -72,7 +72,7 @@ class ConsoleResultPrinter extends ResultPrinter
         return $line;
     }
 
-    protected static function highlightTargetFunction(string $line, int $currentLineNum, ScanResult $result): string
+    protected function highlightTargetFunction(string $line, int $currentLineNum, ScanResult $result): string
     {
         $isTargetLine = $currentLineNum === $result->location->startLine;
 
@@ -83,7 +83,7 @@ class ConsoleResultPrinter extends ResultPrinter
         return $line;
     }
 
-    protected static function highlightSyntax(string $line): string
+    protected function highlightSyntax(string $line): string
     {
         // comments
         $line = preg_replace('~(//.*)$~', '<fg=#334155>$1</>', $line);
@@ -102,7 +102,7 @@ class ConsoleResultPrinter extends ResultPrinter
         return $line;
     }
 
-    protected static function highlightReservedKeywords(string $line)
+    protected function highlightReservedKeywords(string $line)
     {
         $keywords = 'abstract as bool catch class echo extends final for foreach function if implements instanceof int interface ' .
             'namespace new null PHP_EOL private protected public return self static static string try use void';

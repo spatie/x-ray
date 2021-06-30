@@ -68,7 +68,7 @@ class ScanCommand extends Command
             $resultCount += count($results->results);
 
             foreach ($results->results as $result) {
-                $printer::print($this->output, $result);
+                $printer->print($this->output, $result, true);
             }
         }
 

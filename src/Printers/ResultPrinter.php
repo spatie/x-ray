@@ -7,5 +7,5 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class ResultPrinter
 {
-    abstract public static function print(OutputInterface $output, ScanResult $result, bool $colorize = true);
+    abstract public function print(OutputInterface $output, ScanResult $result, bool $colorize = true);
 }
