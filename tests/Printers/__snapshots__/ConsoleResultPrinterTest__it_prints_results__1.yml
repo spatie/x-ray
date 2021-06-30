@@ -1,18 +1,18 @@
 - |
 
 - |4
-     Filename: fixture1.php
+     Filename: <href=file://fixture1.php>fixture1.php</>
 - |4
      Line Num: 3
 - |4
-     Function: test()
+     Function: <ray-call>test()</ray-call>
 - |4
      ------
+- |
+    <target-line> [<line-num-target>   3</line-num-target>] <pointer-target>══════❱</pointer-target>                                                                                </target-line>
 - |4
-     [   3] ══════❱                                                                                
+     [<line-num>   4</line-num>]            <keyword>echo</keyword> strtolower(<str>'TEST'</str>) . <keyword>PHP_EOL</keyword>;                                          
 - |4
-     [   4]            echo strtolower('TEST') . PHP_EOL;                                          
-- |4
-     [   5]                                                                                        
+     [<line-num>   5</line-num>]                                                                                        
 - |
 

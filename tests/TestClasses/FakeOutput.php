@@ -9,9 +9,16 @@ class FakeOutput implements OutputInterface
 {
     public $writtenData = [];
 
+    public $formatter;
+
+    public function __construct()
+    {
+        $this->formatter = new FakeFormatter();
+    }
+
     public function getFormatter()
     {
-        // TODO: Implement getFormatter() method.
+        return $this->formatter;
     }
     public function getVerbosity()
     {
