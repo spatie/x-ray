@@ -11,6 +11,7 @@
     ],
     "bin": "bin/ray-scan",
     "require": {
+        "php": "^7.3|^8.0",
         "nikic/php-parser": "^4.10",
         "symfony/console": "^5.3"
     },
