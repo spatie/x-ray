@@ -7,7 +7,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleResultPrinter extends ResultPrinter
 {
-    public function print(OutputInterface $output, ScanResult $result, bool $colorize = true)
+    /**
+     * @param OutputInterface $output
+     */
+    public function print($output, ScanResult $result, bool $colorize = true)
     {
         $this->printHeader($output, $result);
 

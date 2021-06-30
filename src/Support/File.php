@@ -41,11 +41,6 @@ class File
         return file_get_contents($this->path);
     }
 
-    public function getFilename(): string
-    {
-        return $this->path;
-    }
-
     public function getRealPath(): string
     {
         return realpath($this->path);

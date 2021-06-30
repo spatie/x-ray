@@ -19,9 +19,9 @@ class CodeScanner
     /** @var ParserFactory $parser */
     protected $parser;
 
-    public function __construct()
+    public function __construct($parser = null)
     {
-        $this->parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+        $this->parser = $parser ?? (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
     }
 
     public function scan(File $file)
@@ -44,7 +44,7 @@ class CodeScanner
         return $results;
     }
 
-    protected function findFunctionCalls(array $ast, string ...$functionNames): array
+    public function findFunctionCalls(array $ast, string ...$functionNames): array
     {
         $nodeFinder = new NodeFinder();
 
