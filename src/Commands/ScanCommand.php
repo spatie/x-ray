@@ -22,6 +22,12 @@ class ScanCommand extends Command
     {
         $filename = $input->getArgument('path');
 
+        if (! is_dir($filename)) {
+            $output->writeln('<fg=yellow>Error: Please specify a valid directory path to scan.</>');
+
+            return Command::INVALID;
+        }
+
         $scanner = new CodeScanner();
         $dir = new Directory($filename);
 
