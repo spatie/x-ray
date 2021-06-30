@@ -110,7 +110,6 @@ class ConsoleResultPrinter extends ResultPrinter
         $isTargetLine = $currentLineNum === $result->location->startLine;
 
         if ($isTargetLine) {
-            //$line = str_replace("{$result->location->name}(", "<ray-call>{$result->location->name}</ray-call>(", $line);
             $line = preg_replace('~' . $result->location->name . '\s*\(~', "<ray-call>{$result->location->name}</ray-call>(", $line);
             $line = preg_replace('~' . $result->location->name . '::~', "<ray-call>{$result->location->name}</ray-call>::", $line);
         }
