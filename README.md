@@ -38,10 +38,12 @@ Specify either a valid path name or a valid filename to scan:
 
 ![image](https://user-images.githubusercontent.com/5508707/123883749-990a5b00-d917-11eb-9020-6aa3d6053203.png)
 
+![image](https://user-images.githubusercontent.com/5508707/124039183-6bcdb380-d9d0-11eb-9ff7-f5e18ef017cc.png)
+
 ## Testing
 
 ```bash
-composer test
+./vendor/bin/phpunit
 ```
 
 ## Changelog
