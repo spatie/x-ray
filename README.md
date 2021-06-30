@@ -10,7 +10,7 @@
 
 ---
 
-Scan source code for calls to `ray()` and `rd()` from the [spatie/ray](https://github.com/spatie/ray) and [spatie/laravel-ray](https://github.com/spatie/laravel-ray) packages.
+Scan source code for calls to `ray()` and `rd()` from the [spatie/ray](https://github.com/spatie/ray) and [spatie/laravel-ray](https://github.com/spatie/laravel-ray) packages.  Visit [myray.app](https://myray.app) for information on downloading the Ray debugging app.
 
 ---
 
