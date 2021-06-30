@@ -73,7 +73,7 @@ class ConsoleResultPrinter extends ResultPrinter
         $output->writeln('');
         $output->writeln(" Filename: <href=file://{$result->location->filename}>{$result->location->filename}</>");
         $output->writeln(" Line Num: {$result->location->startLine}");
-        $output->writeln(" Function: <ray-call>{$result->location->name}()</ray-call>");
+        $output->writeln(" Found   : <ray-call>{$result->location->name}</ray-call>");
         $output->writeln(" ------");
     }
 
@@ -112,6 +112,7 @@ class ConsoleResultPrinter extends ResultPrinter
         if ($isTargetLine) {
             //$line = str_replace("{$result->location->name}(", "<ray-call>{$result->location->name}</ray-call>(", $line);
             $line = preg_replace('~' . $result->location->name . '\s*\(~', "<ray-call>{$result->location->name}</ray-call>(", $line);
+            $line = preg_replace('~' . $result->location->name . '::~', "<ray-call>{$result->location->name}</ray-call>::", $line);
         }
 
         return $line;

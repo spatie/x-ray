@@ -38,8 +38,11 @@ class CodeScanner
         }
 
         $rayCalls = $this->findFunctionCalls($ast, 'ray', 'rd');
+        $rayClasses = $this->findStaticMethodCalls($ast, 'Ray');
 
-        $this->traverseNodes($file, $results, $rayCalls);
+        $calls = $this->sortNodesByLineNumber($rayCalls, $rayClasses);
+
+        $this->traverseNodes($file, $results, $calls);
 
         return $results;
     }
@@ -55,6 +58,17 @@ class CodeScanner
         });
     }
 
+    public function findStaticMethodCalls(array $ast, string ...$classNames): array
+    {
+        $nodeFinder = new NodeFinder();
+
+        $nodes = $nodeFinder->findInstanceOf($ast, Node\Expr\StaticCall::class);
+
+        return array_filter($nodes, function(Node $node) use ($classNames) {
+            return in_array($node->class->parts[0], $classNames, true);
+        });
+    }
+
     protected function traverseNodes(File $file, ScanResults $results, array $nodes): void
     {
         $traverser = new NodeTraverser();
@@ -62,5 +76,24 @@ class CodeScanner
         $traverser->addVisitor(new FunctionCallVisitor($file->getRealPath(), $results));
 
         $traverser->traverse($nodes);
+    }
+
+    protected function sortNodesByLineNumber(...$items)
+    {
+        $result = array_merge(...$items);
+
+        usort($result, function($a, $b) {
+            if ($a->name->getAttribute('startLine') > $b->name->getAttribute('startLine')) {
+                return 1;
+            }
+
+            if ($a->name->getAttribute('startLine') < $b->name->getAttribute('startLine')) {
+                return -1;
+            }
+
+            return 0;
+        });
+
+        return $result;
     }
 }

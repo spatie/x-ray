@@ -33,5 +33,16 @@ class FunctionCallVisitor extends NodeVisitorAbstract
 
             $this->results->addFromLocation($location);
         }
+
+        if ($node instanceof Node\Expr\StaticCall) {
+            $location = FunctionCallLocation::create(
+                $node->class->parts[0],
+                $this->filename,
+                $node->getStartLine(),
+                $node->getEndLine()
+            );
+
+            $this->results->addFromLocation($location);
+        }
     }
 }
