@@ -28,9 +28,12 @@ class ScanCommand extends Command
 
         $path = $input->getArgument('path');
         $paths = $this->getPaths($path);
-        $count = $this->scanPaths(new CodeScanner(), new ConsoleResultPrinter(), $paths);
 
-        if ($count) {
+        $scanResults = $this->scanPaths(new CodeScanner(), $paths);
+
+        $this->printResults(new ConsoleResultPrinter(), $scanResults);
+
+        if (count($scanResults)) {
             return Command::FAILURE;
         }
 
@@ -54,9 +57,9 @@ class ScanCommand extends Command
         return $dir->load()->only($filename);
     }
 
-    protected function scanPaths(CodeScanner $scanner, ResultPrinter $printer, array $paths): int
+    protected function scanPaths(CodeScanner $scanner, array $paths): array
     {
-        $resultCount = 0;
+        $scanResults = [];
 
         foreach($paths as $path) {
             $results = $scanner->scan($path, file_get_contents($path));
@@ -65,14 +68,21 @@ class ScanCommand extends Command
                 continue;
             }
 
-            $resultCount += count($results->results);
-
-            foreach ($results->results as $result) {
-                $printer->print($this->output, $result, true);
+            if (count($results->results)) {
+                $scanResults[] = $results;
             }
         }
 
-        return $resultCount;
+        return $scanResults;
+    }
+
+    protected function printResults(ResultPrinter $printer, array $scanResults): void
+    {
+        foreach ($scanResults as $scanResult) {
+            foreach($scanResult->results as $result) {
+                $printer->print($this->output, $result, true);
+            }
+        }
     }
 
     protected function getPaths(string $path): array
