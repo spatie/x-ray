@@ -20,31 +20,45 @@ class ScanCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $filename = $input->getArgument('path');
+        $path = $input->getArgument('path');
+        $dir = new Directory(realpath($path));
+        $paths = [];
 
-        if (! is_dir($filename)) {
-            $output->writeln('<fg=yellow>Error: Please specify a valid directory path to scan.</>');
+        if (is_dir($path)) {
+            $paths = $dir->load()->files();
+        }
 
-            return Command::INVALID;
+        if (!is_dir($path) && is_file($path)) {
+            $filename = realpath($path);
+            $path = dirname($filename);
+
+            $dir = (new Directory($path));
+
+            $paths = $dir->load()->only($filename);
         }
 
         $scanner = new CodeScanner();
-        $dir = new Directory($filename);
 
-        foreach($dir->files() as $filename) {
-            $results = $scanner->scan($filename, file_get_contents($filename));
+        $resultCount = 0;
+
+        foreach($paths as $path) {
+            $results = $scanner->scan($path, file_get_contents($path));
 
             if (!$results) {
-                return Command::FAILURE;
+                continue;
             }
+
+            $resultCount += count($results->results);
 
             if (count($results->results)) {
                 foreach ($results->results as $result) {
                     ConsoleResultPrinter::print($output, $result);
                 }
-
-                return Command::FAILURE;
             }
+        }
+
+        if ($resultCount) {
+            return Command::FAILURE;
         }
 
         return Command::SUCCESS;

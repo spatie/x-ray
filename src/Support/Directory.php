@@ -7,12 +7,15 @@ class Directory
     /** @var string */
     protected $path;
 
+    /** @var array|string[] */
+    protected $files = [];
+
     public function __construct(string $path)
     {
-        $this->path = $path;
+        $this->path = realpath($path);
     }
 
-    public function files(): array
+    public function load(): self
     {
         $result = [];
 
@@ -27,19 +30,33 @@ class Directory
                 continue;
             }
 
-            if (Str::startsWith($name, realpath($this->path) . '/vendor')) {
+            if (Str::startsWith($name, $this->path . '/vendor')) {
                 continue;
             }
 
-            if (Str::startsWith($name, realpath($this->path) . '/node_modules')) {
+            if (Str::startsWith($name, $this->path . '/node_modules')) {
                 continue;
             }
 
-            if ($file->isFile() && $file->getExtension() === 'php') {
+            if ($file->isFile() && $file->isReadable() && $file->getExtension() === 'php') {
                 $result[] = $name;
             }
         }
 
-        return $result;
+        $this->files = array_unique($result);
+
+        return $this;
+    }
+
+    public function only(string ...$filenames): array
+    {
+        return array_filter($this->files(), function($filename) use ($filenames) {
+            return in_array($filename, $filenames, true);
+        });
+    }
+
+    public function files(): array
+    {
+        return $this->files;
     }
 }
