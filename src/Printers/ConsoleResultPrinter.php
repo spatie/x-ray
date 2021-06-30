@@ -5,7 +5,7 @@ namespace Permafrost\RayScan\Printers;
 use Permafrost\RayScan\Results\ScanResult;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ConsoleResultPrinter
+class ConsoleResultPrinter extends ResultPrinter
 {
     public static function print(OutputInterface $output, ScanResult $result, bool $colorize = true)
     {
