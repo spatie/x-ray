@@ -28,6 +28,9 @@ Specify either a valid path name or a valid filename to scan:
 ./vendor/bin/ray-scan /some/project/path/src
 ./vendor/bin/ray-scan ./app
 ./vendor/bin/ray-scan ./app/Models/User.php
+
+# don't display code snippets
+./vendor/bin/ray-scan ./src -N
 ```
 
 ## Sample Output
