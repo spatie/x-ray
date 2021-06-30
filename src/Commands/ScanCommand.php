@@ -6,6 +6,7 @@ use Permafrost\RayScan\CodeScanner;
 use Permafrost\RayScan\Printers\ConsoleResultPrinter;
 use Permafrost\RayScan\Printers\ResultPrinter;
 use Permafrost\RayScan\Support\Directory;
+use Permafrost\RayScan\Support\File;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -62,13 +63,17 @@ class ScanCommand extends Command
         $scanResults = [];
 
         foreach($paths as $path) {
-            $results = $scanner->scan($path, file_get_contents($path));
+            $results = $scanner->scan(new File($path));
 
             if (!$results) {
                 continue;
             }
 
-            if (count($results->results)) {
+            if ($results->hasErrors()) {
+                // TODO: handle scan errors
+            }
+
+            if (! $results->hasErrors() && count($results->results)) {
                 $scanResults[] = $results;
             }
         }

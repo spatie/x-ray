@@ -2,7 +2,9 @@
 
 namespace Permafrost\RayScan;
 
+use Permafrost\RayScan\Results\ScanErrorResult;
 use Permafrost\RayScan\Results\ScanResults;
+use Permafrost\RayScan\Support\File;
 use Permafrost\RayScan\Visitors\FunctionCallVisitor;
 use PhpParser\Error;
 use PhpParser\Node;
@@ -17,54 +19,47 @@ class CodeScanner
     /** @var ParserFactory $parser */
     protected $parser;
 
-    /** @var array|Stmt[] */
-    protected $ast;
-
-    /** @var string $filename */
-    public $filename;
-
     public function __construct()
     {
         $this->parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
     }
 
-    public function scan(string $filename, string $code)
+    public function scan(File $file)
     {
-        $this->filename = realpath($filename);
+        $results = new ScanResults($file);
 
         try {
-            $this->ast = $this->parser->parse($code);
+            /** @var array|Stmt[] $ast */
+            $ast = $this->parser->parse($file->contents());
         } catch (Error $error) {
-            echo "Parse error: {$error->getMessage()}\n";
+            $results->addError(new ScanErrorResult($file, $error, "Parse error: {$error->getMessage()}"));
 
-            return false;
+            return $results;
         }
 
-        $results = new ScanResults();
+        $rayCalls = $this->findFunctionCalls($ast, 'ray', 'rd');
 
-        $rayCalls = $this->findFunctionCalls('ray', 'rd');
-
-        $this->traverseNodes($results, $rayCalls);
+        $this->traverseNodes($file, $results, $rayCalls);
 
         return $results;
     }
 
-    protected function findFunctionCalls(string ...$functionNames): array
+    protected function findFunctionCalls(array $ast, string ...$functionNames): array
     {
         $nodeFinder = new NodeFinder();
 
-        $nodes = $nodeFinder->findInstanceOf($this->ast, FuncCall::class);
+        $nodes = $nodeFinder->findInstanceOf($ast, FuncCall::class);
 
         return array_filter($nodes, function(Node $node) use ($functionNames) {
             return in_array($node->name->parts[0], $functionNames, true);
         });
     }
 
-    protected function traverseNodes(ScanResults $results, array $nodes)
+    protected function traverseNodes(File $file, ScanResults $results, array $nodes): void
     {
         $traverser = new NodeTraverser();
 
-        $traverser->addVisitor(new FunctionCallVisitor($this->filename, $results));
+        $traverser->addVisitor(new FunctionCallVisitor($file->getRealPath(), $results));
 
         $traverser->traverse($nodes);
     }

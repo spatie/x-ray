@@ -35,17 +35,15 @@ class CodeSnippet
         return $this;
     }
 
-    public function fromFile(string $fileName): self
+    public function fromFile(File $file): self
     {
-        if (! file_exists($fileName)) {
+        if (! $file->exists()) {
             $this->code = [];
 
             return $this;
         }
 
         try {
-            $file = new File($fileName);
-
             [$startLineNumber, $endLineNumber] = $this->getBounds($file->numberOfLines());
 
             $code = [];
