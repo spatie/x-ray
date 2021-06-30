@@ -43,7 +43,9 @@ class Directory
             }
         }
 
-        $this->files = array_unique($result);
+        $this->files = array_unique($result, SORT_STRING);
+
+        sort($this->files);
 
         return $this;
     }
