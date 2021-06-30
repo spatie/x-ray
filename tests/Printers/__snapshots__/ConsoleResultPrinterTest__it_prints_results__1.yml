@@ -1,0 +1,18 @@
+- |
+
+- |4
+     Filename: fixture1.php
+- |4
+     Line Num: 3
+- |4
+     Function: test()
+- |4
+     ------
+- |4
+     [   3] ══════❱                                                                                
+- |4
+     [   4]            echo strtolower('TEST') . PHP_EOL;                                          
+- |4
+     [   5]                                                                                        
+- |
+
