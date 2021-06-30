@@ -5,7 +5,7 @@
 - |4
      Line Num: 3
 - |4
-     Function: <ray-call>test()</ray-call>
+     Found   : <ray-call>test</ray-call>
 - |4
      ------
 - |
