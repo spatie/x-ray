@@ -1,10 +1,18 @@
 # ray-scan
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/permafrost-dev/ray-scan.svg?style=flat-square)](https://packagist.org/packages/permafrost-dev/ray-scan)
-[![GitHub Tests Action Status](https://github.com/permafrost-dev/ray-scan/actions/workflows/run-tests.yml/badge.svg)](https://github.com/permafrost-dev/ray-scan/actions/workflows/run-tests.yml)
+<p align="center">
+    <img src="https://static.permafrost.dev/images/ray-scan/ray-scan-logo.png" alt="ray-scan logo" height="200" style="block">
+    <br><br>
+    <img src="https://img.shields.io/packagist/v/permafrost-dev/ray-scan.svg" alt="Packagist Version">
+    <img src="https://img.shields.io/github/license/permafrost-dev/ray-scan.svg" alt="license">
+    <img src="https://github.com/permafrost-dev/ray-scan/actions/workflows/run-tests.yml/badge.svg" alt="Test Run Status">
+</p>
+
 ---
 
-Scan source code for calls to `ray()` and `rd()` from the [spatie/ray](https://github.com/spatie/ray) package.
+Scan source code for calls to `ray()` and `rd()` from the [spatie/ray](https://github.com/spatie/ray) and [spatie/laravel-ray](https://github.com/spatie/laravel-ray) packages.
+
+---
 
 ## Installation
 
