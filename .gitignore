@@ -1,0 +1,15 @@
+.idea
+.php_cs
+.php_cs.cache
+.phpunit.result.cache
+build
+composer.lock
+coverage
+docs
+phpunit.xml
+psalm.xml
+test*.php
+vendor
+.php-cs-fixer.cache
+*.log
+*.cache

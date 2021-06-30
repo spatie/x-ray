@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+
+if (file_exists(__DIR__.'/../../../autoload.php')) {
+    // load autoload file when installed as a composer package
+    require_once(__DIR__.'/../../../autoload.php');
+} elseif (file_exists(__DIR__.'/../vendor/autoload.php')) {
+    // load autoload file when in development
+    require_once(__DIR__.'/../vendor/autoload.php');
+}
+
+use Permafrost\RayScan\Commands\ScanCommand;
+use Symfony\Component\Console\Application;
+
+$application = new Application('ray-scan', '1.0.0');
+$command = new ScanCommand();
+
+$application->add($command);
+$application->setDefaultCommand($command->getName(), true);
+$application->run();

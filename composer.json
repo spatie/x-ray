@@ -1,0 +1,30 @@
+{
+    "name": "permafrost-dev/ray-scan",
+    "description": "Find calls to ray() before deploying your code",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Patrick Organ",
+            "email": "patrick@permafrost.dev"
+        }
+    ],
+    "bin": "bin/ray-scan",
+    "require": {
+        "nikic/php-parser": "^4.10",
+        "symfony/console": "^5.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Permafrost\\RayScan\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Permafrost\\RayScan\\Tests\\": "tests"
+        }
+    },
+}
