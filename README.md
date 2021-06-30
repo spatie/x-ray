@@ -17,10 +17,14 @@ composer require permafrost-dev/ray-scan
 ```bash
 ./vendor/bin/ray-scan /some/project/path/src
 ```
+
+## Sample Output
+
 ![image](https://user-images.githubusercontent.com/5508707/123883510-27321180-d917-11eb-8734-f0e4fcbf4201.png)
 
 ![image](https://user-images.githubusercontent.com/5508707/123883450-0d90ca00-d917-11eb-89dc-ccb604a655b3.png)
 
+![image](https://user-images.githubusercontent.com/5508707/123883749-990a5b00-d917-11eb-9020-6aa3d6053203.png)
 
 ## Testing
 
