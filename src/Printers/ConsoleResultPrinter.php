@@ -8,34 +8,32 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleResultPrinter extends ResultPrinter
 {
-
-
     /**
      * @param OutputInterface $output
      */
-    public function print($output, ScanResult $result, bool $colorize = true)
+    public function print($output, ScanResult $result, bool $colorize = true, bool $printSnippets = true)
     {
         $this->initializeFormatter($output);
 
         $this->printHeader($output, $result);
 
-        foreach ($result->snippet->getCode() as $lineNum => $line) {
-            $line = $this->standardizeLineLength($line);
-            $line = $this->highlightTargetFunction($line, $lineNum, $result);
-            $line = $this->highlightSyntax($line);
-            $line = $this->highlightReservedKeywords($line);
-            $line = $this->createOutputLine($line, $lineNum, $result);
-            $line = $this->highlightTargetLineBackground($line, $lineNum, $result);
+        if ($printSnippets) {
+            foreach ($result->snippet->getCode() as $lineNum => $line) {
+                $line = $this->standardizeLineLength($line);
+                $line = $this->highlightTargetFunction($line, $lineNum, $result);
+                $line = $this->highlightSyntax($line);
+                $line = $this->highlightReservedKeywords($line);
+                $line = $this->createOutputLine($line, $lineNum, $result);
+                $line = $this->highlightTargetLineBackground($line, $lineNum, $result);
 
-            if (! $colorize) {
-                $line = preg_replace('~\<.g=[^>]+\>~', '', $line);
-                $line = str_replace('</>', '', $line);
+                if (!$colorize) {
+                    $line = preg_replace('~\<.g=[^>]+\>~', '', $line);
+                    $line = str_replace('</>', '', $line);
+                }
+
+                $output->writeln($line);
             }
-
-            $output->writeln($line);
         }
-
-        $output->writeln('');
     }
 
     protected function initializeFormatter($output): void
@@ -91,7 +89,14 @@ class ConsoleResultPrinter extends ResultPrinter
         }
 
         // use the *-target tag variant to allow bg highlighting of the target line
-        $line = preg_replace('~<([\w-]+)>(.+)</(\1)>~', '<$1-target>$2</$1-target>', $line);
+//        $line = preg_replace('~<([\w-]+)-target>([^<]+)</(\1)-target>~', '<$1>$2</$1>', $line);
+//        $line = preg_replace('~<([\w-]+)>(.+)</(\1)>~', '<$1-target>$2</$1-target>', $line);
+
+        $line = preg_replace('~<([\w-]+)-target>~', '<$1>', $line);
+        $line = preg_replace('~</([\w-]+)-target>~', '</$1>', $line);
+
+        $line = preg_replace('~<([\w-]+)>~', '<$1-target>', $line);
+        $line = preg_replace('~</([\w-]+)>~', '</$1-target>', $line);
 
         return "<target-line>{$line}</target-line>";
     }
@@ -110,8 +115,8 @@ class ConsoleResultPrinter extends ResultPrinter
         $isTargetLine = $currentLineNum === $result->location->startLine;
 
         if ($isTargetLine) {
-            $line = preg_replace('~' . $result->location->name . '\s*\(~', "<ray-call>{$result->location->name}</ray-call>(", $line);
-            $line = preg_replace('~' . $result->location->name . '::~', "<ray-call>{$result->location->name}</ray-call>::", $line);
+            // match strings like 'Ray::' and 'ray('
+            $line = preg_replace('~(' . $result->location->name . ')(::|\s*\()~', '<ray-call>$1</ray-call>$2', $line);
         }
 
         return $line;
@@ -127,7 +132,7 @@ class ConsoleResultPrinter extends ResultPrinter
         $line = preg_replace('~(\$\w+)~', '<variable>$1</variable>', $line);
 
         // method calls
-        $line = preg_replace('~(->)(\w+)\s*\(~', '$1<method>$2</method>(', $line);
+        $line = preg_replace('~(::|->)(\w+)\s*\(~', '$1<method>$2</method>(', $line);
 
         // strings
         $line = preg_replace("~('[^']+')~", '<str>$1</str>', $line);
@@ -138,11 +143,14 @@ class ConsoleResultPrinter extends ResultPrinter
 
     protected function highlightReservedKeywords(string $line)
     {
-        $keywords = 'abstract as bool catch class echo extends final for foreach function if implements instanceof int interface ' .
-            'namespace new null PHP_EOL private protected public return self static static string try use void';
+        $keywords = '<' .'?php abstract as bool catch class echo extends final for foreach function if implements instanceof int interface ' .
+            'namespace new null private protected public return self static static string try use void';
+
+        // highlight PHP_* constants
+        $line = preg_replace('~\b(PHP_[A-Z_]+)\b~', '<keyword>$1</keyword>', $line);
 
         foreach(explode(' ', $keywords) as $keyword) {
-            $line = preg_replace('~\b('.$keyword.')\b~', '<keyword>$1</keyword>', $line);
+            $line = preg_replace('~('.preg_quote($keyword,'~').')\b~', '<keyword>$1</keyword>', $line);
         }
 
         return $line;

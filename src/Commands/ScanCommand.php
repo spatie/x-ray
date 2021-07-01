@@ -9,6 +9,7 @@ use Permafrost\RayScan\Support\Directory;
 use Permafrost\RayScan\Support\File;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ScanCommand extends Command
@@ -20,6 +21,7 @@ class ScanCommand extends Command
     {
         $this->setName('scan')
             ->addArgument('path')
+            ->addOption('no-snippets', 'N', InputOption::VALUE_NONE)
             ->setDescription('Scans a directory or filename for calls to ray() and rd().');
     }
 
@@ -32,7 +34,9 @@ class ScanCommand extends Command
 
         $scanResults = $this->scanPaths(new CodeScanner(), $paths);
 
-        $this->printResults(new ConsoleResultPrinter(), $scanResults);
+        $hideSnippets = !($input->hasOption('no-snippets') && $input->getOption('no-snippets') === true);
+
+        $this->printResults(new ConsoleResultPrinter(), $scanResults, $hideSnippets);
 
         if (count($scanResults)) {
             return Command::FAILURE;
@@ -51,11 +55,8 @@ class ScanCommand extends Command
     protected function loadFile(string $filename): array
     {
         $filename = realpath($filename);
-        $path = dirname($filename);
 
-        $dir = (new Directory($path));
-
-        return $dir->load()->only($filename);
+        return [$filename];
     }
 
     protected function scanPaths(CodeScanner $scanner, array $paths): array
@@ -81,11 +82,11 @@ class ScanCommand extends Command
         return $scanResults;
     }
 
-    protected function printResults(ResultPrinter $printer, array $scanResults): void
+    protected function printResults(ResultPrinter $printer, array $scanResults, bool $printSnippets = true): void
     {
         foreach ($scanResults as $scanResult) {
             foreach($scanResult->results as $result) {
-                $printer->print($this->output, $result, true);
+                $printer->print($this->output, $result, true, $printSnippets);
             }
         }
     }

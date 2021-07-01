@@ -14,5 +14,3 @@
      [<line-num>   4</line-num>]            <keyword>echo</keyword> strtolower(<str>'TEST'</str>) . <keyword>PHP_EOL</keyword>;                                          
 - |4
      [<line-num>   5</line-num>]                                                                                        
-- |
-
