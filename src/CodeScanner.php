@@ -54,6 +54,10 @@ class CodeScanner
         $nodes = $nodeFinder->findInstanceOf($ast, FuncCall::class);
 
         return array_filter($nodes, function(Node $node) use ($functionNames) {
+            if (! isset($node->name->parts)) {
+                return false;
+            }
+
             return in_array($node->name->parts[0], $functionNames, true);
         });
     }
@@ -65,6 +69,10 @@ class CodeScanner
         $nodes = $nodeFinder->findInstanceOf($ast, Node\Expr\StaticCall::class);
 
         return array_filter($nodes, function(Node $node) use ($classNames) {
+            if (! isset($node->name->parts)) {
+                return false;
+            }
+
             return in_array($node->class->parts[0], $classNames, true);
         });
     }

@@ -31,6 +31,7 @@ class ConsoleResultPrinter extends ResultPrinter
                     $line = str_replace('</>', '', $line);
                 }
 
+                // echo "$line\n";
                 $output->writeln($line);
             }
         }
@@ -115,8 +116,8 @@ class ConsoleResultPrinter extends ResultPrinter
         $isTargetLine = $currentLineNum === $result->location->startLine;
 
         if ($isTargetLine) {
-            // match strings like 'Ray::' and 'ray('
-            $line = preg_replace('~(' . $result->location->name . ')(::|\s*\()~', '<ray-call>$1</ray-call>$2', $line);
+            // match strings like 'Ray::' and 'ray(' and '\ray('
+            $line = preg_replace('~(\\\\?' . $result->location->name . ')(::|\s*\()~', '<ray-call>$1</ray-call>$2', $line);
         }
 
         return $line;
