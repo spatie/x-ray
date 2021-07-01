@@ -7,15 +7,21 @@ use Permafrost\RayScan\Printers\ConsoleResultPrinter;
 use Permafrost\RayScan\Printers\ResultPrinter;
 use Permafrost\RayScan\Support\Directory;
 use Permafrost\RayScan\Support\File;
+use Permafrost\RayScan\Support\Progress;
+use Permafrost\RayScan\Support\ProgressData;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ScanCommand extends Command
 {
     /** @var OutputInterface */
     protected $output;
+
+    /** @var Progress */
+    protected $progress;
 
     protected function configure(): void
     {
@@ -28,11 +34,25 @@ class ScanCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->output = $output;
+        $io = new SymfonyStyle($input, $output);
 
         $path = $input->getArgument('path');
         $paths = $this->getPaths($path);
 
-        $scanResults = $this->scanPaths(new CodeScanner(), $paths);
+        $scanner = new CodeScanner();
+
+        $this->progress = new Progress(count($paths), count($paths));
+
+        $io->progressStart(count($paths));
+
+        $this->progress->withCallback(function(ProgressData $data) use ($io) {
+            usleep(10000);
+            $io->progressAdvance($data->position);
+        });
+
+        $scanResults = $this->scanPaths($scanner, $paths);
+
+        $io->progressFinish();
 
         $hideSnippets = !($input->hasOption('no-snippets') && $input->getOption('no-snippets') === true);
 
@@ -65,6 +85,8 @@ class ScanCommand extends Command
 
         foreach($paths as $path) {
             $results = $scanner->scan(new File($path));
+
+            $this->progress->advance();
 
             if (!$results) {
                 continue;
