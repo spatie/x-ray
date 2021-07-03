@@ -9,7 +9,7 @@ class FakeFormatter implements OutputFormatterInterface
 {
     public $styles = [];
 
-    public function setDecorated(bool $decorated)
+    public function setDecorated(?bool $decorated)
     {
         // TODO: Implement setDecorated() method.
     }
