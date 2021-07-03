@@ -3,6 +3,8 @@
 namespace Permafrost\RayScan\Commands;
 
 use Permafrost\RayScan\CodeScanner;
+use Permafrost\RayScan\Concerns\HasPaths;
+use Permafrost\RayScan\Concerns\HasProgress;
 use Permafrost\RayScan\Configuration\Configuration;
 use Permafrost\RayScan\Configuration\ConfigurationFactory;
 use Permafrost\RayScan\Printers\ConsoleResultPrinter;
@@ -11,7 +13,6 @@ use Permafrost\RayScan\Results\ScanResult;
 use Permafrost\RayScan\Support\Directory;
 use Permafrost\RayScan\Support\File;
 use Permafrost\RayScan\Support\Progress;
-use Permafrost\RayScan\Support\ProgressData;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -20,6 +21,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ScanCommand extends Command
 {
+    use HasPaths;
+    use HasProgress;
+
     /** @var OutputInterface */
     protected $output;
 
@@ -74,11 +78,6 @@ class ScanCommand extends Command
             ->finalizeProgress()
             ->printResults();
 
-        return $this->getExitCode();
-    }
-
-    protected function getExitCode(): int
-    {
         return count($this->scanResults) ? Command::FAILURE : Command::SUCCESS;
     }
 
@@ -95,40 +94,6 @@ class ScanCommand extends Command
     {
         $this->config = ConfigurationFactory::create($this->input);
         $this->config->validate();
-
-        return $this;
-    }
-
-    protected function initializePaths(): self
-    {
-        $this->paths = $this->getPaths($this->config->path);
-
-        return $this;
-    }
-
-    protected function initializeProgress($paths = null): self
-    {
-        $paths = $paths ?? $this->paths;
-
-        $this->progress = new Progress(count($paths), count($paths));
-
-        if (! $this->config->hideProgress) {
-            $this->style->progressStart(count($paths));
-
-            $this->progress->withCallback(function (ProgressData $data) {
-                usleep(10000);
-                $this->style->progressAdvance($data->position);
-            });
-        }
-
-        return $this;
-    }
-
-    protected function finalizeProgress(): self
-    {
-        if (! $this->config->hideProgress) {
-            $this->style->progressFinish();
-        }
 
         return $this;
     }
@@ -185,20 +150,5 @@ class ScanCommand extends Command
                 $printer->print($this->output, $result, true, !$this->config->hideSnippets);
             }
         }
-    }
-
-    protected function getPaths(string $path): array
-    {
-        $paths = [];
-
-        if (is_dir($path)) {
-            $paths = $this->loadDirectoryFiles($path);
-        }
-
-        if (!is_dir($path) && is_file($path)) {
-            $paths = $this->loadFile($path);
-        }
-
-        return $paths;
     }
 }
