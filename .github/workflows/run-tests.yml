@@ -23,7 +23,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
-          coverage: none
+          coverage: pcov
 
       - name: Setup problem matchers
         run: |
@@ -34,4 +34,10 @@ jobs:
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Execute tests
-        run: ./vendor/bin/phpunit -d --without-creating-snapshots
+        run: ./vendor/bin/phpunit --coverage-clover clover.xml -d --without-creating-snapshots
+        
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: clover.xml
