@@ -3,6 +3,8 @@
 namespace Permafrost\RayScan\Commands;
 
 use Permafrost\RayScan\CodeScanner;
+use Permafrost\RayScan\Configuration\Configuration;
+use Permafrost\RayScan\Configuration\ConfigurationFactory;
 use Permafrost\RayScan\Printers\ConsoleResultPrinter;
 use Permafrost\RayScan\Printers\ResultPrinter;
 use Permafrost\RayScan\Support\Directory;
@@ -23,10 +25,14 @@ class ScanCommand extends Command
     /** @var Progress */
     protected $progress;
 
+    /** @var Configuration */
+    protected $config;
+
     protected function configure(): void
     {
         $this->setName('scan')
             ->addArgument('path')
+            ->addOption('no-progress', 'P', InputOption::VALUE_NONE)
             ->addOption('no-snippets', 'N', InputOption::VALUE_NONE)
             ->setDescription('Scans a directory or filename for calls to ray() and rd().');
     }
@@ -36,27 +42,29 @@ class ScanCommand extends Command
         $this->output = $output;
         $io = new SymfonyStyle($input, $output);
 
-        $path = $input->getArgument('path');
-        $paths = $this->getPaths($path);
+        $this->config = ConfigurationFactory::create($input);
+        $paths = $this->getPaths($this->config->path);
 
         $scanner = new CodeScanner();
 
         $this->progress = new Progress(count($paths), count($paths));
 
-        $io->progressStart(count($paths));
+        if (! $this->config->hideProgress) {
+            $io->progressStart(count($paths));
 
-        $this->progress->withCallback(function(ProgressData $data) use ($io) {
-            usleep(10000);
-            $io->progressAdvance($data->position);
-        });
+            $this->progress->withCallback(function (ProgressData $data) use ($io) {
+                usleep(10000);
+                $io->progressAdvance($data->position);
+            });
+        }
 
         $scanResults = $this->scanPaths($scanner, $paths);
 
-        $io->progressFinish();
+        if (! $this->config->hideProgress) {
+            $io->progressFinish();
+        }
 
-        $hideSnippets = !($input->hasOption('no-snippets') && $input->getOption('no-snippets') === true);
-
-        $this->printResults(new ConsoleResultPrinter(), $scanResults, $hideSnippets);
+        $this->printResults(new ConsoleResultPrinter(), $scanResults);
 
         if (count($scanResults)) {
             return Command::FAILURE;
@@ -104,11 +112,11 @@ class ScanCommand extends Command
         return $scanResults;
     }
 
-    protected function printResults(ResultPrinter $printer, array $scanResults, bool $printSnippets = true): void
+    protected function printResults(ResultPrinter $printer, array $scanResults): void
     {
         foreach ($scanResults as $scanResult) {
             foreach($scanResult->results as $result) {
-                $printer->print($this->output, $result, true, $printSnippets);
+                $printer->print($this->output, $result, true, !$this->config->hideSnippets);
             }
         }
     }
