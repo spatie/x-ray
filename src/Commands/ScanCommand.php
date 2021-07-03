@@ -7,6 +7,7 @@ use Permafrost\RayScan\Configuration\Configuration;
 use Permafrost\RayScan\Configuration\ConfigurationFactory;
 use Permafrost\RayScan\Printers\ConsoleResultPrinter;
 use Permafrost\RayScan\Printers\ResultPrinter;
+use Permafrost\RayScan\Results\ScanResult;
 use Permafrost\RayScan\Support\Directory;
 use Permafrost\RayScan\Support\File;
 use Permafrost\RayScan\Support\Progress;
@@ -22,6 +23,9 @@ class ScanCommand extends Command
     /** @var OutputInterface */
     protected $output;
 
+    /** @var InputInterface */
+    protected $input;
+
     /** @var Progress */
     protected $progress;
 
@@ -31,13 +35,25 @@ class ScanCommand extends Command
     /** @var ResultPrinter */
     public $printer;
 
+    /** @var CodeScanner */
+    public $scanner;
+
+    /** @var SymfonyStyle */
+    public $style;
+
+    /** @var array|string[] */
+    public $paths = [];
+
+    /** @var array|ScanResult[] */
+    public $scanResults = [];
+
     protected function configure(): void
     {
         $this->setName('scan')
             ->addArgument('path')
             ->addOption('no-progress', 'P', InputOption::VALUE_NONE)
             ->addOption('no-snippets', 'N', InputOption::VALUE_NONE)
-            ->setDescription('Scans a directory or filename for calls to ray() and rd().');
+            ->setDescription('Scans a directory or filename for calls to ray(), rd() and Ray::*.');
     }
 
     public function __construct(string $name = null)
@@ -45,44 +61,76 @@ class ScanCommand extends Command
         parent::__construct($name);
 
         $this->printer = new ConsoleResultPrinter();
+        $this->scanner = new CodeScanner();
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->output = $output;
-        $io = new SymfonyStyle($input, $output);
+        $this->initializeProps($input, $output)
+            ->initializeConfig()
+            ->initializePaths()
+            ->initializeProgress()
+            ->scanPaths()
+            ->finalizeProgress()
+            ->printResults();
 
-        $this->config = ConfigurationFactory::create($input);
+        return $this->getExitCode();
+    }
+
+    protected function getExitCode(): int
+    {
+        return count($this->scanResults) ? Command::FAILURE : Command::SUCCESS;
+    }
+
+    protected function initializeProps(InputInterface $input, OutputInterface $output): self
+    {
+        $this->output = $output;
+        $this->input = $input;
+        $this->style = new SymfonyStyle($input, $output);
+
+        return $this;
+    }
+
+    protected function initializeConfig(): self
+    {
+        $this->config = ConfigurationFactory::create($this->input);
         $this->config->validate();
 
-        $paths = $this->getPaths($this->config->path);
+        return $this;
+    }
 
-        $scanner = new CodeScanner();
+    protected function initializePaths(): self
+    {
+        $this->paths = $this->getPaths($this->config->path);
+
+        return $this;
+    }
+
+    protected function initializeProgress($paths = null): self
+    {
+        $paths = $paths ?? $this->paths;
 
         $this->progress = new Progress(count($paths), count($paths));
 
         if (! $this->config->hideProgress) {
-            $io->progressStart(count($paths));
+            $this->style->progressStart(count($paths));
 
-            $this->progress->withCallback(function (ProgressData $data) use ($io) {
+            $this->progress->withCallback(function (ProgressData $data) {
                 usleep(10000);
-                $io->progressAdvance($data->position);
+                $this->style->progressAdvance($data->position);
             });
         }
 
-        $scanResults = $this->scanPaths($scanner, $paths);
+        return $this;
+    }
 
+    protected function finalizeProgress(): self
+    {
         if (! $this->config->hideProgress) {
-            $io->progressFinish();
+            $this->style->progressFinish();
         }
 
-        $this->printResults($this->printer, $scanResults);
-
-        if (count($scanResults)) {
-            return Command::FAILURE;
-        }
-
-        return Command::SUCCESS;
+        return $this;
     }
 
     protected function loadDirectoryFiles(string $path): array
@@ -99,9 +147,12 @@ class ScanCommand extends Command
         return [$filename];
     }
 
-    protected function scanPaths(CodeScanner $scanner, array $paths): array
+    protected function scanPaths(?CodeScanner $scanner = null, ?array $paths = null): self
     {
-        $scanResults = [];
+        $scanner = $scanner ?? $this->scanner;
+        $paths = $paths ?? $this->paths;
+
+        $this->scanResults = [];
 
         foreach($paths as $path) {
             $results = $scanner->scan(new File($path));
@@ -117,15 +168,18 @@ class ScanCommand extends Command
             }
 
             if (! $results->hasErrors() && count($results->results)) {
-                $scanResults[] = $results;
+                $this->scanResults[] = $results;
             }
         }
 
-        return $scanResults;
+        return $this;
     }
 
-    protected function printResults(ResultPrinter $printer, array $scanResults): void
+    protected function printResults(?ResultPrinter $printer = null, ?array $scanResults = null): void
     {
+        $printer = $printer ?? $this->printer;
+        $scanResults = $scanResults ?? $this->scanResults;
+
         foreach ($scanResults as $scanResult) {
             foreach($scanResult->results as $result) {
                 $printer->print($this->output, $result, true, !$this->config->hideSnippets);
