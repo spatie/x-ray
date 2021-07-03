@@ -33,7 +33,18 @@ Specify either a valid path name or a valid filename to scan:
 
 # don't display code snippets
 ./vendor/bin/ray-scan ./src -N
+
+# don't display progress bar
+./vendor/bin/ray-scan ./src --no-progress
 ```
+
+## Available Options
+
+| Flag | Description
+|---|---|
+|`--no-progress` or `-P` | Don't display the progress bar while scanning files |
+|`--no-snippets` or `-N` | Don't display snippets from located calls |
+
 
 ## Sample Output
 
