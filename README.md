@@ -19,7 +19,7 @@ Scan source code for calls to `ray()`, `rd()` and `Ray::*` _(static calls)_ from
 ## Installation
 
 ```bash
-composer require permafrost-dev/ray-scan
+composer require permafrost-dev/ray-scan --dev
 ```
 
 ## Usage
