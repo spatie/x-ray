@@ -28,6 +28,9 @@ class ScanCommand extends Command
     /** @var Configuration */
     protected $config;
 
+    /** @var ResultPrinter */
+    public $printer;
+
     protected function configure(): void
     {
         $this->setName('scan')
@@ -37,12 +40,21 @@ class ScanCommand extends Command
             ->setDescription('Scans a directory or filename for calls to ray() and rd().');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function __construct(string $name = null)
+    {
+        parent::__construct($name);
+
+        $this->printer = new ConsoleResultPrinter();
+    }
+
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->output = $output;
         $io = new SymfonyStyle($input, $output);
 
         $this->config = ConfigurationFactory::create($input);
+        $this->config->validate();
+
         $paths = $this->getPaths($this->config->path);
 
         $scanner = new CodeScanner();
@@ -64,7 +76,7 @@ class ScanCommand extends Command
             $io->progressFinish();
         }
 
-        $this->printResults(new ConsoleResultPrinter(), $scanResults);
+        $this->printResults($this->printer, $scanResults);
 
         if (count($scanResults)) {
             return Command::FAILURE;

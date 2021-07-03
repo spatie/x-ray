@@ -1,0 +1,24 @@
+- |
+
+- |4
+     Filename: <href=file:///tests/fixtures/fixture1.php>/tests/fixtures/fixture1.php</>
+- |4
+     Line Num: 2
+- |4
+     Found   : <ray-call>ray</ray-call>
+- |4
+     ------
+- |4
+     [<line-num>   1</line-num>]        <keyword><?php</keyword>                                                                           
+- |
+    <target-line> [<line-num-target>   2</line-num-target>] <pointer-target>══════❱</pointer-target>    <ray-call-target>ray</ray-call-target>(<str-target>'12345'</str-target>);                                                               </target-line>
+- |4
+     [<line-num>   3</line-num>]                                                                                        
+- |4
+     [<line-num>   4</line-num>]            <keyword>echo</keyword> strtolower(<str>'TEST'</str>) . <keyword>PHP_EOL</keyword>;                                          
+- |4
+     [<line-num>   5</line-num>]                                                                                        
+- |4
+     [<line-num>   6</line-num>]            <keyword>echo</keyword> strtoupper(<str>'test'</str>) . <keyword>PHP_EOL</keyword>;                                          
+- |4
+     [<line-num>   7</line-num>]                                                                                        
