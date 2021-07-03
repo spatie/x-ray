@@ -12,7 +12,7 @@ class DirectoryTest extends TestCase
     {
         $dir = new Directory(__DIR__ . '/../fixtures');
 
-        $this->assertCount(3, $dir->load()->files());
+        $this->assertCount(4, $dir->load()->files());
     }
 
     /** @test */
