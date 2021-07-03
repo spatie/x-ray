@@ -3,15 +3,12 @@
 namespace Permafrost\RayScan\Tests;
 
 use Permafrost\RayScan\CodeScanner;
-use Permafrost\RayScan\Results\ScanErrorResult;
 use Permafrost\RayScan\Support\File;
-use PhpParser\Error;
 use PhpParser\ParserFactory;
 use PHPUnit\Framework\TestCase;
 
 class CodeScannerTest extends TestCase
 {
-
     /** @test */
     public function it_finds_function_calls()
     {
