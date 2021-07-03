@@ -41,7 +41,7 @@ class Progress
         return $this;
     }
 
-    public function withCallback(callable $callback): self
+    public function withCallback($callback): self
     {
         $this->callback = $callback;
 

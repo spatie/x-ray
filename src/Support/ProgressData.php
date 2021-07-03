@@ -11,7 +11,7 @@ class ProgressData
     public $current = 0;
 
     /** @var int */
-    public $position = 0;
+    public $position = 1;
 
     /** @var int */
     public $scale = 0;
@@ -25,8 +25,6 @@ class ProgressData
                 $result->$prop = $value;
             }
         }
-
-        $result->position = 1;
 
         return $result;
     }
