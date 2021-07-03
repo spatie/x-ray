@@ -13,6 +13,10 @@ class Configuration
     /** @var bool */
     public $hideProgress = false;
 
+    public $ignoreFunctions = [];
+
+    public $ignorePaths = [];
+
     public function __construct(string $path, bool $hideSnippets, bool $hideProgress)
     {
         $this->path = $path;
@@ -26,4 +30,5 @@ class Configuration
             throw new \InvalidArgumentException('Invalid input file or path provided.');
         }
     }
+
 }

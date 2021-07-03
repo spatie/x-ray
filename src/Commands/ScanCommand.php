@@ -120,7 +120,23 @@ class ScanCommand extends Command
         $this->scanResults = [];
 
         foreach($paths as $path) {
-            $results = $scanner->scan(new File($path));
+            if (in_array($path, $this->config->ignorePaths, true)) {
+                continue;
+            }
+
+            if (in_array(basename($path), $this->config->ignorePaths, true)) {
+                continue;
+            }
+
+            foreach($this->config->ignorePaths as $ignoreFile) {
+                $ignoreFile = str_replace(['*', '?'], ['.*', '.'], $ignoreFile);
+
+                if (preg_match('~' . $ignoreFile . '~', $path) === 1) {
+                    continue 2;
+                }
+            }
+
+            $results = $scanner->scan(new File($path), $this->config);
 
             $this->progress->advance();
 

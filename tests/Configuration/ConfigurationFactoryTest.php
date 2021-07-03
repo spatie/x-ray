@@ -28,7 +28,7 @@ class ConfigurationFactoryTest extends TestCase
         $path = realpath(__DIR__.'/../fixtures/fixture1.php');
         $input = $this->createInput(['path' => $path, '--no-progress' => true, '--no-snippets' => true]);
 
-        $config = ConfigurationFactory::create($input);
+        $config = ConfigurationFactory::create($input, __DIR__ . '/../data');
 
         $this->assertTrue($config->hideSnippets);
         $this->assertTrue($config->hideProgress);
@@ -41,7 +41,7 @@ class ConfigurationFactoryTest extends TestCase
         $filename = realpath(__DIR__.'/../fixtures/missing.php');
 
         $input = $this->createInput(['path' => $filename, '--no-progress' => true]);
-        $config = ConfigurationFactory::create($input);
+        $config = ConfigurationFactory::create($input, __DIR__ . '/../data');
 
         $this->expectException(\InvalidArgumentException::class);
 
@@ -54,7 +54,7 @@ class ConfigurationFactoryTest extends TestCase
         $filename = realpath(__DIR__.'/../fixtures/fixture1.php');
 
         $input = $this->createInput(['path' => $filename, '--no-progress' => true]);
-        $config = ConfigurationFactory::create($input);
+        $config = ConfigurationFactory::create($input, __DIR__ . '/../data');
         $hasException = false;
 
         try {

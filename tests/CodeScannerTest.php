@@ -3,6 +3,8 @@
 namespace Permafrost\RayScan\Tests;
 
 use Permafrost\RayScan\CodeScanner;
+use Permafrost\RayScan\Configuration\Configuration;
+use Permafrost\RayScan\Configuration\ConfigurationFactory;
 use Permafrost\RayScan\Support\File;
 use PhpParser\ParserFactory;
 use PHPUnit\Framework\TestCase;
@@ -28,8 +30,9 @@ class CodeScannerTest extends TestCase
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
         $scanner = new CodeScanner($parser);
         $file = new File(__DIR__ . '/fixtures/fixture1.php');
+        $config = new Configuration(__DIR__, true, true);
 
-        $results = $scanner->scan($file);
+        $results = $scanner->scan($file, $config);
 
         $this->assertFalse($results->hasErrors());
         $this->assertCount(1, $results->results);
@@ -44,8 +47,9 @@ class CodeScannerTest extends TestCase
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
         $scanner = new CodeScanner($parser);
         $file = new File(__DIR__ . '/fixtures/fixture2.php');
+        $config = new Configuration(__DIR__, true, true);
 
-        $results = $scanner->scan($file);
+        $results = $scanner->scan($file, $config);
 
         $this->assertTrue($results->hasErrors());
         $this->assertCount(1, $results->errors);

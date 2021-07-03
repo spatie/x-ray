@@ -2,6 +2,7 @@
 
 namespace Permafrost\RayScan;
 
+use Permafrost\RayScan\Configuration\Configuration;
 use Permafrost\RayScan\Results\ScanErrorResult;
 use Permafrost\RayScan\Results\ScanResults;
 use Permafrost\RayScan\Support\File;
@@ -24,7 +25,7 @@ class CodeScanner
         $this->parser = $parser ?? (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
     }
 
-    public function scan(File $file)
+    public function scan(File $file, Configuration $config)
     {
         $results = new ScanResults($file);
 
@@ -37,7 +38,9 @@ class CodeScanner
             return $results;
         }
 
-        $rayCalls = $this->findFunctionCalls($ast, 'ray', 'rd');
+        $functionNames = array_diff(['ray', 'rd'], $config->ignoreFunctions);
+
+        $rayCalls = $this->findFunctionCalls($ast, ...$functionNames);
         $rayClasses = $this->findStaticMethodCalls($ast, 'Ray');
 
         $calls = $this->sortNodesByLineNumber($rayCalls, $rayClasses);
