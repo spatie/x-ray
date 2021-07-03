@@ -22,7 +22,7 @@ class Configuration
 
     public function validate(): void
     {
-        if (! file_exists($this->filename)) {
+        if (! file_exists($this->path)) {
             throw new \InvalidArgumentException('Invalid input file or path provided.');
         }
     }
