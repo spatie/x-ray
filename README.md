@@ -45,6 +45,29 @@ Specify either a valid path name or a valid filename to scan:
 |`--no-progress` or `-P` | Don't display the progress bar while scanning files |
 |`--no-snippets` or `-N` | Don't display snippets from located calls |
 
+## Configuration files
+
+Create a file named `ray-scan.php` in the root directory of your project to configure the package.
+
+```php
+<?php
+
+return [
+    'ignore' => [
+        // don't flag these functions as errors    
+        'functions' => [
+            'rd',
+        ],
+    
+        // don't scan these filenames or paths; 
+        // regex patterns are supported.
+        'paths' => [
+            'test1.php',
+            '*/tests/*',
+        ],                
+    ],
+];
+```
 
 ## Sample Output
 
