@@ -2,17 +2,16 @@
 
 namespace Permafrost\RayScan\Commands;
 
+use Permafrost\PhpCodeSearch\Support\File;
 use Permafrost\RayScan\CodeScanner;
 use Permafrost\RayScan\Concerns\HasPaths;
 use Permafrost\RayScan\Concerns\HasProgress;
 use Permafrost\RayScan\Configuration\Configuration;
 use Permafrost\RayScan\Configuration\ConfigurationFactory;
 use Permafrost\RayScan\Printers\ConsoleResultsPrinter;
-use Permafrost\RayScan\Printers\ResultPrinter;
 use Permafrost\RayScan\Printers\ResultsPrinter;
 use Permafrost\RayScan\Results\ScanResult;
 use Permafrost\RayScan\Support\Directory;
-use Permafrost\RayScan\Support\File;
 use Permafrost\RayScan\Support\Progress;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

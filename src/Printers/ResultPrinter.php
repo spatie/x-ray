@@ -2,10 +2,10 @@
 
 namespace Permafrost\RayScan\Printers;
 
-use Permafrost\RayScan\Results\ScanResult;
+use Permafrost\PhpCodeSearch\Results\SearchResult;
 use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class ResultPrinter
 {
-    abstract public function print(OutputInterface $output, ScanResult $result, bool $colorize = true);
+    abstract public function print(OutputInterface $output, SearchResult $result, bool $colorize = true);
 }

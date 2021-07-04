@@ -2,7 +2,7 @@
 
 namespace Permafrost\RayScan\Printers;
 
-use Permafrost\RayScan\Results\ScanResult;
+use Permafrost\PhpCodeSearch\Results\SearchResult;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -11,7 +11,7 @@ class ConsoleResultPrinter extends ResultPrinter
     /**
      * @param OutputInterface $output
      */
-    public function print($output, ScanResult $result, bool $colorize = true, bool $printSnippets = true)
+    public function print($output, SearchResult $result, bool $colorize = true, bool $printSnippets = true)
     {
         $this->initializeFormatter($output);
 
@@ -66,7 +66,7 @@ class ConsoleResultPrinter extends ResultPrinter
         }
     }
 
-    protected function printHeader(OutputInterface $output, ScanResult $result): void
+    protected function printHeader(OutputInterface $output, SearchResult $result): void
     {
         $output->writeln('');
         $output->writeln(" Filename: <href=file://{$result->location->filename}>{$result->location->filename}</>");
@@ -80,7 +80,7 @@ class ConsoleResultPrinter extends ResultPrinter
         return str_pad($line, $length, ' ');
     }
 
-    protected function highlightTargetLineBackground(string $line, int $currentLineNum, ScanResult $result): string
+    protected function highlightTargetLineBackground(string $line, int $currentLineNum, SearchResult $result): string
     {
         $isTargetLine = $currentLineNum === $result->location->startLine;
 
@@ -99,7 +99,7 @@ class ConsoleResultPrinter extends ResultPrinter
     }
 
 
-    protected function createOutputLine(string $line, int $currentLineNum, ScanResult $result): string
+    protected function createOutputLine(string $line, int $currentLineNum, SearchResult $result): string
     {
         $isTargetLine = $currentLineNum === $result->location->startLine;
         $prefix = $isTargetLine ? ' <pointer>══════❱</pointer>' : '        ';
@@ -107,7 +107,7 @@ class ConsoleResultPrinter extends ResultPrinter
         return sprintf(" [<line-num>% 4d</line-num>]%-4s%-60s", $currentLineNum, $prefix, $line);
     }
 
-    protected function highlightTargetFunction(string $line, int $currentLineNum, ScanResult $result): string
+    protected function highlightTargetFunction(string $line, int $currentLineNum, SearchResult $result): string
     {
         $isTargetLine = $currentLineNum === $result->location->startLine;
 
