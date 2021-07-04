@@ -2,11 +2,11 @@
 
 namespace Permafrost\RayScan\Tests\Printers;
 
-use Permafrost\RayScan\Code\CodeSnippet;
-use Permafrost\RayScan\Code\FunctionCallLocation;
+use Permafrost\PhpCodeSearch\Code\CodeSnippet;
+use Permafrost\PhpCodeSearch\Code\FunctionCallLocation;
+use Permafrost\PhpCodeSearch\Results\SearchResult;
+use Permafrost\PhpCodeSearch\Support\File;
 use Permafrost\RayScan\Printers\ConsoleResultPrinter;
-use Permafrost\RayScan\Results\ScanResult;
-use Permafrost\RayScan\Support\File;
 use Permafrost\RayScan\Tests\TestClasses\FakeOutput;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -19,14 +19,14 @@ class ConsoleResultPrinterTest extends TestCase
     public function it_prints_results()
     {
         $file = new File(__DIR__.'/../fixtures/fixture1.php');
-        $location = new FunctionCallLocation('test', $file->getRealPath(), 3, 3);
+        $location = new FunctionCallLocation('test', 3, 3);
         $snippet = (new CodeSnippet())
             ->surroundingLine(4)
             ->snippetLineCount(3)
             ->fromFile($file);
 
-        $location->filename = basename($location->filename);
-        $result = new ScanResult($location, $snippet);
+        $result = new SearchResult($location, $snippet, basename($file->filename));
+        $result->file()->filename = basename($file->filename);
         $output = new FakeOutput();
 
         $printer = new ConsoleResultPrinter();

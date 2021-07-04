@@ -2,8 +2,8 @@
 
 namespace Permafrost\RayScan\Printers;
 
+use Permafrost\PhpCodeSearch\Results\FileSearchResults;
 use Permafrost\RayScan\Configuration\Configuration;
-use Permafrost\RayScan\Results\ScanResults;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleResultsPrinter extends ResultsPrinter
@@ -35,13 +35,13 @@ class ConsoleResultsPrinter extends ResultsPrinter
         $functions = [];
 
         // count number of files and functions found
-        /** @var ScanResults $scanResult */
+        /** @var FileSearchResults $scanResult */
         foreach($results as $scanResult) {
             foreach ($scanResult->results as $result) {
-                if (!isset($files[$result->location->filename])) {
-                    $files[$result->location->filename] = 0;
+                if (!isset($files[$result->file()->filename])) {
+                    $files[$result->file()->filename] = 0;
                 }
-                $files[$result->location->filename]++;
+                $files[$result->file()->filename]++;
 
                 if (!isset($functions[$result->location->name])) {
                     $functions[$result->location->name] = 0;

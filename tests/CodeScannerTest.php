@@ -2,9 +2,9 @@
 
 namespace Permafrost\RayScan\Tests;
 
+use Permafrost\PhpCodeSearch\Support\File;
 use Permafrost\RayScan\CodeScanner;
 use Permafrost\RayScan\Configuration\Configuration;
-use Permafrost\RayScan\Support\File;
 use PhpParser\ParserFactory;
 use PHPUnit\Framework\TestCase;
 
@@ -16,23 +16,9 @@ class CodeScannerTest extends TestCase
     }
 
     /** @test */
-    public function it_finds_function_calls()
-    {
-        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
-        $scanner = new CodeScanner($this->getConfig(), $parser);
-        $file = new File(__DIR__ . '/fixtures/fixture1.php');
-
-        $ast = $parser->parse($file->contents());
-        $calls = $scanner->findFunctionCalls($ast, 'ray', 'strtolower');
-
-        $this->assertCount(2, $calls);
-    }
-
-    /** @test */
     public function it_scans_a_file()
     {
-        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
-        $scanner = new CodeScanner($this->getConfig(), $parser);
+        $scanner = new CodeScanner($this->getConfig());
         $file = new File(__DIR__ . '/fixtures/fixture1.php');
 
         $results = $scanner->scan($file);
@@ -47,8 +33,7 @@ class CodeScannerTest extends TestCase
     /** @test */
     public function it_returns_an_error_for_parsing_errors()
     {
-        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
-        $scanner = new CodeScanner($this->getConfig(), $parser);
+        $scanner = new CodeScanner($this->getConfig());
         $file = new File(__DIR__ . '/fixtures/fixture2.php');
 
         $results = $scanner->scan($file);
