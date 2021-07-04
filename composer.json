@@ -17,6 +17,7 @@
         "symfony/console": "^5.3"
     },
     "require-dev": {
+        "permafrost-dev/coverage-check": "^1.0",
         "phpunit/phpunit": "^9.5",
         "spatie/phpunit-snapshot-assertions": "^4.2"
     },

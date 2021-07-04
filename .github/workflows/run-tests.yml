@@ -45,3 +45,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: clover.xml
+          
+      - name: Enforce minimum code coverage
+        run: ./vendor/bin/coverage-check -r 75
