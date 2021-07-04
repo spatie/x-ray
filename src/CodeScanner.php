@@ -23,30 +23,42 @@ class CodeScanner
     /** @var Configuration */
     protected $config;
 
+    /** @var array */
+    protected $ast = [];
+
     public function __construct(Configuration $config, $parser = null)
     {
         $this->config = $config;
         $this->parser = $parser ?? (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
     }
 
-    public function scan(File $file)
+    public function scan(File $file): ScanResults
     {
         $results = new ScanResults($file);
 
-        try {
-            /** @var array|Stmt[] $ast */
-            $ast = $this->parser->parse($file->contents());
-        } catch (Error $error) {
-            $results->addError(new ScanErrorResult($file, $error, "Parse error: {$error->getMessage()}"));
-
+        if (! $this->parseFile($file, $results)) {
             return $results;
         }
 
-        $calls = $this->findAllCalls($ast);
+        $calls = $this->findAllCalls($this->ast);
 
         $this->traverseNodes($file, $results, $calls);
 
         return $results;
+    }
+
+    protected function parseFile(File $file, ScanResults $results): bool
+    {
+        try {
+            /** @var array|Stmt[] $ast */
+            $this->ast = $this->parser->parse($file->contents());
+        } catch (Error $error) {
+            $results->addError(new ScanErrorResult($file, $error, "Parse error: {$error->getMessage()}"));
+
+            return false;
+        }
+
+        return true;
     }
 
     protected function findAllCalls(array $ast): array
