@@ -2,7 +2,7 @@
 
 namespace Permafrost\RayScan\Code;
 
-use Permafrost\RayScan\Support\File;
+use Permafrost\PhpCodeSearch\Support\File;
 use RuntimeException;
 
 /**

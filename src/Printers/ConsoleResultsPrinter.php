@@ -3,9 +3,7 @@
 namespace Permafrost\RayScan\Printers;
 
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
-use Permafrost\PhpCodeSearch\Results\SearchResult;
 use Permafrost\RayScan\Configuration\Configuration;
-use Permafrost\RayScan\Results\ScanResults;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleResultsPrinter extends ResultsPrinter

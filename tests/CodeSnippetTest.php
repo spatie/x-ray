@@ -2,8 +2,8 @@
 
 namespace Permafrost\RayScan\Tests;
 
+use Permafrost\PhpCodeSearch\Support\File;
 use Permafrost\RayScan\Code\CodeSnippet;
-use Permafrost\RayScan\Support\File;
 use PHPUnit\Framework\TestCase;
 
 class CodeSnippetTest extends TestCase
