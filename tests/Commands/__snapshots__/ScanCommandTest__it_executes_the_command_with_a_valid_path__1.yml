@@ -20,8 +20,6 @@
      [<line-num>   5</line-num>]                                                                                        
 - |4
      [<line-num>   6</line-num>]            <keyword>echo</keyword> strtoupper(<str>'test'</str>) . <keyword>PHP_EOL</keyword>;                                          
-- |4
-     [<line-num>   7</line-num>]                                                                                        
 - |
 
 - |

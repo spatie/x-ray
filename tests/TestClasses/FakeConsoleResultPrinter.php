@@ -2,14 +2,14 @@
 
 namespace Permafrost\RayScan\Tests\TestClasses;
 
+use Permafrost\PhpCodeSearch\Results\SearchResult;
 use Permafrost\RayScan\Printers\ConsoleResultPrinter;
-use Permafrost\RayScan\Results\ScanResult;
 
 class FakeConsoleResultPrinter extends ConsoleResultPrinter
 {
-    public function print($output, ScanResult $result, bool $colorize = true, bool $printSnippets = true)
+    public function print($output, SearchResult $result, bool $colorize = true, bool $printSnippets = true)
     {
-        $result->location->filename = str_replace(realpath(__DIR__ . '/../..'), '', $result->location->filename);
+        $result->file()->filename = str_replace(realpath(__DIR__ . '/../..'), '', $result->file()->getRealPath());
 
         parent::print($output, $result, $colorize, $printSnippets);
     }

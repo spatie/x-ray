@@ -69,7 +69,7 @@ class ConsoleResultPrinter extends ResultPrinter
     protected function printHeader(OutputInterface $output, SearchResult $result): void
     {
         $output->writeln('');
-        $output->writeln(" Filename: <href=file://{$result->location->filename}>{$result->location->filename}</>");
+        $output->writeln(" Filename: <href=file://{$result->file()->filename}>{$result->file()->filename}</>");
         $output->writeln(" Line Num: {$result->location->startLine}");
         $output->writeln(" Found   : <ray-call>{$result->location->name}</ray-call>");
         $output->writeln(" ------");
