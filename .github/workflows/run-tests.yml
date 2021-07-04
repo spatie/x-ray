@@ -47,4 +47,4 @@ jobs:
           files: clover.xml
           
       - name: Enforce minimum code coverage
-        run: ./vendor/bin/coverage-check -r 75
+        run: ./vendor/bin/coverage-check clover.xml -r 75
