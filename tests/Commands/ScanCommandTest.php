@@ -3,7 +3,7 @@
 namespace Permafrost\RayScan\Tests\Commands;
 
 use Permafrost\RayScan\Commands\ScanCommand;
-use Permafrost\RayScan\Tests\TestClasses\FakeConsoleResultPrinter;
+use Permafrost\RayScan\Tests\TestClasses\FakeConsoleResultsPrinter;
 use Permafrost\RayScan\Tests\TestClasses\FakeOutput;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -28,7 +28,7 @@ class ScanCommandTest extends TestCase
         parent::setUp();
 
         $this->command = new ScanCommand('scan');
-        $this->command->printer = new FakeConsoleResultPrinter();
+        $this->command->printer = new FakeConsoleResultsPrinter();
         $this->output = new FakeOutput();
     }
 

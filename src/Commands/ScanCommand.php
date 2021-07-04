@@ -7,8 +7,9 @@ use Permafrost\RayScan\Concerns\HasPaths;
 use Permafrost\RayScan\Concerns\HasProgress;
 use Permafrost\RayScan\Configuration\Configuration;
 use Permafrost\RayScan\Configuration\ConfigurationFactory;
-use Permafrost\RayScan\Printers\ConsoleResultPrinter;
+use Permafrost\RayScan\Printers\ConsoleResultsPrinter;
 use Permafrost\RayScan\Printers\ResultPrinter;
+use Permafrost\RayScan\Printers\ResultsPrinter;
 use Permafrost\RayScan\Results\ScanResult;
 use Permafrost\RayScan\Support\Directory;
 use Permafrost\RayScan\Support\File;
@@ -36,7 +37,7 @@ class ScanCommand extends Command
     /** @var Configuration */
     protected $config;
 
-    /** @var ResultPrinter */
+    /** @var ResultsPrinter */
     public $printer;
 
     /** @var CodeScanner */
@@ -64,7 +65,7 @@ class ScanCommand extends Command
     {
         parent::__construct($name);
 
-        $this->printer = new ConsoleResultPrinter();
+        $this->printer = new ConsoleResultsPrinter();
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
@@ -163,15 +164,17 @@ class ScanCommand extends Command
         return $this;
     }
 
-    protected function printResults(?ResultPrinter $printer = null, ?array $scanResults = null): void
+    protected function printResults(?ResultsPrinter $printer = null, ?array $scanResults = null): void
     {
         $printer = $printer ?? $this->printer;
         $scanResults = $scanResults ?? $this->scanResults;
 
-        foreach ($scanResults as $scanResult) {
-            foreach($scanResult->results as $result) {
-                $printer->print($this->output, $result, true, !$this->config->hideSnippets);
-            }
-        }
+        $printer->print($this->output, $scanResults, $this->config);
+
+//        foreach ($scanResults as $scanResult) {
+//            foreach($scanResult->results as $result) {
+//                $printer->print($this->output, $result, true, !$this->config->hideSnippets);
+//            }
+//        }
     }
 }
