@@ -20,12 +20,16 @@ class CodeScanner
     /** @var ParserFactory $parser */
     protected $parser;
 
-    public function __construct($parser = null)
+    /** @var Configuration */
+    protected $config;
+
+    public function __construct(Configuration $config, $parser = null)
     {
-        $this->parser = $parser ?? (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+        $this->config = $config;
+        $this->parser = $parser ?? (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
     }
 
-    public function scan(File $file, Configuration $config)
+    public function scan(File $file)
     {
         $results = new ScanResults($file);
 
@@ -38,46 +42,46 @@ class CodeScanner
             return $results;
         }
 
-        $functionNames = array_diff(['ray', 'rd'], $config->ignoreFunctions);
-
-        $rayCalls = $this->findFunctionCalls($ast, ...$functionNames);
-        $rayClasses = $this->findStaticMethodCalls($ast, 'Ray');
-
-        $calls = $this->sortNodesByLineNumber($rayCalls, $rayClasses);
+        $calls = $this->findAllCalls($ast);
 
         $this->traverseNodes($file, $results, $calls);
 
         return $results;
     }
 
-    public function findFunctionCalls(array $ast, string ...$functionNames): array
+    protected function findAllCalls(array $ast): array
+    {
+        $functionNames = array_diff(['ray', 'rd'], $this->config->ignoreFunctions);
+
+        $rayCalls = $this->findFunctionCalls($ast, ...$functionNames);
+        $rayClasses = $this->findStaticMethodCalls($ast, 'Ray');
+
+        return $this->sortNodesByLineNumber($rayCalls, $rayClasses);
+    }
+
+    protected function findCalls(array $ast, string $class, string $nodeNameProp, array $names): array
     {
         $nodeFinder = new NodeFinder();
 
-        $nodes = $nodeFinder->findInstanceOf($ast, FuncCall::class);
+        $nodes = $nodeFinder->findInstanceOf($ast, $class);
 
-        return array_filter($nodes, function(Node $node) use ($functionNames) {
+        return array_filter($nodes, function(Node $node) use ($names, $nodeNameProp) {
             if (! isset($node->name->parts)) {
                 return false;
             }
 
-            return in_array($node->name->parts[0], $functionNames, true);
+            return in_array($node->{$nodeNameProp}->parts[0], $names, true);
         });
+    }
+
+    public function findFunctionCalls(array $ast, string ...$functionNames): array
+    {
+        return $this->findCalls($ast, FuncCall::class, 'name', $functionNames);
     }
 
     public function findStaticMethodCalls(array $ast, string ...$classNames): array
     {
-        $nodeFinder = new NodeFinder();
-
-        $nodes = $nodeFinder->findInstanceOf($ast, Node\Expr\StaticCall::class);
-
-        return array_filter($nodes, function(Node $node) use ($classNames) {
-            if (! isset($node->name->parts)) {
-                return false;
-            }
-
-            return in_array($node->class->parts[0], $classNames, true);
-        });
+        return $this->findCalls($ast, Node\Expr\StaticCall::class, 'class', $classNames);
     }
 
     protected function traverseNodes(File $file, ScanResults $results, array $nodes): void

@@ -26,33 +26,23 @@ class Directory
         foreach($files as $file){
             $name = $file->getRealPath();
 
-            if (Str::startsWith($file->getFilename(), '.')) {
+            if ($this->isIgnoredPath($name)) {
                 continue;
             }
 
-            if (Str::startsWith($name, $this->path . '/vendor')) {
-                continue;
-            }
-
-            if (Str::startsWith($name, $this->path . '/node_modules')) {
-                continue;
-            }
-
-            if ($file->isFile() && $file->isReadable() && $file->getExtension() === 'php') {
+            if ($file->isFile() && $file->getExtension() === 'php') {
                 $result[] = $name;
             }
         }
 
-        $this->files = array_unique($result, SORT_STRING);
-
-        sort($this->files);
+        $this->setFiles($result);
 
         return $this;
     }
 
     public function only(string ...$filenames): array
     {
-        return array_filter($this->files(), function($filename) use ($filenames) {
+        return array_filter($this->files, function($filename) use ($filenames) {
             return in_array($filename, $filenames, true);
         });
     }
@@ -60,5 +50,29 @@ class Directory
     public function files(): array
     {
         return $this->files;
+    }
+
+    protected function setFiles(array $files): void
+    {
+        $this->files = array_unique($files);
+
+        sort($this->files);
+    }
+
+    protected function isIgnoredPath(string $name): bool
+    {
+        if (Str::startsWith(basename($name), '.')) {
+            return true;
+        }
+
+        if (Str::startsWith($name, "{$this->path}/vendor")) {
+            return true;
+        }
+
+        if (Str::startsWith($name, "{$this->path}/node_modules")) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -26,7 +26,7 @@ class ConsoleResultPrinter extends ResultPrinter
                 $line = $this->createOutputLine($line, $lineNum, $result);
                 $line = $this->highlightTargetLineBackground($line, $lineNum, $result);
 
-                if (!$colorize) {
+                if (! $colorize) {
                     $line = preg_replace('~\<.g=[^>]+\>~', '', $line);
                     $line = str_replace('</>', '', $line);
                 }
@@ -51,7 +51,6 @@ class ConsoleResultPrinter extends ResultPrinter
             'pointer' => ['#ed64a6', null],
             'ray-call' => ['#e53e3e', null],
         ];
-        //fg=#ed64a6;bg=#2d3748
 
         foreach($map as $name => $colors) {
             [$fg, $bg] = $colors;
@@ -90,9 +89,6 @@ class ConsoleResultPrinter extends ResultPrinter
         }
 
         // use the *-target tag variant to allow bg highlighting of the target line
-//        $line = preg_replace('~<([\w-]+)-target>([^<]+)</(\1)-target>~', '<$1>$2</$1>', $line);
-//        $line = preg_replace('~<([\w-]+)>(.+)</(\1)>~', '<$1-target>$2</$1-target>', $line);
-
         $line = preg_replace('~<([\w-]+)-target>~', '<$1>', $line);
         $line = preg_replace('~</([\w-]+)-target>~', '</$1>', $line);
 
@@ -144,14 +140,14 @@ class ConsoleResultPrinter extends ResultPrinter
 
     protected function highlightReservedKeywords(string $line)
     {
-        $keywords = '<' .'?php abstract as bool catch class echo extends final for foreach function if implements instanceof int interface ' .
-            'namespace new null private protected public return self static static string try use void';
+        $keywords = '<' .'?php abstract as bool catch class echo extends false final for foreach function if implements instanceof int interface ' .
+            'namespace new null private protected public return self static static string true try use void';
 
         // highlight PHP_* constants
         $line = preg_replace('~\b(PHP_[A-Z_]+)\b~', '<keyword>$1</keyword>', $line);
 
         foreach(explode(' ', $keywords) as $keyword) {
-            $line = preg_replace('~('.preg_quote($keyword,'~').')\b~', '<keyword>$1</keyword>', $line);
+            $line = preg_replace('~('.preg_quote($keyword, '~').')\b~', '<keyword>$1</keyword>', $line);
         }
 
         return $line;

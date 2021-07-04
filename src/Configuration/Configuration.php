@@ -13,8 +13,10 @@ class Configuration
     /** @var bool */
     public $hideProgress = false;
 
+    /** @var array|string[] */
     public $ignoreFunctions = [];
 
+    /** @var array|string[] */
     public $ignorePaths = [];
 
     public function __construct(string $path, bool $hideSnippets, bool $hideProgress)

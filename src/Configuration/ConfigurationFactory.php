@@ -11,9 +11,10 @@ use Symfony\Component\Console\Input\InputInterface;
  */
 class ConfigurationFactory
 {
+    /** @var array|string[] */
     public static $cache = [];
 
-    public static function create(InputInterface $input, ?string $configPath = null): Configuration
+    public static function create(InputInterface $input, ?string $configDirectory = null): Configuration
     {
         $path = $input->getArgument('path');
 
@@ -22,7 +23,7 @@ class ConfigurationFactory
 
         $result = new Configuration($path, $hideSnippets, $hideProgress);
 
-        $options = (new static())->getSettingsFromConfigFile($configPath);
+        $options = (new static())->getSettingsFromConfigFile($configDirectory);
 
         $result->ignorePaths = $options['ignore']['paths'] ?? [];
         $result->ignoreFunctions = $options['ignore']['functions'] ?? [];
@@ -30,7 +31,7 @@ class ConfigurationFactory
         return $result;
     }
 
-    public function getSettingsFromConfigFile(string $configDirectory = null): array
+    public function getSettingsFromConfigFile(?string $configDirectory = null): array
     {
         $configFilePath = $this->searchConfigFiles($configDirectory);
 
@@ -43,7 +44,7 @@ class ConfigurationFactory
         return $options ?? [];
     }
 
-    protected function searchConfigFiles(string $configDirectory = null): string
+    protected function searchConfigFiles(?string $configDirectory = null): string
     {
         if (! isset(self::$cache[$configDirectory])) {
             self::$cache[$configDirectory] = $this->searchConfigFilesOnDisk($configDirectory);
@@ -52,7 +53,7 @@ class ConfigurationFactory
         return self::$cache[$configDirectory];
     }
 
-    protected function searchConfigFilesOnDisk(string $configDirectory = null): string
+    protected function searchConfigFilesOnDisk(?string $configDirectory = null): string
     {
         $configNames = [
             'ray-scan.php',

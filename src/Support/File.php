@@ -53,7 +53,7 @@ class File
         return $this->file()->key() + 1;
     }
 
-    public function getLine(int $lineNumber = null): string
+    public function getLine(?int $lineNumber = null): string
     {
         if ($lineNumber === null) {
             return $this->getNextLine();
