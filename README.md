@@ -12,7 +12,11 @@
 
 ---
 
-Scan source code for calls to `ray()`, `rd()` and `Ray::*` _(static calls)_ from the [spatie/ray](https://github.com/spatie/ray) and [spatie/laravel-ray](https://github.com/spatie/laravel-ray) packages.  Visit [myray.app](https://myray.app) for information on downloading the Ray debugging app.
+Scan source code for calls to `ray()`, `rd()` and `Ray::*` _(static calls)_ from the [spatie/ray](https://github.com/spatie/ray) and [spatie/laravel-ray](https://github.com/spatie/laravel-ray) _(and other)_ packages.
+
+The primary use case for this package is when calls to `ray()` cannot be left in the source code before deploying, even if ray is disabled.
+
+See [myray.app](https://myray.app) for information on downloading the Ray debugging app.
 
 ---
 
