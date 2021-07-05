@@ -68,8 +68,10 @@ class ConsoleResultPrinter extends ResultPrinter
 
     protected function printHeader(OutputInterface $output, SearchResult $result): void
     {
+        $filename = str_replace(getcwd() . DIRECTORY_SEPARATOR, './', $result->file()->filename);
+
         $output->writeln('');
-        $output->writeln(" Filename: <href=file://{$result->file()->filename}>{$result->file()->filename}</>");
+        $output->writeln(" Filename: <href=file://{$result->file()->filename}>{$filename}</>");
         $output->writeln(" Line Num: {$result->location->startLine}");
         $output->writeln(" Found   : <ray-call>{$result->location->name}</ray-call>");
         $output->writeln(" ------");
