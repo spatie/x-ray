@@ -18,13 +18,10 @@ class ConsoleResultPrinter extends ResultPrinter
         $this->printHeader($output, $result);
 
         if ($printSnippets) {
+            $highlighter = new SyntaxHighlighter();
+
             foreach ($result->snippet->getCode() as $lineNum => $line) {
-                $line = $this->standardizeLineLength($line);
-                $line = $this->highlightTargetFunction($line, $lineNum, $result);
-                $line = $this->highlightSyntax($line);
-                $line = $this->highlightReservedKeywords($line);
-                $line = $this->createOutputLine($line, $lineNum, $result);
-                $line = $this->highlightTargetLineBackground($line, $lineNum, $result);
+                $line = $highlighter->highlightLine($line, $result->node->name(), $lineNum, $result->location->startLine());
 
                 if (! $colorize) {
                     $line = preg_replace('~\<.g=[^>]+\>~', '', $line);
@@ -49,7 +46,7 @@ class ConsoleResultPrinter extends ResultPrinter
             'line-num-target' => ['#ed64a6', '#2d3748'],
             'variable' => ['#9f7aea', null],
             'pointer' => ['#ed64a6', null],
-            'ray-call' => ['#e53e3e', null],
+            'target-call' => ['#e53e3e', null],
         ];
 
         foreach($map as $name => $colors) {
@@ -73,85 +70,7 @@ class ConsoleResultPrinter extends ResultPrinter
         $output->writeln('');
         $output->writeln(" Filename: <href=file://{$result->file()->filename}>{$filename}</>");
         $output->writeln(" Line Num: {$result->location->startLine}");
-        $output->writeln(" Found   : <ray-call>{$result->location->name}</ray-call>");
+        $output->writeln(" Found   : <target-call>{$result->location->name}</target-call>");
         $output->writeln(" ------");
-    }
-
-    protected function standardizeLineLength(string $line, int $length = 80): string
-    {
-        return str_pad($line, $length, ' ');
-    }
-
-    protected function highlightTargetLineBackground(string $line, int $currentLineNum, SearchResult $result): string
-    {
-        $isTargetLine = $currentLineNum === $result->location->startLine;
-
-        if (! $isTargetLine) {
-            return $line;
-        }
-
-        // use the *-target tag variant to allow bg highlighting of the target line
-        $line = preg_replace('~<([\w-]+)-target>~', '<$1>', $line);
-        $line = preg_replace('~</([\w-]+)-target>~', '</$1>', $line);
-
-        $line = preg_replace('~<([\w-]+)>~', '<$1-target>', $line);
-        $line = preg_replace('~</([\w-]+)>~', '</$1-target>', $line);
-
-        return "<target-line>{$line}</target-line>";
-    }
-
-
-    protected function createOutputLine(string $line, int $currentLineNum, SearchResult $result): string
-    {
-        $isTargetLine = $currentLineNum === $result->location->startLine;
-        $prefix = $isTargetLine ? ' <pointer>══════❱</pointer>' : '        ';
-
-        return sprintf(" [<line-num>% 4d</line-num>]%-4s%-60s", $currentLineNum, $prefix, $line);
-    }
-
-    protected function highlightTargetFunction(string $line, int $currentLineNum, SearchResult $result): string
-    {
-        $isTargetLine = $currentLineNum === $result->location->startLine;
-
-        if ($isTargetLine) {
-            // match strings like 'Ray::' and 'ray(' and '\ray('
-            $line = preg_replace('~(\\\\?' . $result->location->name . ')(::|\s*\()~', '<ray-call>$1</ray-call>$2', $line);
-        }
-
-        return $line;
-    }
-
-    protected function highlightSyntax(string $line): string
-    {
-        // comments
-        $line = preg_replace('~(//.*)$~', '<comment>$1</comment>', $line);
-        $line = preg_replace('~(/\*\*?.*\*/\s*)$~', '<comment>$1</comment>', $line);
-
-        // variables
-        $line = preg_replace('~(\$\w+)~', '<variable>$1</variable>', $line);
-
-        // method calls
-        $line = preg_replace('~(::|->)(\w+)\s*\(~', '$1<method>$2</method>(', $line);
-
-        // strings
-        $line = preg_replace("~('[^']+')~", '<str>$1</str>', $line);
-        $line = preg_replace('~("[^"]+")~', '<str>$1</str>', $line);
-
-        return $line;
-    }
-
-    protected function highlightReservedKeywords(string $line)
-    {
-        $keywords = '<' .'?php abstract as bool catch class echo extends false final for foreach function if implements instanceof int interface ' .
-            'namespace new null private protected public return self static static string true try use void';
-
-        // highlight PHP_* constants
-        $line = preg_replace('~\b(PHP_[A-Z_]+)\b~', '<keyword>$1</keyword>', $line);
-
-        foreach(explode(' ', $keywords) as $keyword) {
-            $line = preg_replace('~('.preg_quote($keyword, '~').')\b~', '<keyword>$1</keyword>', $line);
-        }
-
-        return $line;
     }
 }
