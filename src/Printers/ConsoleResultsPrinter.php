@@ -3,33 +3,21 @@
 namespace Permafrost\RayScan\Printers;
 
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
-use Permafrost\RayScan\Configuration\Configuration;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleResultsPrinter extends ResultsPrinter
 {
-    /** @var ConsoleResultPrinter|null */
-    public $printer = null;
-
-    public function __construct()
+    public function print(array $results): void
     {
-        $this->printer = new ConsoleResultPrinter();
-    }
-
-    public function print(OutputInterface $output, array $results, Configuration $config): void
-    {
-        $printer = $this->printer ?? new ConsoleResultPrinter();
-
         foreach ($results as $scanResult) {
             foreach($scanResult->results as $result) {
-                $printer->print($output, $result, true, ! $config->hideSnippets);
+                $this->printer()->print($this->output, $result, true, ! $this->config->hideSnippets);
             }
         }
 
-        $this->printSummary($output, $results, $config);
+        $this->printSummary($results);
     }
 
-    public function printSummary(OutputInterface $output, array $results, Configuration $config): void
+    public function printSummary(array $results): void
     {
         $files = [];
         $functions = [];
@@ -41,11 +29,13 @@ class ConsoleResultsPrinter extends ResultsPrinter
                 if (!isset($files[$result->file()->filename])) {
                     $files[$result->file()->filename] = 0;
                 }
+
                 $files[$result->file()->filename]++;
 
                 if (!isset($functions[$result->node->name()])) {
                     $functions[$result->node->name()] = 0;
                 }
+
                 $functions[$result->node->name()]++;
             }
         }
@@ -53,16 +43,20 @@ class ConsoleResultsPrinter extends ResultsPrinter
         $totalCalls = array_sum(array_values($functions));
         $totalFiles = count($files);
 
-        $output->writeln('');
-        $output->writeln('---');
+        $this->output->writeln('');
+        $this->output->writeln('---');
 
         if ($totalFiles === 0) {
-            $output->writeln("No function or static method calls found.");
+            $this->output->writeln("No function or static method calls found.");
         }
 
         if ($totalFiles > 0) {
-            $output->writeln("Found {$totalCalls} function calls in {$totalFiles} files.");
+            $this->output->writeln("Found {$totalCalls} function calls in {$totalFiles} files.");
         }
     }
 
+    protected function printer(): ResultPrinter
+    {
+        return $this->printer ?? new ConsoleResultPrinter();
+    }
 }

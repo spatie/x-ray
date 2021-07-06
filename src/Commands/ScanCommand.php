@@ -63,14 +63,14 @@ class ScanCommand extends Command
     public function __construct(string $name = null)
     {
         parent::__construct($name);
-
-        $this->printer = new ConsoleResultsPrinter();
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->initializeProps($input, $output)
+        $this
+            ->initializeProps($input, $output)
             ->initializeConfig()
+            ->initializePrinter()
             ->initializeScanner()
             ->initializePaths()
             ->initializeProgress()
@@ -94,6 +94,13 @@ class ScanCommand extends Command
     {
         $this->config = ConfigurationFactory::create($this->input);
         $this->config->validate();
+
+        return $this;
+    }
+
+    protected function initializePrinter(): self
+    {
+        $this->printer = new ConsoleResultsPrinter($this->output, $this->config);
 
         return $this;
     }
@@ -168,6 +175,6 @@ class ScanCommand extends Command
         $printer = $printer ?? $this->printer;
         $scanResults = $scanResults ?? $this->scanResults;
 
-        $printer->print($this->output, $scanResults, $this->config);
+        $printer->print($scanResults);
     }
 }
