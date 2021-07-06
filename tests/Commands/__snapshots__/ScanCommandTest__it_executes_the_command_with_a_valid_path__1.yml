@@ -5,13 +5,13 @@
 - |4
      Line Num: 2
 - |4
-     Found   : <ray-call>ray</ray-call>
+     Found   : <target-call>ray</target-call>
 - |4
      ------
 - |4
      [<line-num>   1</line-num>]        <keyword><?php</keyword>                                                                           
 - |
-    <target-line> [<line-num-target>   2</line-num-target>] <pointer-target>══════❱</pointer-target>    <ray-call-target>ray</ray-call-target>(<str-target>'12345'</str-target>);                                                               </target-line>
+    <target-line> [<line-num-target>   2</line-num-target>] <pointer-target>══════❱</pointer-target>    <target-call-target>ray</target-call-target>(<str-target>'12345'</str-target>);                                                               </target-line>
 - |4
      [<line-num>   3</line-num>]                                                                                        
 - |4

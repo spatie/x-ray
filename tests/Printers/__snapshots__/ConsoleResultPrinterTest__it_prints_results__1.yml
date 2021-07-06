@@ -5,7 +5,7 @@
 - |4
      Line Num: 3
 - |4
-     Found   : <ray-call>test</ray-call>
+     Found   : <target-call>test</target-call>
 - |4
      ------
 - |

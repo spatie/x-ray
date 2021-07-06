@@ -4,6 +4,7 @@ namespace Permafrost\RayScan\Tests\Printers;
 
 use Permafrost\PhpCodeSearch\Code\CodeSnippet;
 use Permafrost\PhpCodeSearch\Code\FunctionCallLocation;
+use Permafrost\PhpCodeSearch\Results\Nodes\FunctionCallNode;
 use Permafrost\PhpCodeSearch\Results\SearchResult;
 use Permafrost\PhpCodeSearch\Support\File;
 use Permafrost\RayScan\Printers\ConsoleResultPrinter;
@@ -25,7 +26,9 @@ class ConsoleResultPrinterTest extends TestCase
             ->snippetLineCount(3)
             ->fromFile($file);
 
-        $result = new SearchResult($location, $snippet, basename($file->filename));
+        $node = FunctionCallNode::create('test');
+
+        $result = new SearchResult($node, $location, $snippet, basename($file->filename));
         $result->file()->filename = basename($file->filename);
         $output = new FakeOutput();
 

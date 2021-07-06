@@ -169,11 +169,5 @@ class ScanCommand extends Command
         $scanResults = $scanResults ?? $this->scanResults;
 
         $printer->print($this->output, $scanResults, $this->config);
-
-//        foreach ($scanResults as $scanResult) {
-//            foreach($scanResult->results as $result) {
-//                $printer->print($this->output, $result, true, !$this->config->hideSnippets);
-//            }
-//        }
     }
 }
