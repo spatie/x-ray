@@ -3,7 +3,7 @@
 namespace Permafrost\RayScan\Tests\Printers;
 
 use Permafrost\PhpCodeSearch\Code\CodeSnippet;
-use Permafrost\PhpCodeSearch\Code\FunctionCallLocation;
+use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\FunctionCallNode;
 use Permafrost\PhpCodeSearch\Results\SearchResult;
 use Permafrost\PhpCodeSearch\Support\File;
@@ -20,7 +20,7 @@ class ConsoleResultPrinterTest extends TestCase
     public function it_prints_results()
     {
         $file = new File(__DIR__.'/../fixtures/fixture1.php');
-        $location = new FunctionCallLocation('test', 3, 3);
+        $location = new GenericCodeLocation(3, 3);
         $snippet = (new CodeSnippet())
             ->surroundingLine(4)
             ->snippetLineCount(3)

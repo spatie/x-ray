@@ -26,7 +26,7 @@ class CodeScannerTest extends TestCase
         $this->assertFalse($results->hasErrors());
         $this->assertCount(1, $results->results);
 
-        $this->assertEquals('ray', $results->results[0]->location->name);
+        $this->assertEquals('ray', $results->results[0]->node->name());
         $this->assertEquals(2, $results->results[0]->location->startLine);
     }
 
