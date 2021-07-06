@@ -7,10 +7,10 @@ use Permafrost\RayScan\Printers\ConsoleResultPrinter;
 
 class FakeConsoleResultPrinter extends ConsoleResultPrinter
 {
-    public function print($output, SearchResult $result, bool $colorize = true, bool $printSnippets = true)
+    public function print($output, SearchResult $result, bool $printSnippets = true): void
     {
         $result->file()->filename = str_replace(realpath(__DIR__ . '/../..'), '', $result->file()->getRealPath());
 
-        parent::print($output, $result, $colorize, $printSnippets);
+        parent::print($output, $result, $printSnippets);
     }
 }

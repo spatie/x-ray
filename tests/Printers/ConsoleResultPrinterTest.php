@@ -34,7 +34,7 @@ class ConsoleResultPrinterTest extends TestCase
 
         $printer = new ConsoleResultPrinter();
 
-        $printer->print($output, $result, false);
+        $printer->print($output, $result, true);
 
         $this->assertMatchesSnapshot($output->writtenData);
     }

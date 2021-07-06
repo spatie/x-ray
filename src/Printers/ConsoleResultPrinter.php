@@ -11,7 +11,7 @@ class ConsoleResultPrinter extends ResultPrinter
     /**
      * @param OutputInterface $output
      */
-    public function print($output, SearchResult $result, bool $colorize = true, bool $printSnippets = true)
+    public function print($output, SearchResult $result, bool $printSnippets = true): void
     {
         $this->initializeFormatter($output);
 
@@ -21,14 +21,11 @@ class ConsoleResultPrinter extends ResultPrinter
             $highlighter = new SyntaxHighlighter();
 
             foreach ($result->snippet->getCode() as $lineNum => $line) {
-                $line = $highlighter->highlightLine($line, $result->node->name(), $lineNum, $result->location->startLine());
+                $name = $result->node->name();
+                $startLine = $result->location->startLine();
 
-                if (! $colorize) {
-                    $line = preg_replace('~\<.g=[^>]+\>~', '', $line);
-                    $line = str_replace('</>', '', $line);
-                }
+                $line = $highlighter->highlightLine($line, $name, $lineNum, $startLine);
 
-                // echo "$line\n";
                 $output->writeln($line);
             }
         }
@@ -36,7 +33,7 @@ class ConsoleResultPrinter extends ResultPrinter
 
     protected function initializeFormatter($output): void
     {
-        $map = [
+        $colorMap = [
             'comment' => ['#334155', null],
             'keyword' => ['#dd6b20', null],
             'line-num' => ['#4a5568', null],
@@ -49,15 +46,15 @@ class ConsoleResultPrinter extends ResultPrinter
             'target-call' => ['#e53e3e', null],
         ];
 
-        foreach($map as $name => $colors) {
+        foreach($colorMap as $name => $colors) {
             [$fg, $bg] = $colors;
 
             $outputStyle = new OutputFormatterStyle($fg, $bg);
             $output->getFormatter()->setStyle($name, $outputStyle);
 
             // create a "NNN-target" tag as well for highlighting the target line bg
-            if ($bg === null && ! isset($map["{$name}-target"])) {
-                $outputStyle = new OutputFormatterStyle($fg, $map['target-line'][1]);
+            if ($bg === null && ! isset($colorMap["{$name}-target"])) {
+                $outputStyle = new OutputFormatterStyle($fg, $colorMap['target-line'][1]);
                 $output->getFormatter()->setStyle("{$name}-target", $outputStyle);
             }
         }
