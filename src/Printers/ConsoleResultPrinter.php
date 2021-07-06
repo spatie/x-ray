@@ -68,7 +68,7 @@ class ConsoleResultPrinter extends ResultPrinter
         $filename = str_replace(getcwd() . DIRECTORY_SEPARATOR, './', $result->file()->filename);
 
         $output->writeln('');
-        $output->writeln(" Filename: <href=file://{$result->file()->filename}>{$filename}</>");
+        $output->writeln(" Filename: {$filename}");
         $output->writeln(" Line Num: {$result->location->startLine}");
         $output->writeln(" Found   : <target-call>{$result->node->name()}</target-call>");
         $output->writeln(" ------");
