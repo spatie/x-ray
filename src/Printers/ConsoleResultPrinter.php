@@ -70,7 +70,7 @@ class ConsoleResultPrinter extends ResultPrinter
         $output->writeln('');
         $output->writeln(" Filename: <href=file://{$result->file()->filename}>{$filename}</>");
         $output->writeln(" Line Num: {$result->location->startLine}");
-        $output->writeln(" Found   : <target-call>{$result->location->name}</target-call>");
+        $output->writeln(" Found   : <target-call>{$result->node->name()}</target-call>");
         $output->writeln(" ------");
     }
 }

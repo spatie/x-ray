@@ -43,10 +43,10 @@ class ConsoleResultsPrinter extends ResultsPrinter
                 }
                 $files[$result->file()->filename]++;
 
-                if (!isset($functions[$result->location->name])) {
-                    $functions[$result->location->name] = 0;
+                if (!isset($functions[$result->node->name()])) {
+                    $functions[$result->node->name()] = 0;
                 }
-                $functions[$result->location->name]++;
+                $functions[$result->node->name()]++;
             }
         }
 
