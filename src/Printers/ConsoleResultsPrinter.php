@@ -50,6 +50,7 @@ class ConsoleResultsPrinter extends ResultsPrinter
             $this->output->writeln("No function or static method calls found.");
         }
 
+        // TODO: print table/summary of files/found calls/counts?
         if ($totalFiles > 0) {
             $this->output->writeln("Found {$totalCalls} function calls in {$totalFiles} files.");
         }
