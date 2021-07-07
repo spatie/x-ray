@@ -18,6 +18,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Finder\Finder;
 
 class ScanCommand extends Command
 {
@@ -114,9 +115,29 @@ class ScanCommand extends Command
 
     protected function loadDirectoryFiles(string $path): array
     {
-        $dir = new Directory(realpath($path));
+        $finder = Finder::create()
+            ->ignoreDotFiles(true)
+            ->ignoreVCS(true)
+            ->ignoreVCSIgnored(file_exists("{$path}/.gitignore"))
+            ->ignoreUnreadableDirs(true)
+            ->in($path)
+            ->exclude($this->config->ignorePaths)
+            ->exclude('vendor')
+            ->exclude('node_modules')
+            ->name('*.php')
+            ->files();
 
-        return $dir->load()->files();
+        $result = [];
+
+        foreach ($finder as $file) {
+            $result[] = $file;
+            echo $file->getFilename()."\n";
+        }
+
+        return $result;
+
+        //$dir = new Directory(realpath($path));
+        //return $dir->load()->files();
     }
 
     protected function loadFile(string $filename): array
