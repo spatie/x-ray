@@ -11,13 +11,13 @@ use Permafrost\RayScan\Configuration\Configuration;
 use Permafrost\RayScan\Configuration\ConfigurationFactory;
 use Permafrost\RayScan\Printers\ConsoleResultsPrinter;
 use Permafrost\RayScan\Printers\ResultsPrinter;
-use Permafrost\RayScan\Support\Directory;
 use Permafrost\RayScan\Support\Progress;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Finder\Finder;
 
 class ScanCommand extends Command
 {
@@ -114,9 +114,25 @@ class ScanCommand extends Command
 
     protected function loadDirectoryFiles(string $path): array
     {
-        $dir = new Directory(realpath($path));
+        $finder = Finder::create()
+            ->ignoreDotFiles(true)
+            ->ignoreVCS(true)
+            ->ignoreVCSIgnored(file_exists("{$path}/.gitignore"))
+            ->ignoreUnreadableDirs(true)
+            ->in($path)
+            ->exclude($this->config->ignorePaths)
+            ->exclude('vendor')
+            ->exclude('node_modules')
+            ->name('*.php')
+            ->files();
 
-        return $dir->load()->files();
+        $result = [];
+
+        foreach ($finder as $file) {
+            $result[] = $file;
+        }
+
+        return $result;
     }
 
     protected function loadFile(string $filename): array
