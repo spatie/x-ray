@@ -66,10 +66,11 @@ return [
         ],
     
         // don't scan these filenames or paths; 
-        // regex patterns are supported.
+        // glob patterns are supported.
         'paths' => [
             'test1.php',
             '*/tests/*',
+            'app/Http/*'
         ],                
     ],
 ];
