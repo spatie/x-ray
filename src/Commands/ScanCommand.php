@@ -11,7 +11,6 @@ use Permafrost\RayScan\Configuration\Configuration;
 use Permafrost\RayScan\Configuration\ConfigurationFactory;
 use Permafrost\RayScan\Printers\ConsoleResultsPrinter;
 use Permafrost\RayScan\Printers\ResultsPrinter;
-use Permafrost\RayScan\Support\Directory;
 use Permafrost\RayScan\Support\Progress;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -131,13 +130,9 @@ class ScanCommand extends Command
 
         foreach ($finder as $file) {
             $result[] = $file;
-            echo $file->getFilename()."\n";
         }
 
         return $result;
-
-        //$dir = new Directory(realpath($path));
-        //return $dir->load()->files();
     }
 
     protected function loadFile(string $filename): array
