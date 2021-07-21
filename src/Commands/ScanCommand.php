@@ -108,7 +108,7 @@ class ScanCommand extends Command
             $this->style->progressStart(count($paths));
 
             $this->progress->withCallback(function ($current, $total) {
-                usleep(10000);
+                usleep(500);
                 $this->style->progressAdvance();
             });
         }
