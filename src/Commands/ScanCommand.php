@@ -102,12 +102,12 @@ class ScanCommand extends Command
     {
         $paths = $paths ?? $this->paths;
 
-        $this->progress = new Progress(count($paths), count($paths));
+        $this->progress = new Progress(count($paths));
 
         if (! $this->config->hideProgress) {
             $this->style->progressStart(count($paths));
 
-            $this->progress->withCallback(function (ProgressData $data) {
+            $this->progress->withCallback(function ($current, $total) {
                 usleep(10000);
                 $this->style->progressAdvance();
             });

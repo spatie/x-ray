@@ -14,7 +14,7 @@ class ProgressTest extends TestCase
     /** @test */
     public function it_initializes_correctly()
     {
-        $progress = new Progress(543, 100);
+        $progress = new Progress(543);
 
         $this->assertMatchesObjectSnapshot($progress);
     }
@@ -22,7 +22,7 @@ class ProgressTest extends TestCase
     /** @test */
     public function it_advances_the_current_value()
     {
-        $progress = new Progress(543, 100);
+        $progress = new Progress(543);
 
         $this->assertEquals(0, $progress->current);
 
@@ -36,7 +36,7 @@ class ProgressTest extends TestCase
     /** @test */
     public function it_advances_the_current_value_and_calls_the_callback()
     {
-        $progress = new Progress(543, 100);
+        $progress = new Progress(543);
         $data = (object)['called' => false];
 
         $progress->withCallback(function($param) use ($data) {

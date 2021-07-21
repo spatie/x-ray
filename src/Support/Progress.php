@@ -10,16 +10,12 @@ class Progress
     /** @var int */
     public $current;
 
-    /** @var int */
-    public $scale;
-
     /** @var callable | null */
     public $callback = null;
 
-    public function __construct(int $total, int $scale = 100)
+    public function __construct(int $total)
     {
         $this->total = $total;
-        $this->scale = $scale;
         $this->current = 0;
     }
 
@@ -28,14 +24,7 @@ class Progress
         $this->current += $amount;
 
         if ($this->callback) {
-            $data = ProgressData::create([
-                'current' => $this->current,
-                'position' => $this->position(),
-                'scale' => $this->scale,
-                'total' => $this->total,
-            ]);
-
-            call_user_func($this->callback, $data);
+            call_user_func($this->callback, $this->current, $this->total);
         }
 
         return $this;
@@ -46,10 +35,5 @@ class Progress
         $this->callback = $callback;
 
         return $this;
-    }
-
-    public function position(): int
-    {
-        return ($this->current / $this->total) * $this->scale;
     }
 }
