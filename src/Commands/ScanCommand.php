@@ -57,16 +57,10 @@ class ScanCommand extends Command
             ->setDescription('Scans a directory or filename for calls to ray(), rd() and Ray::*.');
     }
 
-    public function __construct(string $name = null)
-    {
-        parent::__construct($name);
-    }
-
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this
             ->initializeProps($input, $output)
-            ->initializeConfig()
             ->initializePrinter()
             ->initializeScanner()
             ->initializePaths()
@@ -80,7 +74,7 @@ class ScanCommand extends Command
 
     protected function initializePaths(): self
     {
-        $this->paths = $this->getPaths($this->config->path);
+        $this->paths = $this->loadDirectoryFiles($this->config->path);
 
         return $this;
     }
@@ -91,11 +85,6 @@ class ScanCommand extends Command
         $this->input = $input;
         $this->style = new SymfonyStyle($input, $output);
 
-        return $this;
-    }
-
-    protected function initializeConfig(): self
-    {
         $this->config = ConfigurationFactory::create($this->input);
         $this->config->validate();
 
@@ -109,6 +98,24 @@ class ScanCommand extends Command
         return $this;
     }
 
+    protected function initializeProgress($paths = null): self
+    {
+        $paths = $paths ?? $this->paths;
+
+        $this->progress = new Progress(count($paths));
+
+        if (! $this->config->hideProgress) {
+            $this->style->progressStart(count($paths));
+
+            $this->progress->withCallback(function ($current, $total) {
+                usleep(500);
+                $this->style->progressAdvance();
+            });
+        }
+
+        return $this;
+    }
+
     protected function initializeScanner(): self
     {
         $this->scanner = new CodeScanner($this->config);
@@ -118,6 +125,10 @@ class ScanCommand extends Command
 
     protected function loadDirectoryFiles(string $path): array
     {
+        if (is_file($path)) {
+            return [realpath($path)];
+        }
+
         $finder = Finder::create()
             ->ignoreDotFiles(true)
             ->ignoreVCS(true)
@@ -139,29 +150,6 @@ class ScanCommand extends Command
         return $result;
     }
 
-    protected function loadFile(string $filename): array
-    {
-        $filename = realpath($filename);
-
-        return [$filename];
-    }
-
-
-    protected function getPaths(string $path): array
-    {
-        $paths = [];
-
-        if (is_dir($path)) {
-            $paths = $this->loadDirectoryFiles($path);
-        }
-
-        if (!is_dir($path) && is_file($path)) {
-            $paths = $this->loadFile($path);
-        }
-
-        return $paths;
-    }
-
     protected function scanPaths(?CodeScanner $scanner = null, ?array $paths = null): self
     {
         $scanner = $scanner ?? $this->scanner;
@@ -179,7 +167,7 @@ class ScanCommand extends Command
             }
 
             foreach($this->config->ignorePaths as $ignoreFile) {
-                $ignoreFile = str_replace(['*', '?'], ['.*', '.'], $ignoreFile);
+                $ignoreFile = str_replace(['*', '?', '~'], ['.*', '.', '\\~'], $ignoreFile);
 
                 if (preg_match('~' . $ignoreFile . '~', $path) === 1) {
                     continue 2;
@@ -212,24 +200,6 @@ class ScanCommand extends Command
         $scanResults = $scanResults ?? $this->scanResults;
 
         $printer->print($scanResults);
-    }
-
-    protected function initializeProgress($paths = null): self
-    {
-        $paths = $paths ?? $this->paths;
-
-        $this->progress = new Progress(count($paths), count($paths));
-
-        if (! $this->config->hideProgress) {
-            $this->style->progressStart(count($paths));
-
-            $this->progress->withCallback(function (ProgressData $data) {
-                usleep(10000);
-                $this->style->progressAdvance($data->position);
-            });
-        }
-
-        return $this;
     }
 
     protected function finalizeProgress(): self
