@@ -73,7 +73,7 @@ class SyntaxHighlighter extends BasicSnippetHighlighter
     protected function highlightReservedKeywords(string $line): string
     {
         $keywords = '<' .'?php abstract as bool catch class echo extends false final for foreach function if implements instanceof int interface ' .
-            'namespace new null private protected public return self static static string true try use void';
+            'namespace new null private protected public return self static string true try use void';
 
         // highlight PHP_* constants
         $line = preg_replace('~\b(PHP_[A-Z_]+)\b~', '<keyword>$1</keyword>', $line);
