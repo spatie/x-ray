@@ -57,6 +57,7 @@ class ScanCommand extends Command
             ->addArgument('path')
             ->addOption('no-progress', 'P', InputOption::VALUE_NONE)
             ->addOption('no-snippets', 'N', InputOption::VALUE_NONE)
+            ->addOption('summary', 's', InputOption::VALUE_NONE)
             ->setDescription('Scans a directory or filename for calls to ray(), rd() and Ray::*.');
     }
 
