@@ -12,7 +12,7 @@ class ConsoleResultsPrinter extends ResultsPrinter
         if (! $this->config->hideSnippets) {
             foreach ($results as $scanResult) {
                 foreach($scanResult->results as $result) {
-                    $this->printer()->print($this->output, $result, ! $this->config->hideSnippets);
+                    $this->printer()->print($this->output, $result);
                 }
             }
         }
@@ -21,6 +21,29 @@ class ConsoleResultsPrinter extends ResultsPrinter
     }
 
     public function printSummary(array $results): void
+    {
+        [$files, $functions] = $this->summarizeCalls($results);
+
+        $totalCalls = array_sum(array_values($functions));
+        $totalFiles = count($files);
+
+        if ($this->config->showSummary) {
+            $this->renderSummaryTable($files);
+        }
+
+        $this->output->writeln('');
+        $this->output->writeln('---');
+
+        if ($totalFiles === 0) {
+            $this->output->writeln("No function or static method calls found.");
+        }
+
+        if ($totalFiles > 0) {
+            $this->output->writeln("Found {$totalCalls} function calls in {$totalFiles} files.");
+        }
+    }
+
+    protected function summarizeCalls(array $results): array
     {
         $files = [];
         $functions = [];
@@ -43,23 +66,7 @@ class ConsoleResultsPrinter extends ResultsPrinter
             }
         }
 
-        $totalCalls = array_sum(array_values($functions));
-        $totalFiles = count($files);
-
-        if ($this->config->showSummary) {
-            $this->renderSummaryTable($files);
-        }
-
-        $this->output->writeln('');
-        $this->output->writeln('---');
-
-        if ($totalFiles === 0) {
-            $this->output->writeln("No function or static method calls found.");
-        }
-
-        if ($totalFiles > 0) {
-            $this->output->writeln("Found {$totalCalls} function calls in {$totalFiles} files.");
-        }
+        return [$files, $functions];
     }
 
     protected function printer(): ResultPrinter

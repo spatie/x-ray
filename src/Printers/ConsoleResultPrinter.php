@@ -12,23 +12,20 @@ class ConsoleResultPrinter extends ResultPrinter
     /**
      * @param OutputInterface $output
      */
-    public function print($output, SearchResult $result, bool $printSnippets = true): void
+    public function print($output, SearchResult $result): void
     {
         $this->initializeFormatter($output);
-
         $this->printHeader($output, $result);
 
-        if ($printSnippets) {
-            $highlighter = new SyntaxHighlighter();
+        $highlighter = new SyntaxHighlighter();
 
-            foreach ($result->snippet->getCode() as $lineNum => $line) {
-                $name = $result->node->name();
-                $startLine = $result->location->startLine();
+        foreach ($result->snippet->getCode() as $lineNum => $line) {
+            $name = $result->node->name();
+            $startLine = $result->location->startLine();
 
-                $line = $highlighter->highlightLine($line, $name, $lineNum, $startLine);
+            $line = $highlighter->highlightLine($line, $name, $lineNum, $startLine);
 
-                $output->writeln($line);
-            }
+            $output->writeln($line);
         }
     }
 
