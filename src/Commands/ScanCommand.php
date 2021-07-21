@@ -5,13 +5,12 @@ namespace Permafrost\RayScan\Commands;
 use Permafrost\PhpCodeSearch\Results\SearchResult;
 use Permafrost\PhpCodeSearch\Support\File;
 use Permafrost\RayScan\CodeScanner;
-use Permafrost\RayScan\Concerns\HasPaths;
-use Permafrost\RayScan\Concerns\HasProgress;
 use Permafrost\RayScan\Configuration\Configuration;
 use Permafrost\RayScan\Configuration\ConfigurationFactory;
 use Permafrost\RayScan\Printers\ConsoleResultsPrinter;
 use Permafrost\RayScan\Printers\ResultsPrinter;
 use Permafrost\RayScan\Support\Progress;
+use Permafrost\RayScan\Support\ProgressData;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -21,9 +20,6 @@ use Symfony\Component\Finder\Finder;
 
 class ScanCommand extends Command
 {
-    use HasPaths;
-    use HasProgress;
-
     /** @var OutputInterface */
     protected $output;
 
@@ -80,6 +76,13 @@ class ScanCommand extends Command
             ->printResults();
 
         return count($this->scanResults) ? Command::FAILURE : Command::SUCCESS;
+    }
+
+    protected function initializePaths(): self
+    {
+        $this->paths = $this->getPaths($this->config->path);
+
+        return $this;
     }
 
     protected function initializeProps(InputInterface $input, OutputInterface $output): self
@@ -143,6 +146,22 @@ class ScanCommand extends Command
         return [$filename];
     }
 
+
+    protected function getPaths(string $path): array
+    {
+        $paths = [];
+
+        if (is_dir($path)) {
+            $paths = $this->loadDirectoryFiles($path);
+        }
+
+        if (!is_dir($path) && is_file($path)) {
+            $paths = $this->loadFile($path);
+        }
+
+        return $paths;
+    }
+
     protected function scanPaths(?CodeScanner $scanner = null, ?array $paths = null): self
     {
         $scanner = $scanner ?? $this->scanner;
@@ -193,5 +212,32 @@ class ScanCommand extends Command
         $scanResults = $scanResults ?? $this->scanResults;
 
         $printer->print($scanResults);
+    }
+
+    protected function initializeProgress($paths = null): self
+    {
+        $paths = $paths ?? $this->paths;
+
+        $this->progress = new Progress(count($paths), count($paths));
+
+        if (! $this->config->hideProgress) {
+            $this->style->progressStart(count($paths));
+
+            $this->progress->withCallback(function (ProgressData $data) {
+                usleep(10000);
+                $this->style->progressAdvance($data->position);
+            });
+        }
+
+        return $this;
+    }
+
+    protected function finalizeProgress(): self
+    {
+        if (! $this->config->hideProgress) {
+            $this->style->progressFinish();
+        }
+
+        return $this;
     }
 }
