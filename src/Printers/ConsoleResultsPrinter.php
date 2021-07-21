@@ -3,6 +3,7 @@
 namespace Permafrost\RayScan\Printers;
 
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
+use Symfony\Component\Console\Helper\Table;
 
 class ConsoleResultsPrinter extends ResultsPrinter
 {
@@ -50,8 +51,9 @@ class ConsoleResultsPrinter extends ResultsPrinter
             $this->output->writeln("No function or static method calls found.");
         }
 
-        // TODO: print table/summary of files/found calls/counts?
         if ($totalFiles > 0) {
+            $this->renderSummaryTable($files);
+
             $this->output->writeln("Found {$totalCalls} function calls in {$totalFiles} files.");
         }
     }
@@ -59,5 +61,27 @@ class ConsoleResultsPrinter extends ResultsPrinter
     protected function printer(): ResultPrinter
     {
         return $this->printer ?? new ConsoleResultPrinter();
+    }
+
+    protected function renderSummaryTable(array $fileCounts)
+    {
+        $rows = [];
+
+        foreach($fileCounts as $filename => $count) {
+            $rows[] = [$this->makeFilenameRelative($filename), $count];
+        }
+
+        $table = new Table($this->output);
+
+        $table
+            ->setHeaders(['Filename', 'Call Count'])
+            ->setRows($rows);
+
+        $table->render();
+    }
+
+    protected function makeFilenameRelative(string $filename): string
+    {
+        return str_replace(getcwd() . DIRECTORY_SEPARATOR, './', $filename);
     }
 }
