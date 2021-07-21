@@ -9,9 +9,11 @@ class ConsoleResultsPrinter extends ResultsPrinter
 {
     public function print(array $results): void
     {
-        foreach ($results as $scanResult) {
-            foreach($scanResult->results as $result) {
-                $this->printer()->print($this->output, $result, ! $this->config->hideSnippets);
+        if (! $this->config->hideSnippets) {
+            foreach ($results as $scanResult) {
+                foreach($scanResult->results as $result) {
+                    $this->printer()->print($this->output, $result, ! $this->config->hideSnippets);
+                }
             }
         }
 
@@ -44,6 +46,10 @@ class ConsoleResultsPrinter extends ResultsPrinter
         $totalCalls = array_sum(array_values($functions));
         $totalFiles = count($files);
 
+        if ($this->config->showSummary) {
+            $this->renderSummaryTable($files);
+        }
+
         $this->output->writeln('');
         $this->output->writeln('---');
 
@@ -52,8 +58,6 @@ class ConsoleResultsPrinter extends ResultsPrinter
         }
 
         if ($totalFiles > 0) {
-            $this->renderSummaryTable($files);
-
             $this->output->writeln("Found {$totalCalls} function calls in {$totalFiles} files.");
         }
     }
@@ -63,7 +67,7 @@ class ConsoleResultsPrinter extends ResultsPrinter
         return $this->printer ?? new ConsoleResultPrinter();
     }
 
-    protected function renderSummaryTable(array $fileCounts)
+    protected function renderSummaryTable(array $fileCounts): void
     {
         $rows = [];
 
