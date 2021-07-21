@@ -26,7 +26,7 @@ class ConsoleResultPrinterTest extends TestCase
             ->snippetLineCount(3)
             ->fromFile($file);
 
-        $node = FunctionCallNode::create('test');
+        $node = FunctionCallNode::create('test', []);
 
         $result = new SearchResult($node, $location, $snippet, basename($file->filename));
         $result->file()->filename = basename($file->filename);

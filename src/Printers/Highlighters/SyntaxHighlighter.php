@@ -1,8 +1,8 @@
 <?php
 
-namespace Permafrost\RayScan\Printers;
+namespace Permafrost\RayScan\Printers\Highlighters;
 
-class SyntaxHighlighter
+class SyntaxHighlighter extends BasicSnippetHighlighter
 {
     public function highlightLine(string $line, string $targetName, int $currentLineNum, int $targetLineNumber): string
     {
@@ -10,7 +10,7 @@ class SyntaxHighlighter
         $line = $this->highlightTargetFunction($line, $targetName, $currentLineNum, $targetLineNumber);
         $line = $this->highlightSyntax($line);
         $line = $this->highlightReservedKeywords($line);
-        $line = $this->createOutputLine($line, $currentLineNum, $targetLineNumber);
+        $line = $this->createTargetLinePointer($line, $currentLineNum, $targetLineNumber);
         $line = $this->highlightTargetLineBackground($line, $currentLineNum, $targetLineNumber);
 
         return $line;
@@ -37,14 +37,6 @@ class SyntaxHighlighter
         $line = preg_replace('~</([\w-]+)>~', '</$1-target>', $line);
 
         return "<target-line>{$line}</target-line>";
-    }
-
-    protected function createOutputLine(string $line, int $currentLineNum, int $startLine): string
-    {
-        $isTargetLine = $currentLineNum === $startLine;
-        $prefix = $isTargetLine ? ' <pointer>══════❱</pointer>' : '        ';
-
-        return sprintf(" [<line-num>% 4d</line-num>]%-4s%-60s", $currentLineNum, $prefix, $line);
     }
 
     protected function highlightTargetFunction(string $line, string $name, int $currentLineNum, int $startLine): string

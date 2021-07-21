@@ -3,6 +3,7 @@
 namespace Permafrost\RayScan\Printers;
 
 use Permafrost\PhpCodeSearch\Results\SearchResult;
+use Permafrost\RayScan\Printers\Highlighters\SyntaxHighlighter;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\OutputInterface;
 
