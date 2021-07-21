@@ -3,14 +3,17 @@
 namespace Permafrost\RayScan\Printers;
 
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
+use Symfony\Component\Console\Helper\Table;
 
 class ConsoleResultsPrinter extends ResultsPrinter
 {
     public function print(array $results): void
     {
-        foreach ($results as $scanResult) {
-            foreach($scanResult->results as $result) {
-                $this->printer()->print($this->output, $result, ! $this->config->hideSnippets);
+        if (! $this->config->hideSnippets) {
+            foreach ($results as $scanResult) {
+                foreach($scanResult->results as $result) {
+                    $this->printer()->print($this->output, $result, ! $this->config->hideSnippets);
+                }
             }
         }
 
@@ -43,6 +46,10 @@ class ConsoleResultsPrinter extends ResultsPrinter
         $totalCalls = array_sum(array_values($functions));
         $totalFiles = count($files);
 
+        if ($this->config->showSummary) {
+            $this->renderSummaryTable($files);
+        }
+
         $this->output->writeln('');
         $this->output->writeln('---');
 
@@ -50,7 +57,6 @@ class ConsoleResultsPrinter extends ResultsPrinter
             $this->output->writeln("No function or static method calls found.");
         }
 
-        // TODO: print table/summary of files/found calls/counts?
         if ($totalFiles > 0) {
             $this->output->writeln("Found {$totalCalls} function calls in {$totalFiles} files.");
         }
@@ -59,5 +65,27 @@ class ConsoleResultsPrinter extends ResultsPrinter
     protected function printer(): ResultPrinter
     {
         return $this->printer ?? new ConsoleResultPrinter();
+    }
+
+    protected function renderSummaryTable(array $fileCounts): void
+    {
+        $rows = [];
+
+        foreach($fileCounts as $filename => $count) {
+            $rows[] = [$this->makeFilenameRelative($filename), $count];
+        }
+
+        $table = new Table($this->output);
+
+        $table
+            ->setHeaders(['Filename', 'Call Count'])
+            ->setRows($rows);
+
+        $table->render();
+    }
+
+    protected function makeFilenameRelative(string $filename): string
+    {
+        return str_replace(getcwd() . DIRECTORY_SEPARATOR, './', $filename);
     }
 }

@@ -20,8 +20,9 @@ class ConfigurationFactory
 
         $hideProgress = $input->hasOption('no-progress') && $input->getOption('no-progress') === true;
         $hideSnippets = $input->hasOption('no-snippets') && $input->getOption('no-snippets') === true;
+        $showSummary = $input->hasOption('summary') && $input->getOption('summary') === true;
 
-        $result = new Configuration($path, $hideSnippets, $hideProgress);
+        $result = new Configuration($path, $hideSnippets, $hideProgress, $showSummary);
 
         $options = (new static())->getSettingsFromConfigFile($configDirectory);
 

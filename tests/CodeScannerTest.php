@@ -5,14 +5,13 @@ namespace Permafrost\RayScan\Tests;
 use Permafrost\PhpCodeSearch\Support\File;
 use Permafrost\RayScan\CodeScanner;
 use Permafrost\RayScan\Configuration\Configuration;
-use PhpParser\ParserFactory;
 use PHPUnit\Framework\TestCase;
 
 class CodeScannerTest extends TestCase
 {
     protected function getConfig(): Configuration
     {
-        return new Configuration(__DIR__, false, false);
+        return new Configuration(__DIR__, false, false, false);
     }
 
     /** @test */

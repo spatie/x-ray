@@ -13,17 +13,21 @@ class Configuration
     /** @var bool */
     public $hideProgress = false;
 
+    /** @var bool */
+    public $showSummary = false;
+
     /** @var array|string[] */
     public $ignoreFunctions = [];
 
     /** @var array|string[] */
     public $ignorePaths = [];
 
-    public function __construct(string $path, bool $hideSnippets, bool $hideProgress)
+    public function __construct(string $path, bool $hideSnippets, bool $hideProgress, bool $showSummary)
     {
         $this->path = $path;
         $this->hideSnippets = $hideSnippets;
         $this->hideProgress = $hideProgress;
+        $this->showSummary = $showSummary;
     }
 
     public function validate(): void
