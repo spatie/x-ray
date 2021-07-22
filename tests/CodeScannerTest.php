@@ -20,7 +20,7 @@ class CodeScannerTest extends TestCase
         $scanner = new CodeScanner($this->getConfig());
         $file = new File(__DIR__ . '/fixtures/fixture1.php');
 
-        $results = $scanner->scan($file);
+        $results = $scanner->scanFile($file);
 
         $this->assertFalse($results->hasErrors());
         $this->assertCount(1, $results->results);
@@ -35,7 +35,7 @@ class CodeScannerTest extends TestCase
         $scanner = new CodeScanner($this->getConfig());
         $file = new File(__DIR__ . '/fixtures/fixture2.php');
 
-        $results = $scanner->scan($file);
+        $results = $scanner->scanFile($file);
 
         $this->assertTrue($results->hasErrors());
         $this->assertCount(1, $results->errors);
