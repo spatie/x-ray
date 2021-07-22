@@ -23,6 +23,7 @@ class CodeScanner
 
         return $searcher
             ->functions(['ray', 'rd'])
+            ->methods(['ray'])
             ->static(['Ray'])
             ->classes(['Ray'])
             ->search($file);
