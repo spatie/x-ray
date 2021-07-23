@@ -44,9 +44,7 @@ class ScanCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->initializeProps($input, $output)
-            ->initializeProgress()
             ->scanPaths()
-            ->finalizeProgress()
             ->printResults();
 
         return count($this->scanResults) ? Command::FAILURE : Command::SUCCESS;
@@ -62,23 +60,22 @@ class ScanCommand extends Command
         return $this;
     }
 
-    protected function initializeProgress(): self
-    {
-        $pathCount = count($this->scanner->paths());
-
-        if (! $this->config->hideProgress) {
-            $this->style->progressStart($pathCount);
-        }
-
-        return $this;
-    }
-
     protected function scanPaths(?array $paths = null): self
     {
+        if (! $this->config->hideProgress) {
+            $this->style->progressStart(count($this->scanner->paths()));
+        }
+
         $this->scanResults = $this->scanner->scan($paths, function() {
-            usleep(500);
-            $this->style->progressAdvance();
+            if (! $this->config->hideProgress) {
+                usleep(500);
+                $this->style->progressAdvance();
+            }
         });
+
+        if (! $this->config->hideProgress) {
+            $this->style->progressFinish();
+        }
 
         return $this;
     }
@@ -86,14 +83,5 @@ class ScanCommand extends Command
     protected function printResults(): void
     {
         $this->printer->print($this->scanResults);
-    }
-
-    protected function finalizeProgress(): self
-    {
-        if (! $this->config->hideProgress) {
-            $this->style->progressFinish();
-        }
-
-        return $this;
     }
 }
