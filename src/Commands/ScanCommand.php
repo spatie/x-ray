@@ -59,10 +59,7 @@ class ScanCommand extends Command
     protected function initializeProps(InputInterface $input, OutputInterface $output): self
     {
         $this->style = new SymfonyStyle($input, $output);
-
-        $this->config = ConfigurationFactory::create($input);
-        $this->config->validate();
-
+        $this->config = ConfigurationFactory::create($input)->validate();
         $this->printer = new ConsoleResultsPrinter($output, $this->config);
         $this->scanner = new CodeScanner($this->config, $this->config->path);
 
