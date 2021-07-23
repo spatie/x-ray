@@ -8,7 +8,6 @@ use Permafrost\RayScan\Configuration\Configuration;
 use Permafrost\RayScan\Configuration\ConfigurationFactory;
 use Permafrost\RayScan\Printers\ConsoleResultsPrinter;
 use Permafrost\RayScan\Printers\ResultsPrinter;
-use Permafrost\RayScan\Support\Progress;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -22,9 +21,6 @@ class ScanCommand extends Command
 
     /** @var ResultsPrinter */
     public $printer;
-
-    /** @var Progress */
-    protected $progress;
 
     /** @var CodeScanner */
     public $scanner;
@@ -66,41 +62,30 @@ class ScanCommand extends Command
         return $this;
     }
 
-    protected function initializeProgress($paths = null): self
+    protected function initializeProgress(): self
     {
-        $paths = $paths ?? $this->scanner->paths();
-
-        $this->progress = new Progress(count($paths));
+        $pathCount = count($this->scanner->paths());
 
         if (! $this->config->hideProgress) {
-            $this->style->progressStart(count($paths));
-
-            $this->progress->withCallback(function ($current, $total) {
-                usleep(500);
-                $this->style->progressAdvance();
-            });
+            $this->style->progressStart($pathCount);
         }
 
         return $this;
     }
 
-    protected function scanPaths(?CodeScanner $scanner = null, ?array $paths = null): self
+    protected function scanPaths(?array $paths = null): self
     {
-        $scanner = $scanner ?? $this->scanner;
-
-        $this->scanResults = $scanner->scan($paths, function() {
-            $this->progress->advance();
+        $this->scanResults = $this->scanner->scan($paths, function() {
+            usleep(500);
+            $this->style->progressAdvance();
         });
 
         return $this;
     }
 
-    protected function printResults(?ResultsPrinter $printer = null, ?array $scanResults = null): void
+    protected function printResults(): void
     {
-        $printer = $printer ?? $this->printer;
-        $scanResults = $scanResults ?? $this->scanResults;
-
-        $printer->print($scanResults);
+        $this->printer->print($this->scanResults);
     }
 
     protected function finalizeProgress(): self
