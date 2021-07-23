@@ -30,11 +30,13 @@ class Configuration
         $this->showSummary = $showSummary;
     }
 
-    public function validate(): void
+    public function validate(): self
     {
         if (! file_exists($this->path)) {
             throw new \InvalidArgumentException('Invalid input file or path provided.');
         }
+
+        return $this;
     }
 
 }

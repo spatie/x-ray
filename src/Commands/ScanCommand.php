@@ -8,7 +8,6 @@ use Permafrost\RayScan\Configuration\Configuration;
 use Permafrost\RayScan\Configuration\ConfigurationFactory;
 use Permafrost\RayScan\Printers\ConsoleResultsPrinter;
 use Permafrost\RayScan\Printers\ResultsPrinter;
-use Permafrost\RayScan\Support\Progress;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -22,9 +21,6 @@ class ScanCommand extends Command
 
     /** @var ResultsPrinter */
     public $printer;
-
-    /** @var Progress */
-    protected $progress;
 
     /** @var CodeScanner */
     public $scanner;
@@ -48,9 +44,7 @@ class ScanCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->initializeProps($input, $output)
-            ->initializeProgress()
             ->scanPaths()
-            ->finalizeProgress()
             ->printResults();
 
         return count($this->scanResults) ? Command::FAILURE : Command::SUCCESS;
@@ -59,59 +53,35 @@ class ScanCommand extends Command
     protected function initializeProps(InputInterface $input, OutputInterface $output): self
     {
         $this->style = new SymfonyStyle($input, $output);
-
-        $this->config = ConfigurationFactory::create($input);
-        $this->config->validate();
-
+        $this->config = ConfigurationFactory::create($input)->validate();
         $this->printer = new ConsoleResultsPrinter($output, $this->config);
         $this->scanner = new CodeScanner($this->config, $this->config->path);
 
         return $this;
     }
 
-    protected function initializeProgress($paths = null): self
+    protected function scanPaths(?array $paths = null): self
     {
-        $paths = $paths ?? $this->scanner->paths();
-
-        $this->progress = new Progress(count($paths));
-
         if (! $this->config->hideProgress) {
-            $this->style->progressStart(count($paths));
-
-            $this->progress->withCallback(function ($current, $total) {
-                usleep(500);
-                $this->style->progressAdvance();
-            });
+            $this->style->progressStart(count($this->scanner->paths()));
         }
 
-        return $this;
-    }
-
-    protected function scanPaths(?CodeScanner $scanner = null, ?array $paths = null): self
-    {
-        $scanner = $scanner ?? $this->scanner;
-
-        $this->scanResults = $scanner->scan($paths, function() {
-            $this->progress->advance();
+        $this->scanResults = $this->scanner->scan($paths, function() {
+            if (! $this->config->hideProgress) {
+                usleep(500);
+                $this->style->progressAdvance();
+            }
         });
 
-        return $this;
-    }
-
-    protected function printResults(?ResultsPrinter $printer = null, ?array $scanResults = null): void
-    {
-        $printer = $printer ?? $this->printer;
-        $scanResults = $scanResults ?? $this->scanResults;
-
-        $printer->print($scanResults);
-    }
-
-    protected function finalizeProgress(): self
-    {
         if (! $this->config->hideProgress) {
             $this->style->progressFinish();
         }
 
         return $this;
+    }
+
+    protected function printResults(): void
+    {
+        $this->printer->print($this->scanResults);
     }
 }
