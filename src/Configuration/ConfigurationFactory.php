@@ -57,7 +57,7 @@ class ConfigurationFactory
     protected function searchConfigFilesOnDisk(?string $configDirectory = null): string
     {
         $configNames = [
-            'ray-scan.php',
+            'ray-scanFile.php',
         ];
 
         $configDirectory = $configDirectory ?? (string)getcwd();

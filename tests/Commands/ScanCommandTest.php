@@ -27,7 +27,7 @@ class ScanCommandTest extends TestCase
     {
         parent::setUp();
 
-        $this->command = new ScanCommand('scan');
+        $this->command = new ScanCommand('scanFile');
         $this->command->printer = new FakeConsoleResultsPrinter();
         $this->output = new FakeOutput();
     }
