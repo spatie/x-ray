@@ -3,7 +3,6 @@
 namespace Permafrost\RayScan\Commands;
 
 use Permafrost\PhpCodeSearch\Results\SearchResult;
-use Permafrost\PhpCodeSearch\Support\File;
 use Permafrost\RayScan\CodeScanner;
 use Permafrost\RayScan\Configuration\Configuration;
 use Permafrost\RayScan\Configuration\ConfigurationFactory;
@@ -15,16 +14,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Finder\Finder;
 
 class ScanCommand extends Command
 {
-    /** @var OutputInterface */
-    protected $output;
-
-    /** @var InputInterface */
-    protected $input;
-
     /** @var Progress */
     protected $progress;
 
@@ -57,8 +49,6 @@ class ScanCommand extends Command
     {
         $this
             ->initializeProps($input, $output)
-            ->initializePrinter()
-            ->initializeScanner()
             ->initializeProgress()
             ->scanPaths()
             ->finalizeProgress()
@@ -69,19 +59,13 @@ class ScanCommand extends Command
 
     protected function initializeProps(InputInterface $input, OutputInterface $output): self
     {
-        $this->output = $output;
-        $this->input = $input;
         $this->style = new SymfonyStyle($input, $output);
 
-        $this->config = ConfigurationFactory::create($this->input);
+        $this->config = ConfigurationFactory::create($input);
         $this->config->validate();
 
-        return $this;
-    }
-
-    protected function initializePrinter(): self
-    {
-        $this->printer = new ConsoleResultsPrinter($this->output, $this->config);
+        $this->printer = new ConsoleResultsPrinter($output, $this->config);
+        $this->scanner = new CodeScanner($this->config, $this->config->path);
 
         return $this;
     }
@@ -100,13 +84,6 @@ class ScanCommand extends Command
                 $this->style->progressAdvance();
             });
         }
-
-        return $this;
-    }
-
-    protected function initializeScanner(): self
-    {
-        $this->scanner = new CodeScanner($this->config, $this->config->path);
 
         return $this;
     }
