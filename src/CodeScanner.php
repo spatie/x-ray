@@ -41,20 +41,8 @@ class CodeScanner
         $results = [];
 
         foreach($paths as $path) {
-            if (in_array($path, $this->config->ignorePaths, true)) {
+            if ($this->isPathIgnored($path)) {
                 continue;
-            }
-
-            if (in_array(basename($path), $this->config->ignorePaths, true)) {
-                continue;
-            }
-
-            foreach($this->config->ignorePaths as $ignoreFile) {
-                $ignoreFile = str_replace(['*', '?', '~'], ['.*', '.', '\\~'], $ignoreFile);
-
-                if (preg_match('~' . $ignoreFile . '~', $path) === 1) {
-                    continue 2;
-                }
             }
 
             $scanResults = $this->scanFile(new File($path));
@@ -109,5 +97,26 @@ class CodeScanner
         }
 
         return $result;
+    }
+
+    protected function isPathIgnored(string $path): bool
+    {
+        if (in_array($path, $this->config->ignorePaths, true)) {
+            return true;
+        }
+
+        if (in_array(basename($path), $this->config->ignorePaths, true)) {
+            return true;
+        }
+
+        foreach($this->config->ignorePaths as $ignoreFile) {
+            $ignoreFile = str_replace(['*', '?', '~'], ['.*', '.', '\\~'], $ignoreFile);
+
+            if (preg_match('~' . $ignoreFile . '~', $path) === 1) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
