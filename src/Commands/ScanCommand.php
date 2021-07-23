@@ -17,23 +17,23 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ScanCommand extends Command
 {
-    /** @var Progress */
-    protected $progress;
-
     /** @var Configuration */
     protected $config;
 
     /** @var ResultsPrinter */
     public $printer;
 
+    /** @var Progress */
+    protected $progress;
+
     /** @var CodeScanner */
     public $scanner;
 
-    /** @var SymfonyStyle */
-    public $style;
-
     /** @var array|SearchResult[] */
     public $scanResults = [];
+
+    /** @var SymfonyStyle */
+    public $style;
 
     protected function configure(): void
     {
@@ -47,8 +47,7 @@ class ScanCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this
-            ->initializeProps($input, $output)
+        $this->initializeProps($input, $output)
             ->initializeProgress()
             ->scanPaths()
             ->finalizeProgress()
