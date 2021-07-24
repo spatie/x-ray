@@ -19,10 +19,8 @@ class SyntaxHighlighterV2
     public const ACTUAL_LINE_MARK = 'actual_line_mark';
     public const LINE_NUMBER      = 'line_number';
 
-    protected const ARROW_SYMBOL        = '>';
-    protected const DELIMITER           = '>';
     protected const ARROW_SYMBOL_UTF8   = ' ❱❱';//➜';
-    protected const DELIMITER_UTF8      = '▕ '; // '▶';
+    protected const DELIMITER_UTF8      = '▕ ';
     protected const LINE_NUMBER_DIVIDER = 'line_divider';
     protected const MARKED_LINE_NUMBER  = 'marked_line';
     protected const WIDTH               = 4;
@@ -88,34 +86,34 @@ class SyntaxHighlighterV2
         return str_replace('__CODE_BUFFER_REMOVE__', '', $result);
     }
 
-    protected function findCodeInSnippet(CodeSnippet $snippet, string $code, $matchAnywhere = false): array
-    {
-        $lineBuffer = [];
-        $found = false;
+//    protected function findCodeInSnippet(CodeSnippet $snippet, string $code, $matchAnywhere = false): array
+//    {
+//        $lineBuffer = [];
+//        $found = false;
+//
+//        $lines = explode(PHP_EOL, $code);
+//
+//        foreach($snippet->getCode() as $lineNum => $line) {
+//            if (count($lines)) {
+//                $posResult = strpos(trim($line), trim($lines[0]));
+//
+//                $found = $matchAnywhere ? ($posResult !== false) : ($posResult === 0);
+//            }
+//
+//            if (count($lines) === 0 && count($lineBuffer)) {
+//                return $lineBuffer;
+//            }
+//
+//            if ($found) {
+//                $lineBuffer[] = $lineNum;
+//                array_shift($lines);
+//            }
+//        }
+//
+//        return $lineBuffer;
+//    }
 
-        $lines = explode(PHP_EOL, $code);
-
-        foreach($snippet->getCode() as $lineNum => $line) {
-            if (count($lines)) {
-                $posResult = strpos(trim($line), trim($lines[0]));
-
-                $found = $matchAnywhere ? ($posResult !== false) : ($posResult === 0);
-            }
-
-            if (count($lines) === 0 && count($lineBuffer)) {
-                return $lineBuffer;
-            }
-
-            if ($found) {
-                $lineBuffer[] = $lineNum;
-                array_shift($lines);
-            }
-        }
-
-        return $lineBuffer;
-    }
-
-    public function __construct(?ConsoleColor $color = null, bool $UTF8 = true)
+    public function __construct(?ConsoleColor $color = null)
     {
         $this->color = $color ?? new ConsoleColor();
 
@@ -127,11 +125,6 @@ class SyntaxHighlighterV2
 
         foreach (self::THEME as $name => $styles) {
             $this->color->addTheme($name, $styles);
-        }
-
-        if (! $UTF8) {
-            $this->delimiter = self::DELIMITER;
-            $this->arrow     = self::ARROW_SYMBOL;
         }
 
         $this->delimiter .= ' ';
