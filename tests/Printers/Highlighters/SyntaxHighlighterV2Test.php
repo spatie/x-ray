@@ -23,7 +23,7 @@ class SyntaxHighlighterV2Test extends TestCase
             ->snippetLineCount(5)
             ->fromFile(new File(__DIR__ . '/../../fixtures/fixture1.php'));
 
-        $this->assertMatchesSnapshot($highlighter->highlightSnippet($snippet));
+        $this->assertMatchesSnapshot($highlighter->highlightSnippet($snippet, 3));
     }
 
 }
