@@ -58,10 +58,15 @@ class FakeOutput implements OutputInterface
     }
     public function write($messages, bool $newline = false, int $options = 0)
     {
-        $this->writtenData[] = $messages;
+        $this->writtenData[] = $this->stripAnsi($messages);
     }
     public function writeln($messages, int $options = 0)
     {
-        $this->writtenData[] = $messages . PHP_EOL;
+        $this->writtenData[] = $this->stripAnsi($messages . PHP_EOL);
+    }
+
+    protected function stripAnsi(string $str): string
+    {
+        return preg_replace("~\e\[[0-9;]+m~", '', $str);
     }
 }
