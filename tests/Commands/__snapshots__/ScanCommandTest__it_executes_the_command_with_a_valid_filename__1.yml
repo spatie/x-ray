@@ -8,18 +8,13 @@
      Found   : <target-call>ray</target-call>
 - |4
      ------
-- |4
-     [<line-num>   1</line-num>]        <keyword><?php</keyword>                                                                           
-- |
-    <target-line> [<line-num-target>   2</line-num-target>] <pointer-target>══════❱</pointer-target>    <target-call-target>ray</target-call-target>(<str-target>'12345'</str-target>);                                                               </target-line>
-- |4
-     [<line-num>   3</line-num>]                                                                                        
-- |4
-     [<line-num>   4</line-num>]            <keyword>echo</keyword> strtolower(<str>'TEST'</str>) . <keyword>PHP_EOL</keyword>;                                          
-- |4
-     [<line-num>   5</line-num>]                                                                                        
-- |4
-     [<line-num>   6</line-num>]            <keyword>echo</keyword> strtoupper(<str>'test'</str>) . <keyword>PHP_EOL</keyword>;                                          
+- |4+
+           1▕  ray('12345');
+     ❱❱    2▕  
+           3▕      echo strtolower('TEST') . PHP_EOL;
+           4▕  
+           5▕      echo strtoupper('test') . PHP_EOL;
+
 - |
 
 - |4

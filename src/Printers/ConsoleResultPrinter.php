@@ -3,12 +3,16 @@
 namespace Permafrost\RayScan\Printers;
 
 use Permafrost\PhpCodeSearch\Results\SearchResult;
-use Permafrost\RayScan\Printers\Highlighters\SyntaxHighlighter;
+use Permafrost\RayScan\Printers\Highlighters\ConsoleColor;
+use Permafrost\RayScan\Printers\Highlighters\SyntaxHighlighterV2;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleResultPrinter extends ResultPrinter
 {
+    /** @var ConsoleColor|null */
+    public $consoleColor = null;
+
     /**
      * @param OutputInterface $output
      */
@@ -18,16 +22,10 @@ class ConsoleResultPrinter extends ResultPrinter
         $this->printHeader($output, $result);
 
         if ($this->config->showSnippets) {
-            $highlighter = new SyntaxHighlighter();
+            $highlighter = new SyntaxHighlighterV2($this->consoleColor);
+            $line = $highlighter->highlightSnippet($result->snippet, $result->location->endLine());
 
-            foreach ($result->snippet->getCode() as $lineNum => $line) {
-                $name = $result->node->name();
-                $startLine = $result->location->startLine();
-
-                $line = $highlighter->highlightLine($line, $name, $lineNum, $startLine);
-
-                $output->writeln($line);
-            }
+            $output->writeln($line);
         }
     }
 
@@ -68,9 +66,12 @@ class ConsoleResultPrinter extends ResultPrinter
             $output->writeln('');
         }
 
+        $nameParts = explode('->', $result->node->name());
+        $nodeName = end($nameParts);
+
         $output->writeln(" Filename: {$filename}");
         $output->writeln(" Line Num: {$result->location->startLine}");
-        $output->writeln(" Found   : <target-call>{$result->node->name()}</target-call>");
+        $output->writeln(" Found   : <target-call>{$nodeName}</target-call>");
         $output->writeln(' ------');
     }
 }

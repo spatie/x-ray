@@ -3,6 +3,7 @@
 namespace Permafrost\RayScan\Tests\Commands;
 
 use Permafrost\RayScan\Commands\ScanCommand;
+use Permafrost\RayScan\Tests\TestClasses\FakeConsoleColor;
 use Permafrost\RayScan\Tests\TestClasses\FakeConsoleResultsPrinter;
 use Permafrost\RayScan\Tests\TestClasses\FakeOutput;
 use Permafrost\RayScan\Tests\Traits\CreatesTestConfiguration;
@@ -50,6 +51,7 @@ class ScanCommandTest extends TestCase
         $input = $this->createInput(['path' => __DIR__ . '/../fixtures/fixture1.php', '--no-progress' => true, '--snippets' => true]);
 
         $this->command->printer = new FakeConsoleResultsPrinter($this->createConfigurationFromInput($input));
+        $this->command->printer->consoleColor = new FakeConsoleColor();
 
         $this->command->execute($input, $this->output);
 
@@ -63,6 +65,7 @@ class ScanCommandTest extends TestCase
         $input = $this->createInput(['path' => $path, '--no-progress' => true, '--snippets' => true]);
 
         $this->command->printer = new FakeConsoleResultsPrinter($this->createConfigurationFromInput($input));
+        $this->command->printer->consoleColor = new FakeConsoleColor();
 
         $this->command->execute($input, $this->output);
 

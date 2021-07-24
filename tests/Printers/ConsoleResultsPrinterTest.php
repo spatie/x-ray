@@ -4,6 +4,7 @@ namespace Permafrost\RayScan\Tests\Printers;
 
 use Permafrost\RayScan\CodeScanner;
 use Permafrost\RayScan\Printers\ConsoleResultsPrinter;
+use Permafrost\RayScan\Tests\TestClasses\FakeConsoleColor;
 use Permafrost\RayScan\Tests\TestClasses\FakeOutput;
 use Permafrost\RayScan\Tests\Traits\CreatesTestConfiguration;
 use PHPUnit\Framework\TestCase;
@@ -21,6 +22,7 @@ class ConsoleResultsPrinterTest extends TestCase
         $config = $this->createConfiguration($path, null, ['path' => $path, '--summary' => true]);
         $output = new FakeOutput();
         $printer = new ConsoleResultsPrinter($output, $config);
+        $printer->consoleColor = new FakeConsoleColor();
         $scanner = new CodeScanner($config, $path);
 
         $results = $scanner->scan();
@@ -36,6 +38,7 @@ class ConsoleResultsPrinterTest extends TestCase
         $config = $this->createConfiguration($path, null, ['path' => $path]);
         $output = new FakeOutput();
         $printer = new ConsoleResultsPrinter($output, $config);
+        $printer->consoleColor = new FakeConsoleColor();
         $scanner = new CodeScanner($config, $path);
 
         $results = $scanner->scan();

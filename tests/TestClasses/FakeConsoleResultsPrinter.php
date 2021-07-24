@@ -12,5 +12,6 @@ class FakeConsoleResultsPrinter extends ConsoleResultsPrinter
         $this->config = $config;
 
         $this->printer = new FakeConsoleResultPrinter($config);
+        $this->printer->consoleColor = new FakeConsoleColor();
     }
 }
