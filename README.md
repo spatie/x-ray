@@ -37,15 +37,15 @@ Specify either a valid path name or a valid filename to scan:
 ./vendor/bin/ray-scan ./app
 ./vendor/bin/ray-scan ./app/Models/User.php
 
-# don't display code snippets
-./vendor/bin/ray-scan ./src -N
+# display code snippets
+./vendor/bin/ray-scan ./src --snippets
+./vendor/bin/ray-scan ./src -S
 
 # don't display progress bar
 ./vendor/bin/ray-scan ./src --no-progress
 
 # display only a summary of the discovered calls
-./vendor/bin/ray-scan ./src --summary --no-snippets
-./vendor/bin/ray-scan ./src -sN
+./vendor/bin/ray-scan ./src --summary
 ```
 
 ## Available Options
@@ -53,7 +53,7 @@ Specify either a valid path name or a valid filename to scan:
 | Flag | Description
 |---|---|
 |`--no-progress` or `-P` | Don't display the progress bar while scanning files |
-|`--no-snippets` or `-N` | Don't display snippets from located calls |
+|`--snippets` or `-S` | Display code snippets from located calls |
 |`--summary` or `-s` | Display a summary of the files/calls discovered |
 
 ## Configuration files
