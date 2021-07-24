@@ -72,10 +72,10 @@ class SyntaxHighlighterV2
 
     public $lines = [];
 
-    public function highlightSnippet(CodeSnippet $snippet): string
+    public function highlightSnippet(CodeSnippet $snippet, int $targetLine): string
     {
         $code = $snippet->getCode();
-        $targetLine = $snippet->getLineNumber();
+        //$targetLine = $snippet->getLineNumber();
 
         $lineNumbers = array_keys($code);
         $codeStr = '';

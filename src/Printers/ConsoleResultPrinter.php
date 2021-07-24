@@ -27,7 +27,7 @@ class ConsoleResultPrinter extends ResultPrinter
 
             $testHighlighter = new SyntaxHighlighterV2($this->consoleColor);
 
-            $output->writeln($testHighlighter->highlightSnippet($result->snippet));
+            $output->writeln($testHighlighter->highlightSnippet($result->snippet, $result->location->endLine()));
 
 //            foreach ($result->snippet->getCode() as $lineNum => $line) {
 //                $name = $result->node->name();
