@@ -19,10 +19,10 @@ class ConfigurationFactory
         $path = $input->getArgument('path');
 
         $hideProgress = $input->hasOption('no-progress') && $input->getOption('no-progress') === true;
-        $hideSnippets = $input->hasOption('no-snippets') && $input->getOption('no-snippets') === true;
+        $showSnippets = $input->hasOption('snippets') && $input->getOption('snippets') === true;
         $showSummary = $input->hasOption('summary') && $input->getOption('summary') === true;
 
-        $result = new Configuration($path, $hideSnippets, $hideProgress, $showSummary);
+        $result = new Configuration($path, $showSnippets, $hideProgress, $showSummary);
 
         $options = (new static())->getSettingsFromConfigFile($configDirectory);
 
@@ -57,7 +57,7 @@ class ConfigurationFactory
     protected function searchConfigFilesOnDisk(?string $configDirectory = null): string
     {
         $configNames = [
-            'ray-scanFile.php',
+            'ray-scan.php',
         ];
 
         $configDirectory = $configDirectory ?? (string)getcwd();

@@ -9,7 +9,7 @@ class ConsoleResultsPrinter extends ResultsPrinter
 {
     public function print(array $results): void
     {
-        if (! $this->config->hideSnippets) {
+        if ($this->config->showSnippets) {
             foreach ($results as $scanResult) {
                 foreach($scanResult->results as $result) {
                     $this->printer()->print($this->output, $result);

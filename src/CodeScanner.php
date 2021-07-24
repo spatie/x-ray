@@ -51,7 +51,7 @@ class CodeScanner
                 $postScanCallback();
             }
 
-            if (!$scanResults) {
+            if (! $scanResults) {
                 continue;
             }
 
