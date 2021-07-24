@@ -3,6 +3,7 @@
 namespace Permafrost\RayScan\Printers;
 
 use Permafrost\PhpCodeSearch\Results\SearchResult;
+use Permafrost\RayScan\Printers\Highlighters\ConsoleColor;
 use Permafrost\RayScan\Printers\Highlighters\SyntaxHighlighter;
 use Permafrost\RayScan\Printers\Highlighters\SyntaxHighlighterV2;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
@@ -10,6 +11,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleResultPrinter extends ResultPrinter
 {
+    /** @var ConsoleColor|null */
+    public $consoleColor = null;
+
     /**
      * @param OutputInterface $output
      */
@@ -19,9 +23,9 @@ class ConsoleResultPrinter extends ResultPrinter
         $this->printHeader($output, $result);
 
         if ($this->config->showSnippets) {
-            $highlighter = new SyntaxHighlighter();
+//            $highlighter = new SyntaxHighlighter();
 
-            $testHighlighter = new SyntaxHighlighterV2();
+            $testHighlighter = new SyntaxHighlighterV2($this->consoleColor);
 
             $output->writeln($testHighlighter->highlightSnippet($result->snippet));
 

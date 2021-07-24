@@ -3,12 +3,18 @@
 namespace Permafrost\RayScan\Printers;
 
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
+use Permafrost\RayScan\Printers\Highlighters\ConsoleColor;
 use Symfony\Component\Console\Helper\Table;
 
 class ConsoleResultsPrinter extends ResultsPrinter
 {
+    /** @var ConsoleColor|null */
+    public $consoleColor = null;
+
     public function print(array $results): void
     {
+        $this->printer()->consoleColor = $this->consoleColor;
+
         foreach ($results as $scanResult) {
             foreach ($scanResult->results as $result) {
                 $this->printer()->print($this->output, $result);
