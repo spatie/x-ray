@@ -22,7 +22,8 @@ class ConsoleResultPrinter extends ResultPrinter
             $highlighter = new SyntaxHighlighter();
 
             $testHighlighter = new SyntaxHighlighterV2();
-            $testHighlighter->highlightSnippet($result->snippet);
+
+            $output->writeln(preg_replace('~^<\?php ~', '', $testHighlighter->highlightSnippet($result->snippet)));
 
             foreach ($result->snippet->getCode() as $lineNum => $line) {
                 $name = $result->node->name();
