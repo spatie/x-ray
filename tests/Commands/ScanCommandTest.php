@@ -5,6 +5,7 @@ namespace Permafrost\RayScan\Tests\Commands;
 use Permafrost\RayScan\Commands\ScanCommand;
 use Permafrost\RayScan\Tests\TestClasses\FakeConsoleResultsPrinter;
 use Permafrost\RayScan\Tests\TestClasses\FakeOutput;
+use Permafrost\RayScan\Tests\Traits\CreatesTestConfiguration;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Command\Command;
@@ -15,6 +16,7 @@ use Symfony\Component\Console\Input\InputOption;
 
 class ScanCommandTest extends TestCase
 {
+    use CreatesTestConfiguration;
     use MatchesSnapshots;
 
     /** @var ScanCommand */
@@ -28,7 +30,6 @@ class ScanCommandTest extends TestCase
         parent::setUp();
 
         $this->command = new ScanCommand('scan');
-        $this->command->printer = new FakeConsoleResultsPrinter();
         $this->output = new FakeOutput();
     }
 
@@ -48,6 +49,8 @@ class ScanCommandTest extends TestCase
     {
         $input = $this->createInput(['path' => __DIR__ . '/../fixtures/fixture1.php', '--no-progress' => true, '--snippets' => true]);
 
+        $this->command->printer = new FakeConsoleResultsPrinter($this->createConfigurationFromInput($input));
+
         $this->command->execute($input, $this->output);
 
         $this->assertMatchesSnapshot($this->output->writtenData);
@@ -56,7 +59,10 @@ class ScanCommandTest extends TestCase
     /** @test */
     public function it_executes_the_command_with_a_valid_path()
     {
-        $input = $this->createInput(['path' => __DIR__ . '/../fixtures', '--no-progress' => true, '--snippets' => true]);
+        $path = __DIR__ . '/../fixtures';
+        $input = $this->createInput(['path' => $path, '--no-progress' => true, '--snippets' => true]);
+
+        $this->command->printer = new FakeConsoleResultsPrinter($this->createConfigurationFromInput($input));
 
         $this->command->execute($input, $this->output);
 
@@ -66,6 +72,8 @@ class ScanCommandTest extends TestCase
     /** @test */
     public function it_executes_and_has_no_scan_results_and_returns_a_success_exit_code()
     {
+        $this->command->printer = new FakeConsoleResultsPrinter($this->createConfiguration(__DIR__ . '/../fixtures/fixture1.php'));
+
         $input = $this->createInput(['path' => __DIR__ . '/../fixtures/fixture3.php', '--no-progress' => true]);
 
         $result = $this->command->execute($input, $this->output);
@@ -77,6 +85,7 @@ class ScanCommandTest extends TestCase
     public function it_executes_the_command_with_a_valid_filename_and_displays_progress()
     {
         $input = $this->createInput(['path' => __DIR__ . '/../fixtures/fixture1.php']);
+        $this->command->printer = new FakeConsoleResultsPrinter($this->createConfiguration(__DIR__ . '/../fixtures/fixture1.php'));
 
         $this->command->execute($input, $this->output);
 

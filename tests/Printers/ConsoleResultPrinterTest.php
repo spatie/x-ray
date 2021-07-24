@@ -9,11 +9,13 @@ use Permafrost\PhpCodeSearch\Results\SearchResult;
 use Permafrost\PhpCodeSearch\Support\File;
 use Permafrost\RayScan\Printers\ConsoleResultPrinter;
 use Permafrost\RayScan\Tests\TestClasses\FakeOutput;
+use Permafrost\RayScan\Tests\Traits\CreatesTestConfiguration;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class ConsoleResultPrinterTest extends TestCase
 {
+    use CreatesTestConfiguration;
     use MatchesSnapshots;
 
     /** @test */
@@ -32,7 +34,8 @@ class ConsoleResultPrinterTest extends TestCase
         $result->file()->filename = basename($file->filename);
         $output = new FakeOutput();
 
-        $printer = new ConsoleResultPrinter();
+        $options = ['path' => $file->getRealPath(), '--snippets' => true];
+        $printer = new ConsoleResultPrinter($this->createConfiguration(__DIR__, null, $options));
 
         $printer->print($output, $result);
 
