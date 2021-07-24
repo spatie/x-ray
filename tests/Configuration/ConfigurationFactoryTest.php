@@ -16,7 +16,7 @@ class ConfigurationFactoryTest extends TestCase
         $inputDefinition = new InputDefinition([
             new InputArgument('path', InputArgument::REQUIRED),
             new InputOption('no-progress', 'P', InputOption::VALUE_NONE),
-            new InputOption('no-snippets', 'S', InputOption::VALUE_NONE),
+            new InputOption('snippets', 'S', InputOption::VALUE_NONE),
         ]);
 
         return new ArrayInput($input, $inputDefinition);
@@ -26,11 +26,11 @@ class ConfigurationFactoryTest extends TestCase
     public function it_creates_a_configuration_object()
     {
         $path = realpath(__DIR__.'/../fixtures/fixture1.php');
-        $input = $this->createInput(['path' => $path, '--no-progress' => true, '--no-snippets' => true]);
+        $input = $this->createInput(['path' => $path, '--no-progress' => true, '--snippets' => true]);
 
         $config = ConfigurationFactory::create($input, __DIR__ . '/../data');
 
-        $this->assertTrue($config->hideSnippets);
+        $this->assertTrue($config->showSnippets);
         $this->assertTrue($config->hideProgress);
         $this->assertEquals($path, $config->path);
     }
