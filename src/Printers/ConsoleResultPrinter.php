@@ -4,6 +4,7 @@ namespace Permafrost\RayScan\Printers;
 
 use Permafrost\PhpCodeSearch\Results\SearchResult;
 use Permafrost\RayScan\Printers\Highlighters\SyntaxHighlighter;
+use Permafrost\RayScan\Printers\Highlighters\SyntaxHighlighterV2;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -19,6 +20,9 @@ class ConsoleResultPrinter extends ResultPrinter
 
         if ($this->config->showSnippets) {
             $highlighter = new SyntaxHighlighter();
+
+            $testHighlighter = new SyntaxHighlighterV2();
+            $testHighlighter->highlightSnippet($result->snippet);
 
             foreach ($result->snippet->getCode() as $lineNum => $line) {
                 $name = $result->node->name();
