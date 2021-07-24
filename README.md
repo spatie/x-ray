@@ -85,13 +85,11 @@ return [
 
 ![image](https://user-images.githubusercontent.com/5508707/126868292-807e1468-d23d-43f3-9cf3-d4ed95eb2f54.png)
 
-![image](https://user-images.githubusercontent.com/5508707/123883510-27321180-d917-11eb-8734-f0e4fcbf4201.png)
+![image](https://user-images.githubusercontent.com/5508707/126883434-3bc6fbad-73c1-4144-a587-cdf59c74b6ce.png)
 
-![image](https://user-images.githubusercontent.com/5508707/123883450-0d90ca00-d917-11eb-89dc-ccb604a655b3.png)
+![image](https://user-images.githubusercontent.com/5508707/126883461-f56e74c9-f427-4f59-8ece-385b5d013b78.png)
 
-![image](https://user-images.githubusercontent.com/5508707/123883749-990a5b00-d917-11eb-9020-6aa3d6053203.png)
-
-![image](https://user-images.githubusercontent.com/5508707/124039183-6bcdb380-d9d0-11eb-9ff7-f5e18ef017cc.png)
+![image](https://user-images.githubusercontent.com/5508707/126883470-1224ed2b-38ed-4772-9d8b-65f71539119d.png)
 
 ## Testing
 
