@@ -77,9 +77,13 @@ class ConsoleResultPrinter extends ResultPrinter
             $output->writeln('');
         }
 
+        $nodeNameParts = explode('->', $result->node->name());
+
+        $nodeName = end($nodeNameParts);
+
         $output->writeln(" Filename: {$filename}");
         $output->writeln(" Line Num: {$result->location->startLine}");
-        $output->writeln(" Found   : <target-call>{$result->node->name()}</target-call>");
+        $output->writeln(" Found   : <target-call>{$nodeName}</target-call>");
         $output->writeln(' ------');
     }
 }

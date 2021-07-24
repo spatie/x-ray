@@ -2,12 +2,11 @@
 
 namespace Permafrost\RayScan\Printers\Highlighters;
 
+/** @codeCoverageIgnore  */
 class SyntaxHighlighter extends BasicSnippetHighlighter
 {
     public function highlightLine(string $line, string $targetName, int $currentLineNum, int $targetLineNumber): string
     {
-        //print_r($this->tokenize($line));
-
         $line = $this->standardizeLineLength($line);
         $line = $this->highlightTargetFunction($line, $targetName, $currentLineNum, $targetLineNumber);
         $line = $this->highlightSyntax($line);
@@ -17,8 +16,6 @@ class SyntaxHighlighter extends BasicSnippetHighlighter
 
         return $line;
     }
-
-
 
     protected function standardizeLineLength(string $line, int $length = 80): string
     {

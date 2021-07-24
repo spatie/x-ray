@@ -21,11 +21,11 @@ class SyntaxHighlighterV2
 
     protected const ARROW_SYMBOL        = '>';
     protected const DELIMITER           = '>';
-    protected const ARROW_SYMBOL_UTF8   = ' ═❱';//➜';
+    protected const ARROW_SYMBOL_UTF8   = ' ❱❱';//➜';
     protected const DELIMITER_UTF8      = '▕ '; // '▶';
     protected const LINE_NUMBER_DIVIDER = 'line_divider';
     protected const MARKED_LINE_NUMBER  = 'marked_line';
-    protected const WIDTH               = 3;
+    protected const WIDTH               = 4;
     protected const TARGET_LINE = 'target_line';
 
     /**
@@ -318,7 +318,7 @@ class SyntaxHighlighterV2
         $lineStrlen = $lineStrlen < self::WIDTH ? self::WIDTH : $lineStrlen;
         $snippet    = '';
         $mark = $this->arrow . ' ';
-        $mark = str_pad($mark, 6, ' ', STR_PAD_LEFT);
+        $mark = str_pad($mark, 4, ' ', STR_PAD_LEFT);
 
 
         foreach ($lines as $i => $line) {
