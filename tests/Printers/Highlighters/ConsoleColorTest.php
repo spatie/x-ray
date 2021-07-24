@@ -72,7 +72,7 @@ class ConsoleColorTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $color = new ConsoleColor();
-        $color->apply(123, 'test');
+        $color->apply(null, 'test');
     }
 
     /** @test */
