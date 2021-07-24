@@ -27,7 +27,7 @@ class ScanCommandTest extends TestCase
     {
         parent::setUp();
 
-        $this->command = new ScanCommand('scanFile');
+        $this->command = new ScanCommand('scan');
         $this->command->printer = new FakeConsoleResultsPrinter();
         $this->output = new FakeOutput();
     }
@@ -37,7 +37,7 @@ class ScanCommandTest extends TestCase
         $inputDefinition = new InputDefinition([
             new InputArgument('path', InputArgument::REQUIRED),
             new InputOption('no-progress', 'P', InputOption::VALUE_NONE),
-            new InputOption('no-snippets', 'N', InputOption::VALUE_NONE),
+            new InputOption('snippets', 'S', InputOption::VALUE_NONE),
         ]);
 
         return new ArrayInput($input, $inputDefinition);
@@ -46,7 +46,7 @@ class ScanCommandTest extends TestCase
     /** @test */
     public function it_executes_the_command_with_a_valid_filename()
     {
-        $input = $this->createInput(['path' => __DIR__ . '/../fixtures/fixture1.php', '--no-progress' => true]);
+        $input = $this->createInput(['path' => __DIR__ . '/../fixtures/fixture1.php', '--no-progress' => true, '--snippets' => true]);
 
         $this->command->execute($input, $this->output);
 
@@ -56,7 +56,7 @@ class ScanCommandTest extends TestCase
     /** @test */
     public function it_executes_the_command_with_a_valid_path()
     {
-        $input = $this->createInput(['path' => __DIR__ . '/../fixtures', '--no-progress' => true]);
+        $input = $this->createInput(['path' => __DIR__ . '/../fixtures', '--no-progress' => true, '--snippets' => true]);
 
         $this->command->execute($input, $this->output);
 
@@ -76,7 +76,7 @@ class ScanCommandTest extends TestCase
     /** @test */
     public function it_executes_the_command_with_a_valid_filename_and_displays_progress()
     {
-        $input = $this->createInput(['path' => __DIR__ . '/../fixtures/fixture1.php', '--no-snippets' => true]);
+        $input = $this->createInput(['path' => __DIR__ . '/../fixtures/fixture1.php']);
 
         $this->command->execute($input, $this->output);
 
