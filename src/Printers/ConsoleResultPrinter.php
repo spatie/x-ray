@@ -17,15 +17,17 @@ class ConsoleResultPrinter extends ResultPrinter
         $this->initializeFormatter($output);
         $this->printHeader($output, $result);
 
-        $highlighter = new SyntaxHighlighter();
+        if ($this->config->showSnippets) {
+            $highlighter = new SyntaxHighlighter();
 
-        foreach ($result->snippet->getCode() as $lineNum => $line) {
-            $name = $result->node->name();
-            $startLine = $result->location->startLine();
+            foreach ($result->snippet->getCode() as $lineNum => $line) {
+                $name = $result->node->name();
+                $startLine = $result->location->startLine();
 
-            $line = $highlighter->highlightLine($line, $name, $lineNum, $startLine);
+                $line = $highlighter->highlightLine($line, $name, $lineNum, $startLine);
 
-            $output->writeln($line);
+                $output->writeln($line);
+            }
         }
     }
 

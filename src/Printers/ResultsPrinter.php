@@ -7,7 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class ResultsPrinter
 {
-    /** @var ResultPrinter|null */
+    /** @var ResultPrinter */
     protected $printer = null;
 
     /** @var Configuration */
