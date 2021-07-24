@@ -83,7 +83,7 @@ return [
 
 ## Sample Output
 
-![image](https://user-images.githubusercontent.com/5508707/126868292-807e1468-d23d-43f3-9cf3-d4ed95eb2f54.png)
+![image](https://user-images.githubusercontent.com/5508707/126883494-57cffebc-6fb1-4dff-9e10-148770437fcc.png)
 
 ![image](https://user-images.githubusercontent.com/5508707/126883434-3bc6fbad-73c1-4144-a587-cdf59c74b6ce.png)
 
