@@ -23,16 +23,16 @@ class ConsoleResultPrinter extends ResultPrinter
 
             $testHighlighter = new SyntaxHighlighterV2();
 
-            $output->writeln(preg_replace('~^<\?php ~', '', $testHighlighter->highlightSnippet($result->snippet)));
+            $output->writeln($testHighlighter->highlightSnippet($result->snippet));
 
-            foreach ($result->snippet->getCode() as $lineNum => $line) {
-                $name = $result->node->name();
-                $startLine = $result->location->startLine();
-
-                $line = $highlighter->highlightLine($line, $name, $lineNum, $startLine);
-
-                $output->writeln($line);
-            }
+//            foreach ($result->snippet->getCode() as $lineNum => $line) {
+//                $name = $result->node->name();
+//                $startLine = $result->location->endLine();
+//
+//                $line = $highlighter->highlightLine($line, $name, $lineNum, $startLine);
+//
+//                $output->writeln($line);
+//            }
         }
     }
 

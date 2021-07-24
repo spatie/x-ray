@@ -88,7 +88,7 @@ class ConsoleColor
      * @throws InvalidStyleException
      * @throws \InvalidArgumentException
      */
-    public function apply($style, $text)
+    public function apply($style, $text, array $appendStyle = [])
     {
         if (!$this->isStyleForced() && !$this->isSupported()) {
             return $text;
@@ -100,6 +100,8 @@ class ConsoleColor
         if (!is_array($style)) {
             throw new \InvalidArgumentException('Style must be string or array.');
         }
+
+        $style = array_merge($style, $appendStyle);
 
         $sequences = [];
 

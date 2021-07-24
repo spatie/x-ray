@@ -4,48 +4,54 @@ namespace Permafrost\RayScan\Printers\Highlighters;
 
 use Permafrost\PhpCodeSearch\Code\CodeSnippet;
 
+/**
+ * Original code taken from nunomaduro/collision
+ * @link https://github.com/nunomaduro/collision/blob/stable/src/Highlighter.php
+ */
 class SyntaxHighlighterV2
 {
-    public const TOKEN_DEFAULT    = 'token_default';
     public const TOKEN_COMMENT    = 'token_comment';
-    public const TOKEN_VARIABLE   = 'token_variable';
-    public const TOKEN_STRING     = 'token_string';
+    public const TOKEN_DEFAULT    = 'token_default';
     public const TOKEN_HTML       = 'token_html';
     public const TOKEN_KEYWORD    = 'token_keyword';
+    public const TOKEN_STRING     = 'token_string';
+    public const TOKEN_VARIABLE   = 'token_variable';
     public const ACTUAL_LINE_MARK = 'actual_line_mark';
     public const LINE_NUMBER      = 'line_number';
 
-    private const ARROW_SYMBOL        = '>';
-    private const DELIMITER           = '>';
-    private const ARROW_SYMBOL_UTF8   = '❱';//➜';
-    private const DELIMITER_UTF8      = '▕'; // '▶';
-    private const LINE_NUMBER_DIVIDER = 'line_divider';
-    private const MARKED_LINE_NUMBER  = 'marked_line';
-    private const WIDTH               = 3;
+    protected const ARROW_SYMBOL        = '>';
+    protected const DELIMITER           = '>';
+    protected const ARROW_SYMBOL_UTF8   = ' ═❱';//➜';
+    protected const DELIMITER_UTF8      = '▕ '; // '▶';
+    protected const LINE_NUMBER_DIVIDER = 'line_divider';
+    protected const MARKED_LINE_NUMBER  = 'marked_line';
+    protected const WIDTH               = 3;
+    protected const TARGET_LINE = 'target_line';
 
     /**
      * Holds the theme.
      *
      * @var array
      */
-    private const THEME = [
+    protected const THEME = [
         self::TOKEN_STRING  => ['color_70'],
         self::TOKEN_VARIABLE => ['color_141'],
         self::TOKEN_COMMENT => ['dark_gray', 'italic'],
-        self::TOKEN_KEYWORD => ['color_208'],//['magenta', 'bold'],
-        self::TOKEN_DEFAULT => ['default', 'bold'],
+        self::TOKEN_KEYWORD => ['color_208'],
+        self::TOKEN_DEFAULT => ['default'],
         self::TOKEN_HTML    => ['blue', 'bold'],
 
         self::ACTUAL_LINE_MARK    => ['red', 'bold'],
         self::LINE_NUMBER         => ['dark_gray'],
         self::MARKED_LINE_NUMBER  => ['italic', 'bold'],
         self::LINE_NUMBER_DIVIDER => ['dark_gray'],
+        self::TARGET_LINE => ['bold', 'italic'], //'bg_color_25'],
     ];
-    /** @var ConsoleColor */
-    private $color;
 
-    /** @var array */
-    private const DEFAULT_THEME = [
+    /** @var ConsoleColor */
+    protected $color;
+
+    protected const DEFAULT_THEME = [
         self::TOKEN_STRING  => 'red',
         self::TOKEN_COMMENT => 'yellow',
         self::TOKEN_KEYWORD => 'green',
@@ -57,61 +63,30 @@ class SyntaxHighlighterV2
         self::MARKED_LINE_NUMBER  => 'dark_gray',
         self::LINE_NUMBER_DIVIDER => 'dark_gray',
     ];
-    /** @var string */
-    private $delimiter = self::DELIMITER_UTF8;
-    /** @var string */
-    private $arrow = self::ARROW_SYMBOL_UTF8;
-    /**
-     * @var string
-     */
-    private const NO_MARK = '    ';
+
+    protected $delimiter = self::DELIMITER_UTF8;
+
+    protected $arrow = self::ARROW_SYMBOL_UTF8;
+
+    protected const NO_MARK = '    ';
 
     public $lines = [];
-    public $lineTokens = [];
 
     public function highlightSnippet(CodeSnippet $snippet): string
     {
         $code = $snippet->getCode();
-
         $targetLine = $snippet->getLineNumber();
 
-        return $this->highlight(implode(PHP_EOL, $code), $targetLine, array_keys($code));
+        $lineNumbers = array_keys($code);
+        $codeStr = '';
 
-        foreach($tokens as $token) {
-            $lineNums = [];
-
-            if ($token[0] === self::TOKEN_COMMENT) {
-                $lineNums[] = [self::TOKEN_COMMENT, trim($token[1]), $this->findCodeInSnippet($snippet, rtrim($token[1]))];
-            }
-
-            if ($token[0] === self::TOKEN_STRING) {
-                $lineNums[] = [self::TOKEN_STRING, $token[1], $this->findCodeInSnippet($snippet, $token[1], true)];
-            }
+        foreach($code as $line) {
+            $codeStr .= str_pad($line, 80) . PHP_EOL;
         }
 
-        //print_r($this->findCodeInSnippet($snippet, "'hello world'", true));
+        $result = $this->highlight(trim($codeStr), $targetLine, $lineNumbers);
 
-        foreach($code as $lineNum => &$line) {
-            //if (count($lineNums)) {
-                foreach($lineNums as $lineNumData) {
-                    [$tokenType, $tokenValue, $lineNumbers] = $lineNumData;
-                    if (in_array($lineNum, $lineNumbers)) {
-                        echo "IN ARRAY $lineNum\n";
-                        $line = str_replace($tokenValue, '>>>'.$tokenValue.'<<<', $line);
-                    }
-                }
-            //}
-
-            echo "$line\n";
-//            $tokens = $this->tokenize($line, $lineNum);
-            //if (is_array($tokens) && count($tokens)) {
-//                $lastToken = end($tokens)[0];
-//                $lastTokenValue = end($tokens)[1];
-                //print_r($tokens);
-            //}
-        }
-
-        return '';
+        return str_replace('__CODE_BUFFER_REMOVE__', '', $result);
     }
 
     protected function findCodeInSnippet(CodeSnippet $snippet, string $code, $matchAnywhere = false): array
@@ -139,15 +114,8 @@ class SyntaxHighlighterV2
         }
 
         return $lineBuffer;
-
-
     }
 
-
-
-    /**
-     * Creates an instance of the Highlighter.
-     */
     public function __construct(ConsoleColor $color = null, bool $UTF8 = true)
     {
         $this->color = $color ?: new ConsoleColor();
@@ -161,52 +129,37 @@ class SyntaxHighlighterV2
         foreach (self::THEME as $name => $styles) {
             $this->color->addTheme($name, $styles);
         }
-        if (!$UTF8) {
+
+        if (! $UTF8) {
             $this->delimiter = self::DELIMITER;
             $this->arrow     = self::ARROW_SYMBOL;
         }
+
         $this->delimiter .= ' ';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function highlight(string $content, int $line, array $lineNumbers): string
     {
-        return ($this->getCodeSnippet($content, $line, 4, 4, $lineNumbers));
+        return $this->getCodeSnippet($content, $line, $lineNumbers);
     }
 
-    /**
-     * @param string $source
-     * @param int    $lineNumber
-     * @param int    $linesBefore
-     * @param int    $linesAfter
-     */
-    public function getCodeSnippet($source, $lineNumber, $linesBefore = 2, $linesAfter = 2, array $lineNumbers = []): string
+    public function getCodeSnippet(string $source, int $lineNumber, array $lineNumbers = []): string
     {
         $tempTokenLines = $this->getHighlightedLines($source);
-
-//        $offset     = $lineNumber - $linesBefore - 1;
-//        $offset     = max($offset, 0);
-//        $length     = $linesAfter + $linesBefore + 1;
-//        $tempTokenLines = array_slice($tokenLines, $offset, $length, $preserveKeys = true);
-//        $tokenLines = [];
-
+        $tokenLines = [];
         $index = 0;
+
         foreach($tempTokenLines as $line) {
             $tokenLines[$lineNumbers[$index]] = $line;
             $index++;
         }
 
-        $lines = $this->colorLines($tokenLines);
+        $lines = $this->colorLines($tokenLines, $lineNumber);
 
         return $this->lineNumbers($lines, $lineNumber);
     }
 
-    /**
-     * @param string $source
-     */
-    private function getHighlightedLines($source): array
+    protected function getHighlightedLines(string $source): array
     {
         $source = str_replace(["\r\n", "\r"], "\n", $source);
         $tokens = $this->tokenize($source);
@@ -214,13 +167,10 @@ class SyntaxHighlighterV2
         return $this->splitToLines($tokens);
     }
 
-    /**
-     * @param string $source
-     */
-    private function tokenize($source): array
+    protected function tokenize(string $source): array
     {
         if (strpos(ltrim($source), '<?'.'php') === false) {
-            $source = "<?" ."php {$source}";
+            $source = "<?" ."php __CODE_BUFFER_REMOVE__{$source}";
         }
 
         $tokens = token_get_all($source);
@@ -302,16 +252,14 @@ class SyntaxHighlighterV2
             $output[] = [$newType, $buffer];
         }
 
-        array_pop($output);
-
         return $output;
     }
 
-    private function splitToLines(array $tokens): array
+    protected function splitToLines(array $tokens): array
     {
         $lines = [];
-
         $line = [];
+
         foreach ($tokens as $token) {
             foreach (explode("\n", $token[1]) as $count => $tokenLine) {
                 if ($count > 0) {
@@ -332,34 +280,47 @@ class SyntaxHighlighterV2
         return $lines;
     }
 
-    private function colorLines(array $tokenLines): array
+    protected function colorLines(array $tokenLines, int $targetLine): array
     {
         $lines = [];
         foreach ($tokenLines as $lineCount => $tokenLine) {
             $line = '';
+
             foreach ($tokenLine as $token) {
                 [$tokenType, $tokenValue] = $token;
+
                 if ($this->color->hasTheme($tokenType)) {
-                    $line .= $this->color->apply($tokenType, $tokenValue);
+                    $appendStyles = $this->getColorLineAdditionalStyles($lineCount, $targetLine);
+                    $line .= $this->color->apply($tokenType, $tokenValue, $appendStyles);
                 } else {
                     $line .= $tokenValue;
                 }
             }
+
             $lines[$lineCount] = $line;
         }
 
         return $lines;
     }
 
-    /**
-     * @param int|null $markLine
-     */
-    private function lineNumbers(array $lines, $markLine = null): string
+    protected function getColorLineAdditionalStyles(int $currentLine, int $targetLine): array
+    {
+        if ($currentLine !== $targetLine) {
+            return [];
+        }
+
+        return self::THEME[self::TARGET_LINE];
+    }
+
+    protected function lineNumbers(array $lines, ?int $markLine = null): string
     {
         $lineStrlen = strlen((string) (array_key_last($lines) + 1));
         $lineStrlen = $lineStrlen < self::WIDTH ? self::WIDTH : $lineStrlen;
         $snippet    = '';
-        $mark       = '  ' . $this->arrow . ' ';
+        $mark = $this->arrow . ' ';
+        $mark = str_pad($mark, 6, ' ', STR_PAD_LEFT);
+
+
         foreach ($lines as $i => $line) {
             $coloredLineNumber = $this->coloredLineNumber(self::LINE_NUMBER, $i, $lineStrlen);
 
@@ -385,14 +346,9 @@ class SyntaxHighlighterV2
         return $snippet;
     }
 
-    /**
-     * @param string $style
-     * @param int    $i
-     * @param int    $lineStrlen
-     */
-    private function coloredLineNumber($style, $i, $lineStrlen): string
+    protected function coloredLineNumber(string $style, int $lineNum, int $lineStrlen): string
     {
-        return $this->color->apply($style, str_pad((string) ($i + 1), $lineStrlen, ' ', STR_PAD_LEFT));
+        return $this->color->apply($style, str_pad((string)$lineNum, $lineStrlen, ' ', STR_PAD_LEFT));
     }
 
 }
