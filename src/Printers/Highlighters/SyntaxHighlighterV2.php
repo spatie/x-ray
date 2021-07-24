@@ -75,13 +75,12 @@ class SyntaxHighlighterV2
     public function highlightSnippet(CodeSnippet $snippet, int $targetLine): string
     {
         $code = $snippet->getCode();
-        //$targetLine = $snippet->getLineNumber();
 
         $lineNumbers = array_keys($code);
         $codeStr = '';
 
         foreach($code as $line) {
-            $codeStr .= str_pad($line, 80) . PHP_EOL;
+            $codeStr .= $line . PHP_EOL;
         }
 
         $result = $this->highlight(trim($codeStr), $targetLine, $lineNumbers);

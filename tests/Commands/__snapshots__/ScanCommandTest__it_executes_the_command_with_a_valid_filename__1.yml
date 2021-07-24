@@ -9,10 +9,10 @@
 - |4
      ------
 - |4+
-           1▕  ray('12345');                                                               
-     ❱❱    2▕                                                                                  
-           3▕      echo strtolower('TEST') . PHP_EOL;                                          
-           4▕                                                                                  
+           1▕  ray('12345');
+     ❱❱    2▕  
+           3▕      echo strtolower('TEST') . PHP_EOL;
+           4▕  
            5▕      echo strtoupper('test') . PHP_EOL;
 
 - |
