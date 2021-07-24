@@ -18,6 +18,7 @@ trait CreatesTestConfiguration
             new InputArgument('path', InputArgument::REQUIRED),
             new InputOption('no-progress', 'P', InputOption::VALUE_NONE),
             new InputOption('snippets', 'S', InputOption::VALUE_NONE),
+            new InputOption('summary', 's', InputOption::VALUE_NONE),
         ]);
 
         return new ArrayInput($input, $inputDefinition);
