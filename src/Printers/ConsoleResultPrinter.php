@@ -17,15 +17,17 @@ class ConsoleResultPrinter extends ResultPrinter
         $this->initializeFormatter($output);
         $this->printHeader($output, $result);
 
-        $highlighter = new SyntaxHighlighter();
+        if ($this->config->showSnippets) {
+            $highlighter = new SyntaxHighlighter();
 
-        foreach ($result->snippet->getCode() as $lineNum => $line) {
-            $name = $result->node->name();
-            $startLine = $result->location->startLine();
+            foreach ($result->snippet->getCode() as $lineNum => $line) {
+                $name = $result->node->name();
+                $startLine = $result->location->startLine();
 
-            $line = $highlighter->highlightLine($line, $name, $lineNum, $startLine);
+                $line = $highlighter->highlightLine($line, $name, $lineNum, $startLine);
 
-            $output->writeln($line);
+                $output->writeln($line);
+            }
         }
     }
 
@@ -62,10 +64,13 @@ class ConsoleResultPrinter extends ResultPrinter
     {
         $filename = str_replace(getcwd() . DIRECTORY_SEPARATOR, './', $result->file()->filename);
 
-        $output->writeln('');
+        if ($this->config->showSnippets) {
+            $output->writeln('');
+        }
+
         $output->writeln(" Filename: {$filename}");
         $output->writeln(" Line Num: {$result->location->startLine}");
         $output->writeln(" Found   : <target-call>{$result->node->name()}</target-call>");
-        $output->writeln(" ------");
+        $output->writeln(' ------');
     }
 }

@@ -9,11 +9,9 @@ class ConsoleResultsPrinter extends ResultsPrinter
 {
     public function print(array $results): void
     {
-        if ($this->config->showSnippets) {
-            foreach ($results as $scanResult) {
-                foreach($scanResult->results as $result) {
-                    $this->printer()->print($this->output, $result);
-                }
+        foreach ($results as $scanResult) {
+            foreach ($scanResult->results as $result) {
+                $this->printer()->print($this->output, $result);
             }
         }
 
@@ -31,15 +29,17 @@ class ConsoleResultsPrinter extends ResultsPrinter
             $this->renderSummaryTable($files);
         }
 
-        $this->output->writeln('');
-        $this->output->writeln('---');
+        if ($this->config->showSnippets) {
+            $this->output->writeln('');
+            $this->output->writeln(' ---');
+        }
 
         if ($totalFiles === 0) {
-            $this->output->writeln("No function or static method calls found.");
+            $this->output->writeln(" No function or static method calls found.");
         }
 
         if ($totalFiles > 0) {
-            $this->output->writeln("Found {$totalCalls} function calls in {$totalFiles} files.");
+            $this->output->writeln(" Found {$totalCalls} function calls in {$totalFiles} files.");
         }
     }
 
@@ -71,7 +71,7 @@ class ConsoleResultsPrinter extends ResultsPrinter
 
     protected function printer(): ResultPrinter
     {
-        return $this->printer ?? new ConsoleResultPrinter();
+        return $this->printer ?? new ConsoleResultPrinter($this->config);
     }
 
     protected function renderSummaryTable(array $fileCounts): void

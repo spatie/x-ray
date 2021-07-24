@@ -22,7 +22,7 @@
      [<line-num>   6</line-num>]            <keyword>echo</keyword> strtoupper(<str>'test'</str>) . <keyword>PHP_EOL</keyword>;                                          
 - |
 
-- |
-    ---
-- |
-    Found 1 function calls in 1 files.
+- |4
+     ---
+- |4
+     Found 1 function calls in 1 files.
