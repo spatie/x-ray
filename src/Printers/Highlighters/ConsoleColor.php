@@ -165,7 +165,7 @@ class ConsoleColor
 
         foreach ($styles as $style) {
             if (!$this->isValidStyle($style)) {
-                throw new InvalidStyleException($style);
+                throw new \Exception($style); //InvalidStyleException
             }
         }
 
