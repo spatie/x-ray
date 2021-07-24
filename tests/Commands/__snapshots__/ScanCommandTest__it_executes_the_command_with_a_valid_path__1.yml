@@ -8,18 +8,13 @@
      Found   : <target-call>ray</target-call>
 - |4
      ------
-- |4
-     [<line-num>   1</line-num>]        <keyword><?php</keyword>                                                                           
-- |
-    <target-line> [<line-num-target>   2</line-num-target>] <pointer-target>══════❱</pointer-target>    <target-call-target>ray</target-call-target>(<str-target>'12345'</str-target>);                                                               </target-line>
-- |4
-     [<line-num>   3</line-num>]                                                                                        
-- |4
-     [<line-num>   4</line-num>]            <keyword>echo</keyword> strtolower(<str>'TEST'</str>) . <keyword>PHP_EOL</keyword>;                                          
-- |4
-     [<line-num>   5</line-num>]                                                                                        
-- |4
-     [<line-num>   6</line-num>]            <keyword>echo</keyword> strtoupper(<str>'test'</str>) . <keyword>PHP_EOL</keyword>;                                          
+- |4+
+        [90m  1[0m[90m▕  [0m[39mray[0m[38;5;208m([0m[38;5;70m'12345'[0m[38;5;208m);                                                               [0m
+    [31;1m ═❱ [0m[3;1m  2[0m[90m▕  [0m[38;5;208;1;3m                                                                                [0m
+        [90m  3[0m[90m▕  [0m[38;5;208m    echo [0m[39mstrtolower[0m[38;5;208m([0m[38;5;70m'TEST'[0m[38;5;208m) . [0m[39mPHP_EOL[0m[38;5;208m;                                          [0m
+        [90m  4[0m[90m▕  [0m[38;5;208m                                                                                [0m
+        [90m  5[0m[90m▕  [0m[38;5;208m    echo [0m[39mstrtoupper[0m[38;5;208m([0m[38;5;70m'test'[0m[38;5;208m) . [0m[39mPHP_EOL[0m[38;5;208m;[0m
+
 - |
 
 - |4

@@ -8,6 +8,7 @@ use Permafrost\PhpCodeSearch\Results\Nodes\FunctionCallNode;
 use Permafrost\PhpCodeSearch\Results\SearchResult;
 use Permafrost\PhpCodeSearch\Support\File;
 use Permafrost\RayScan\Printers\ConsoleResultPrinter;
+use Permafrost\RayScan\Tests\TestClasses\FakeConsoleColor;
 use Permafrost\RayScan\Tests\TestClasses\FakeOutput;
 use Permafrost\RayScan\Tests\Traits\CreatesTestConfiguration;
 use PHPUnit\Framework\TestCase;
@@ -36,6 +37,8 @@ class ConsoleResultPrinterTest extends TestCase
 
         $options = ['path' => $file->getRealPath(), '--snippets' => true];
         $printer = new ConsoleResultPrinter($this->createConfiguration(__DIR__, null, $options));
+
+        $printer->consoleColor = new FakeConsoleColor();
 
         $printer->print($output, $result);
 
