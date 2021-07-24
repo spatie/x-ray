@@ -67,15 +67,6 @@ class ConsoleColorTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_an_exception_when_applying_a_style_with_an_invalid_type()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-
-        $color = new ConsoleColor();
-        $color->apply(null, 'test');
-    }
-
-    /** @test */
     public function it_sets_and_gets_the_forced_style_property()
     {
         $color = new ConsoleColor();
