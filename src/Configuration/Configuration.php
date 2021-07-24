@@ -8,7 +8,7 @@ class Configuration
     public $path;
 
     /** @var bool */
-    public $hideSnippets = false;
+    public $showSnippets = false;
 
     /** @var bool */
     public $hideProgress = false;
@@ -22,10 +22,10 @@ class Configuration
     /** @var array|string[] */
     public $ignorePaths = [];
 
-    public function __construct(string $path, bool $hideSnippets, bool $hideProgress, bool $showSummary)
+    public function __construct(string $path, bool $showSnippets, bool $hideProgress, bool $showSummary)
     {
         $this->path = $path;
-        $this->hideSnippets = $hideSnippets;
+        $this->showSnippets = $showSnippets;
         $this->hideProgress = $hideProgress;
         $this->showSummary = $showSummary;
     }
