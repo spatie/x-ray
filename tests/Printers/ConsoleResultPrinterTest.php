@@ -2,7 +2,7 @@
 
 namespace Permafrost\RayScan\Tests\Printers;
 
-use Permafrost\PhpCodeSearch\Code\CodeSnippet;
+use Permafrost\CodeSnippets\CodeSnippet;
 use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\FunctionCallNode;
 use Permafrost\PhpCodeSearch\Results\SearchResult;
@@ -27,7 +27,7 @@ class ConsoleResultPrinterTest extends TestCase
         $snippet = (new CodeSnippet())
             ->surroundingLine(4)
             ->snippetLineCount(3)
-            ->fromFile($file);
+            ->fromFile($file->getRealPath());
 
         $node = FunctionCallNode::create('test', []);
 

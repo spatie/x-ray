@@ -21,7 +21,7 @@ class CodeScannerTest extends TestCase
         $scanner = new CodeScanner($this->getConfig(), $file->getRealPath());
 
 
-        $results = $scanner->scanFile($file);
+        $results = $scanner->scanFile($file->getRealPath());
 
         $this->assertFalse($results->hasErrors());
         $this->assertCount(1, $results->results);
@@ -36,7 +36,7 @@ class CodeScannerTest extends TestCase
         $file = new File(__DIR__ . '/fixtures/fixture2.php');
         $scanner = new CodeScanner($this->getConfig(), $file->getRealPath());
 
-        $results = $scanner->scanFile($file);
+        $results = $scanner->scanFile($file->getRealPath());
 
         $this->assertTrue($results->hasErrors());
         $this->assertCount(1, $results->errors);
