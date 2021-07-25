@@ -4,7 +4,6 @@ namespace Permafrost\RayScan;
 
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
 use Permafrost\PhpCodeSearch\Searcher;
-use Permafrost\PhpCodeSearch\Support\File;
 use Permafrost\RayScan\Configuration\Configuration;
 use Symfony\Component\Finder\Finder;
 
@@ -22,7 +21,7 @@ class CodeScanner
         $this->paths = $this->loadDirectoryFiles($path);
     }
 
-    public function scanFile(File $file): FileSearchResults
+    public function scanFile(string $file): FileSearchResults
     {
         $searcher = new Searcher();
 
@@ -45,7 +44,7 @@ class CodeScanner
                 continue;
             }
 
-            $scanResults = $this->scanFile(new File($path));
+            $scanResults = $this->scanFile($path);
 
             if ($postScanCallback) {
                 $postScanCallback();

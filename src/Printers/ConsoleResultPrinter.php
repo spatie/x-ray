@@ -23,7 +23,8 @@ class ConsoleResultPrinter extends ResultPrinter
 
         if ($this->config->showSnippets) {
             $highlighter = new SyntaxHighlighterV2($this->consoleColor);
-            $line = $highlighter->highlightSnippet($result->snippet, $result->location->endLine());
+
+            $line = $highlighter->highlightSnippet($result->snippet, $result->location->startLine(), $result->location->endLine());
 
             $output->writeln($line);
         }

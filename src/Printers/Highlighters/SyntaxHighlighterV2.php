@@ -2,7 +2,7 @@
 
 namespace Permafrost\RayScan\Printers\Highlighters;
 
-use Permafrost\PhpCodeSearch\Code\CodeSnippet;
+use Permafrost\CodeSnippets\CodeSnippet;
 
 /**
  * Original code taken from nunomaduro/collision
@@ -70,9 +70,9 @@ class SyntaxHighlighterV2
 
     public $lines = [];
 
-    public function highlightSnippet(CodeSnippet $snippet, int $targetLine): string
+    public function highlightSnippet(CodeSnippet $snippet, int $startLine, int $endLine): string
     {
-        $code = $snippet->getCode();
+        $code = $snippet->getLines();
 
         $lineNumbers = array_keys($code);
         $codeStr = '';
@@ -81,7 +81,7 @@ class SyntaxHighlighterV2
             $codeStr .= $line . PHP_EOL;
         }
 
-        $result = $this->highlight(trim($codeStr), $targetLine, $lineNumbers);
+        $result = $this->highlight(trim($codeStr), $startLine, $endLine, $lineNumbers);
 
         return str_replace('__CODE_BUFFER_REMOVE__', '', $result);
     }
@@ -130,12 +130,12 @@ class SyntaxHighlighterV2
         $this->delimiter .= ' ';
     }
 
-    public function highlight(string $content, int $line, array $lineNumbers): string
+    public function highlight(string $content, int $startLine, int $endLine, array $lineNumbers): string
     {
-        return $this->getCodeSnippet($content, $line, $lineNumbers);
+        return $this->getCodeSnippet($content, $startLine, $endLine, $lineNumbers);
     }
 
-    public function getCodeSnippet(string $source, int $lineNumber, array $lineNumbers = []): string
+    public function getCodeSnippet(string $source, int $startLineNumber, int $endLineNumber, array $lineNumbers = []): string
     {
         $tempTokenLines = $this->getHighlightedLines($source);
         $tokenLines = [];
@@ -146,9 +146,9 @@ class SyntaxHighlighterV2
             $index++;
         }
 
-        $lines = $this->colorLines($tokenLines, $lineNumber);
+        $lines = $this->colorLines($tokenLines, $startLineNumber, $endLineNumber);
 
-        return $this->lineNumbers($lines, $lineNumber);
+        return $this->lineNumbers($lines, range($startLineNumber, $endLineNumber));
     }
 
     protected function getHighlightedLines(string $source): array
@@ -272,7 +272,7 @@ class SyntaxHighlighterV2
         return $lines;
     }
 
-    protected function colorLines(array $tokenLines, int $targetLine): array
+    protected function colorLines(array $tokenLines, int $startLine, int $endLine): array
     {
         $lines = [];
         foreach ($tokenLines as $lineCount => $tokenLine) {
@@ -282,7 +282,7 @@ class SyntaxHighlighterV2
                 [$tokenType, $tokenValue] = $token;
 
                 if ($this->color->hasTheme($tokenType)) {
-                    $appendStyles = $this->getColorLineAdditionalStyles($lineCount, $targetLine);
+                    $appendStyles = $this->getColorLineAdditionalStyles($lineCount, range($startLine, $endLine));
                     $line .= $this->color->apply($tokenType, $tokenValue, $appendStyles);
                 } else {
                     $line .= $tokenValue;
@@ -295,16 +295,16 @@ class SyntaxHighlighterV2
         return $lines;
     }
 
-    protected function getColorLineAdditionalStyles(int $currentLine, int $targetLine): array
+    protected function getColorLineAdditionalStyles(int $currentLine, array $targetLines): array
     {
-        if ($currentLine !== $targetLine) {
+        if (! in_array($currentLine, $targetLines, true)) {
             return [];
         }
 
         return self::THEME[self::TARGET_LINE];
     }
 
-    protected function lineNumbers(array $lines, ?int $markLine = null): string
+    protected function lineNumbers(array $lines, ?array $markLines = null): string
     {
         $lineStrlen = strlen((string) (array_key_last($lines) + 1));
         $lineStrlen = $lineStrlen < self::WIDTH ? self::WIDTH : $lineStrlen;
@@ -316,15 +316,16 @@ class SyntaxHighlighterV2
         foreach ($lines as $i => $line) {
             $coloredLineNumber = $this->coloredLineNumber(self::LINE_NUMBER, $i, $lineStrlen);
 
-            if ($markLine !== null) {
+            if ($markLines !== null) {
+                $isMarkedLine = in_array($i, $markLines, true);
                 $snippet .=
-                    ($markLine === $i
+                    ($isMarkedLine
                         ? $this->color->apply(self::ACTUAL_LINE_MARK, $mark)
                         : self::NO_MARK
                     );
 
                 $coloredLineNumber =
-                    ($markLine === $i ?
+                    ($isMarkedLine ?
                         $this->coloredLineNumber(self::MARKED_LINE_NUMBER, $i, $lineStrlen) :
                         $coloredLineNumber
                     );
