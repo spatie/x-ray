@@ -3,6 +3,12 @@
     "description": "Find calls to ray() before deploying your code",
     "homepage": "https://github.com/permafrost-dev/ray-scan",
     "license": "MIT",
+    "keywords": [
+        "spatie",
+        "ray",
+        "search",
+        "permafrost"
+    ],
     "authors": [
         {
             "name": "Patrick Organ",
