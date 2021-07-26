@@ -16,13 +16,13 @@ class ConsoleColor
     const RESET_STYLE = 0;
 
     /** @var bool */
-    private $isSupported;
+    protected $isSupported;
 
     /** @var bool */
-    private $forceStyle = false;
+    protected  $forceStyle = false;
 
     /** @var array */
-    private const STYLES = [
+    protected const STYLES = [
         'none'      => null,
         'bold'      => '1',
         'dark'      => '2',
@@ -72,7 +72,7 @@ class ConsoleColor
     ];
 
     /** @var array */
-    private $themes = [];
+    protected $themes = [];
 
     public function __construct()
     {
@@ -215,7 +215,7 @@ class ConsoleColor
         return $sequences;
     }
 
-    protected function styleSequence(string $style): string
+    protected function styleSequence(string $style): ?string
     {
         if (array_key_exists($style, self::STYLES)) {
             return self::STYLES[$style];
