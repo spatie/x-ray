@@ -7,7 +7,6 @@ use Permafrost\PhpCodeSearch\Results\SearchResult;
 use Permafrost\RayScan\Printers\Highlighters\ConsoleColor;
 use Permafrost\RayScan\Printers\Highlighters\SyntaxHighlighterV2;
 use Permafrost\RayScan\Support\Str;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleResultPrinter extends ResultPrinter
