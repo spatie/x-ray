@@ -1,7 +1,7 @@
 - ''
 - ' Filename: fixture1.php'
-- ' Line Num: 3'
-- ' Found   : <target-call>test</target-call>'
+- ' Line Num: <options=bold>3</>'
+- ' Found   : <fg=#e53e3e>test</>'
 - ' ------'
 - |4
      ❱❱    3▕  

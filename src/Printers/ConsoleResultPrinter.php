@@ -6,7 +6,7 @@ use Permafrost\CodeSnippets\Bounds;
 use Permafrost\PhpCodeSearch\Results\SearchResult;
 use Permafrost\RayScan\Printers\Highlighters\ConsoleColor;
 use Permafrost\RayScan\Printers\Highlighters\SyntaxHighlighterV2;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Permafrost\RayScan\Support\Str;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleResultPrinter extends ResultPrinter
@@ -19,44 +19,14 @@ class ConsoleResultPrinter extends ResultPrinter
      */
     public function print($output, SearchResult $result): void
     {
-        $this->initializeFormatter($output);
         $this->printHeader($output, $result);
 
         if ($this->config->showSnippets) {
-            $highlighter = new SyntaxHighlighterV2($this->consoleColor);
-
-            $line = $highlighter->highlightSnippet($result->snippet, Bounds::create($result->location->startLine(), $result->location->endLine()));
+            $bounds = Bounds::create($result->location->startLine(), $result->location->endLine());
+            $line = (new SyntaxHighlighterV2($this->consoleColor))
+                ->highlightSnippet($result->snippet, $bounds);
 
             $output->writeln($line);
-        }
-    }
-
-    protected function initializeFormatter($output): void
-    {
-        $colorMap = [
-            'comment' => ['#334155', null],
-            'keyword' => ['#dd6b20', null],
-            'line-num' => ['#4a5568', null],
-            'method' => ['#ecc94b', null],
-            'str' => ['#38a169', null],
-            'target-line' => [null, '#2d3748'],
-            'line-num-target' => ['#ed64a6', '#2d3748'],
-            'variable' => ['#9f7aea', null],
-            'pointer' => ['#ed64a6', null],
-            'target-call' => ['#e53e3e', null],
-        ];
-
-        foreach($colorMap as $name => $colors) {
-            [$fg, $bg] = $colors;
-
-            $outputStyle = new OutputFormatterStyle($fg, $bg);
-            $output->getFormatter()->setStyle($name, $outputStyle);
-
-            // create a "NNN-target" tag as well for highlighting the target line bg
-            if ($bg === null && ! isset($colorMap["{$name}-target"])) {
-                $outputStyle = new OutputFormatterStyle($fg, $colorMap['target-line'][1]);
-                $output->getFormatter()->setStyle("{$name}-target", $outputStyle);
-            }
         }
     }
 
@@ -68,12 +38,11 @@ class ConsoleResultPrinter extends ResultPrinter
             $output->writeln('');
         }
 
-        $nameParts = explode('->', $result->node->name());
-        $nodeName = end($nameParts);
+        $nodeName = Str::afterLast($result->node->name(), '->');
 
         $output->writeln(" Filename: {$filename}");
-        $output->writeln(" Line Num: {$result->location->startLine}");
-        $output->writeln(" Found   : <target-call>{$nodeName}</target-call>");
+        $output->writeln(" Line Num: <options=bold>{$result->location->startLine}</>");
+        $output->writeln(" Found   : <fg=#e53e3e>{$nodeName}</>");
         $output->writeln(' ------');
     }
 }

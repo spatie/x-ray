@@ -15,4 +15,13 @@ class StrTest extends TestCase
         $this->assertFalse(Str::startsWith('ABC', 'B'));
         $this->assertFalse(Str::startsWith('ABC', 'a'));
     }
+
+    /** @test */
+    public function it_gets_the_str_after_the_last_instance_of_a_substr()
+    {
+        $this->assertEquals('test', Str::afterLast('this is a test', 'a '));
+        $this->assertEquals('myMethod()', Str::afterLast('$obj->myMethod()', '->'));
+        $this->assertEquals('myMethod()', Str::afterLast('myMethod()', '->'));
+        $this->assertEquals('myMethod()', Str::afterLast('myMethod()', ''));
+    }
 }

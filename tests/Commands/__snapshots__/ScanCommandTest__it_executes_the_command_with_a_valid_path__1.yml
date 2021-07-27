@@ -1,7 +1,7 @@
 - ''
 - ' Filename: ./tests/fixtures/fixture1.php'
-- ' Line Num: 2'
-- ' Found   : <target-call>ray</target-call>'
+- ' Line Num: <options=bold>2</>'
+- ' Found   : <fg=#e53e3e>ray</>'
 - ' ------'
 - |4
            1▕  <?php
