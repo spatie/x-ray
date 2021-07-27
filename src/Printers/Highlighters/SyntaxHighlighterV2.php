@@ -77,15 +77,13 @@ class SyntaxHighlighterV2
     public function highlightSnippet(CodeSnippet $snippet, Bounds $bounds): string
     {
         $code = $snippet->getLines();
-
-        $lineNumbers = array_keys($code);
         $codeStr = '';
 
         foreach($code as $line) {
             $codeStr .= $line . PHP_EOL;
         }
 
-        return $this->highlight(($codeStr), $bounds, $lineNumbers);
+        return $this->highlight($codeStr, $bounds, array_keys($code));
     }
 
     public function __construct(?ConsoleColor $color = null)
