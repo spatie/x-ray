@@ -3,7 +3,6 @@
 namespace Permafrost\RayScan\Tests\Printers\Highlighters;
 
 use Permafrost\CodeSnippets\CodeSnippet;
-use Permafrost\PhpCodeSearch\Support\File;
 use Permafrost\RayScan\Printers\Highlighters\SyntaxHighlighterV2;
 use Permafrost\RayScan\Tests\TestClasses\FakeConsoleColor;
 use PHPUnit\Framework\TestCase;

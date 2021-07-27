@@ -1,12 +1,6 @@
-- |
-    +--+--+
-- |
-    |<info> Filename </info>|<info> Call Count </info>|
-- |
-    +--+--+
-- |
-    | ./tests/fixtures/fixture1.php | 1 |
-- |
-    +--+--+
-- |4
-     Found 1 function calls in 1 files.
+- +--+--+
+- '|<info> Filename </info>|<info> Call Count </info>|'
+- +--+--+
+- '| ./tests/fixtures/fixture1.php | 1 |'
+- +--+--+
+- ' Found 1 function calls in 1 files.'
