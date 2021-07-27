@@ -12,6 +12,15 @@
 
 ---
 
+Testing instructions:  Clone the repo, then run:
+
+```bash
+composer install
+./bin/ray-scan . -S
+```
+
+---
+
 Scan source code for calls to `ray()`, `rd()` and `Ray::*` _(static calls)_ from the [spatie/ray](https://github.com/spatie/ray) and [spatie/laravel-ray](https://github.com/spatie/laravel-ray) _(and other)_ packages.
 
 The primary use case for this package is when calls to `ray()` cannot be left in the source code before deploying, even if ray is disabled.  This package does NOT remove the function calls, it only displays their locations so they can be removed manually.
