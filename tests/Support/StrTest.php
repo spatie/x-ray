@@ -22,5 +22,6 @@ class StrTest extends TestCase
         $this->assertEquals('test', Str::afterLast('this is a test', 'a '));
         $this->assertEquals('myMethod()', Str::afterLast('$obj->myMethod()', '->'));
         $this->assertEquals('myMethod()', Str::afterLast('myMethod()', '->'));
+        $this->assertEquals('myMethod()', Str::afterLast('myMethod()', ''));
     }
 }
