@@ -4,12 +4,12 @@
 - ' Found   : <target-call>ray</target-call>'
 - ' ------'
 - |4
-           1▕  ray('12345');
-     ❱❱    2▕  
-           3▕      echo strtolower('TEST') . PHP_EOL;
-           4▕  
-           5▕      echo strtoupper('test') . PHP_EOL;
-           6▕  
+           1▕  <?php
+     ❱❱    2▕      ray('12345');
+           3▕  
+           4▕      echo strtolower('TEST') . PHP_EOL;
+           5▕  
+           6▕      echo strtoupper('test') . PHP_EOL;
 - ''
 - ' ---'
 - ' Found 1 function calls in 1 files.'
