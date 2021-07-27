@@ -4,6 +4,7 @@ namespace Permafrost\RayScan\Printers\Highlighters;
 
 use Permafrost\CodeSnippets\Bounds;
 use Permafrost\CodeSnippets\CodeSnippet;
+use Permafrost\RayScan\Support\Str;
 
 /**
  * Original code taken from nunomaduro/collision
@@ -71,6 +72,8 @@ class SyntaxHighlighterV2
 
     public $lines = [];
 
+    protected $hasOpenTag = false;
+
     public function highlightSnippet(CodeSnippet $snippet, Bounds $bounds): string
     {
         $code = $snippet->getLines();
@@ -84,35 +87,12 @@ class SyntaxHighlighterV2
 
         $result = $this->highlight(($codeStr), $bounds, $lineNumbers);
 
-        return str_replace('__CODE_BUFFER_REMOVE__', '', $result);
-    }
+        $result = str_replace('__CODE_BUFFER_REMOVE__', '', $result);
 
-//    protected function findCodeInSnippet(CodeSnippet $snippet, string $code, $matchAnywhere = false): array
-//    {
-//        $lineBuffer = [];
-//        $found = false;
-//
-//        $lines = explode(PHP_EOL, $code);
-//
-//        foreach($snippet->getCode() as $lineNum => $line) {
-//            if (count($lines)) {
-//                $posResult = strpos(trim($line), trim($lines[0]));
-//
-//                $found = $matchAnywhere ? ($posResult !== false) : ($posResult === 0);
-//            }
-//
-//            if (count($lines) === 0 && count($lineBuffer)) {
-//                return $lineBuffer;
-//            }
-//
-//            if ($found) {
-//                $lineBuffer[] = $lineNum;
-//                array_shift($lines);
-//            }
-//        }
-//
-//        return $lineBuffer;
-//    }
+        return $result;
+
+
+    }
 
     public function __construct(?ConsoleColor $color = null)
     {
@@ -157,6 +137,9 @@ class SyntaxHighlighterV2
     protected function getHighlightedLines(string $source): array
     {
         $source = str_replace(["\r\n", "\r"], "\n", $source);
+
+        $this->hasOpenTag = Str::startsWith(ltrim($source), '<?php');
+
         $tokens = $this->tokenize($source);
 
         return $this->splitToLines($tokens);
@@ -164,8 +147,8 @@ class SyntaxHighlighterV2
 
     protected function tokenize(string $source): array
     {
-        if (strpos(ltrim($source), '<?'.'php') === false) {
-            $source = "<?" ."php {$source}";
+        if (! $this->hasOpenTag) {
+            $source = "<?"."php {$source}";
         }
 
         $tokens = token_get_all($source);
@@ -180,11 +163,11 @@ class SyntaxHighlighterV2
                     case T_WHITESPACE:
                         break;
 
+
                     case T_OPEN_TAG:
-                        $newType = null;
-                        //$newType = self::TOKEN_DEFAULT;
-                        //$newType = 'whitespace';
-                        //$token[1] = PHP_EOL;
+                        // mark the token as a keyword if it wasn't added automatically for tokenization
+                        $newType = $this->hasOpenTag ? self::TOKEN_KEYWORD : self::TOKEN_DEFAULT;
+
                         break;
 
                     case T_OPEN_TAG_WITH_ECHO:
@@ -281,6 +264,8 @@ class SyntaxHighlighterV2
     protected function colorLines(array $tokenLines, Bounds $bounds): array
     {
         $lines = [];
+        $firstLineNum = array_keys($tokenLines)[0];
+
         foreach ($tokenLines as $lineCount => $tokenLine) {
             $line = '';
 
@@ -293,6 +278,11 @@ class SyntaxHighlighterV2
                 } else {
                     $line .= $tokenValue;
                 }
+            }
+
+            // strip the open tag that we added for tokenization
+            if ($lineCount === $firstLineNum && ! $this->hasOpenTag) {
+                $line = preg_replace('~<\?php\s?~', '', $line);
             }
 
             $lines[$lineCount] = $line;
