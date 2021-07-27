@@ -85,13 +85,7 @@ class SyntaxHighlighterV2
             $codeStr .= $line . PHP_EOL;
         }
 
-        $result = $this->highlight(($codeStr), $bounds, $lineNumbers);
-
-        $result = str_replace('__CODE_BUFFER_REMOVE__', '', $result);
-
-        return $result;
-
-
+        return $this->highlight(($codeStr), $bounds, $lineNumbers);
     }
 
     public function __construct(?ConsoleColor $color = null)
