@@ -148,7 +148,7 @@ class SyntaxHighlighterV2
 
         $lines = $this->colorLines($tokenLines, $startLineNumber, $endLineNumber);
 
-        return $this->lineNumbers($lines, range($startLineNumber-1, $endLineNumber-1));
+        return $this->lineNumbers($lines, range($startLineNumber, $endLineNumber));
     }
 
     protected function getHighlightedLines(string $source): array
