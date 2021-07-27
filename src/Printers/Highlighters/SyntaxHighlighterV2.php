@@ -274,7 +274,7 @@ class SyntaxHighlighterV2
                 }
             }
 
-            // strip the open tag that we added for tokenization
+            // strip the open tag that was added for tokenization
             if ($lineCount === $firstLineNum && ! $this->hasOpenTag) {
                 $line = preg_replace('~<\?php\s?~', '', $line);
             }
@@ -299,26 +299,22 @@ class SyntaxHighlighterV2
         $lineStrlen = strlen((string) (array_key_last($lines) + 1));
         $lineStrlen = $lineStrlen < self::WIDTH ? self::WIDTH : $lineStrlen;
         $snippet    = '';
-        $mark = $this->arrow . ' ';
-        $mark = str_pad($mark, 4, ' ', STR_PAD_LEFT);
+        $mark = str_pad($this->arrow . ' ', 4, ' ', STR_PAD_LEFT);
 
+        foreach ($lines as $lineNum => $line) {
+            $coloredLineNumber = $this->coloredLineNumber(self::LINE_NUMBER, $lineNum, $lineStrlen);
 
-        foreach ($lines as $i => $line) {
-            $coloredLineNumber = $this->coloredLineNumber(self::LINE_NUMBER, $i, $lineStrlen);
+            if (! empty($markLines)) {
+                $isMarkedLine = in_array($lineNum, $markLines, true);
 
-            if ($markLines !== null) {
-                $isMarkedLine = in_array($i, $markLines, true);
-                $snippet .=
-                    ($isMarkedLine
-                        ? $this->color->apply(self::ACTUAL_LINE_MARK, $mark)
-                        : self::NO_MARK
-                    );
+                if (! $isMarkedLine) {
+                    $snippet .= self::NO_MARK;
+                }
 
-                $coloredLineNumber =
-                    ($isMarkedLine ?
-                        $this->coloredLineNumber(self::MARKED_LINE_NUMBER, $i, $lineStrlen) :
-                        $coloredLineNumber
-                    );
+                if ($isMarkedLine) {
+                    $snippet .= $this->color->apply(self::ACTUAL_LINE_MARK, $mark);
+                    $coloredLineNumber = $this->coloredLineNumber(self::MARKED_LINE_NUMBER, $lineNum, $lineStrlen);
+                }
             }
 
             $snippet .= $coloredLineNumber;
