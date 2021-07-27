@@ -2,6 +2,7 @@
 
 namespace Permafrost\RayScan\Tests\Printers\Highlighters;
 
+use Permafrost\CodeSnippets\Bounds;
 use Permafrost\CodeSnippets\CodeSnippet;
 use Permafrost\RayScan\Printers\Highlighters\SyntaxHighlighterV2;
 use Permafrost\RayScan\Tests\TestClasses\FakeConsoleColor;
@@ -22,7 +23,7 @@ class SyntaxHighlighterV2Test extends TestCase
             ->snippetLineCount(5)
             ->fromFile(__DIR__ . '/../../fixtures/fixture1.php');
 
-        $this->assertMatchesSnapshot($highlighter->highlightSnippet($snippet, 3, 3));
+        $this->assertMatchesSnapshot($highlighter->highlightSnippet($snippet, Bounds::create(3, 3)));
     }
 
 }

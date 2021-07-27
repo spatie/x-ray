@@ -2,6 +2,7 @@
 
 namespace Permafrost\RayScan\Printers\Highlighters;
 
+use Permafrost\CodeSnippets\Bounds;
 use Permafrost\CodeSnippets\CodeSnippet;
 
 /**
@@ -70,7 +71,7 @@ class SyntaxHighlighterV2
 
     public $lines = [];
 
-    public function highlightSnippet(CodeSnippet $snippet, int $startLine, int $endLine): string
+    public function highlightSnippet(CodeSnippet $snippet, Bounds $bounds): string
     {
         $code = $snippet->getLines();
 
@@ -81,7 +82,7 @@ class SyntaxHighlighterV2
             $codeStr .= $line . PHP_EOL;
         }
 
-        $result = $this->highlight(trim($codeStr), $startLine, $endLine, $lineNumbers);
+        $result = $this->highlight(($codeStr), $bounds, $lineNumbers);
 
         return str_replace('__CODE_BUFFER_REMOVE__', '', $result);
     }
@@ -130,25 +131,27 @@ class SyntaxHighlighterV2
         $this->delimiter .= ' ';
     }
 
-    public function highlight(string $content, int $startLine, int $endLine, array $lineNumbers): string
+    public function highlight(string $content, Bounds $bounds, array $lineNumbers): string
     {
-        return $this->getCodeSnippet($content, $startLine, $endLine, $lineNumbers);
+        return $this->getCodeSnippet($content, $bounds, $lineNumbers);
     }
 
-    public function getCodeSnippet(string $source, int $startLineNumber, int $endLineNumber, array $lineNumbers = []): string
+    public function getCodeSnippet(string $source, Bounds $bounds, array $lineNumbers = []): string
     {
         $tempTokenLines = $this->getHighlightedLines($source);
         $tokenLines = [];
         $index = 0;
 
         foreach($tempTokenLines as $line) {
-            $tokenLines[$lineNumbers[$index]] = $line;
+            if (isset($lineNumbers[$index])) {
+                $tokenLines[$lineNumbers[$index]] = $line;
+            }
             $index++;
         }
 
-        $lines = $this->colorLines($tokenLines, $startLineNumber, $endLineNumber);
+        $lines = $this->colorLines($tokenLines, $bounds);
 
-        return $this->lineNumbers($lines, range($startLineNumber, $endLineNumber));
+        return $this->lineNumbers($lines, range($bounds->start, $bounds->end));
     }
 
     protected function getHighlightedLines(string $source): array
@@ -162,7 +165,7 @@ class SyntaxHighlighterV2
     protected function tokenize(string $source): array
     {
         if (strpos(ltrim($source), '<?'.'php') === false) {
-            $source = "<?" ."php __CODE_BUFFER_REMOVE__{$source}";
+            $source = "<?" ."php {$source}";
         }
 
         $tokens = token_get_all($source);
@@ -179,6 +182,9 @@ class SyntaxHighlighterV2
 
                     case T_OPEN_TAG:
                         $newType = null;
+                        //$newType = self::TOKEN_DEFAULT;
+                        //$newType = 'whitespace';
+                        //$token[1] = PHP_EOL;
                         break;
 
                     case T_OPEN_TAG_WITH_ECHO:
@@ -272,7 +278,7 @@ class SyntaxHighlighterV2
         return $lines;
     }
 
-    protected function colorLines(array $tokenLines, int $startLine, int $endLine): array
+    protected function colorLines(array $tokenLines, Bounds $bounds): array
     {
         $lines = [];
         foreach ($tokenLines as $lineCount => $tokenLine) {
@@ -282,7 +288,7 @@ class SyntaxHighlighterV2
                 [$tokenType, $tokenValue] = $token;
 
                 if ($this->color->hasTheme($tokenType)) {
-                    $appendStyles = $this->getColorLineAdditionalStyles($lineCount, range($startLine, $endLine));
+                    $appendStyles = $this->getColorLineAdditionalStyles($lineCount, range($bounds->start, $bounds->end));
                     $line .= $this->color->apply($tokenType, $tokenValue, $appendStyles);
                 } else {
                     $line .= $tokenValue;
