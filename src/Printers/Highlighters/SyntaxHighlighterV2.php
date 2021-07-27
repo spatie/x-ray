@@ -76,14 +76,7 @@ class SyntaxHighlighterV2
 
     public function highlightSnippet(CodeSnippet $snippet, Bounds $bounds): string
     {
-        $code = $snippet->getLines();
-        $codeStr = '';
-
-        foreach($code as $line) {
-            $codeStr .= $line . PHP_EOL;
-        }
-
-        return $this->highlight($codeStr, $bounds, array_keys($code));
+        return $this->highlight($snippet->toString(), $bounds, $snippet->getLineNumbers());
     }
 
     public function __construct(?ConsoleColor $color = null)
