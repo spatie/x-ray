@@ -11,6 +11,8 @@ use Permafrost\RayScan\Printers\ConsoleResultPrinter;
 use Permafrost\RayScan\Tests\TestClasses\FakeConsoleColor;
 use Permafrost\RayScan\Tests\TestClasses\FakeOutput;
 use Permafrost\RayScan\Tests\Traits\CreatesTestConfiguration;
+use PhpParser\Node\Expr\FuncCall;
+use PhpParser\Node\Name;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -29,7 +31,7 @@ class ConsoleResultPrinterTest extends TestCase
             ->snippetLineCount(3)
             ->fromFile($file->getRealPath());
 
-        $node = FunctionCallNode::create('test', []);
+        $node = FunctionCallNode::create(new FuncCall(new Name('test'), [], []), []);
 
         $result = new SearchResult($node, $location, $snippet, basename($file->filename));
         $result->file()->filename = basename($file->filename);
