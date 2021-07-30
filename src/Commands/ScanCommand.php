@@ -44,6 +44,7 @@ class ScanCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->initializeProps($input, $output)
+            ->printStatus($output)
             ->scanPaths()
             ->printResults();
 
@@ -83,5 +84,12 @@ class ScanCommand extends Command
     protected function printResults(): void
     {
         $this->printer->print($this->scanResults);
+    }
+
+    protected function printStatus(OutputInterface $output): self
+    {
+        $output->writeln('Scanning for ray calls...');
+
+        return $this;
     }
 }
