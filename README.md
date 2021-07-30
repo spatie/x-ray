@@ -113,6 +113,17 @@ fi
 exit $rayScanExitCode || $localPreCommitExitCode
 ```
 
+You can also use `ray-scan` with husky in your `package.json` configuration:
+
+```json
+...
+"husky": {
+    "hooks": {
+        "pre-commit": "lint-staged && ray-scan -s ."
+    }
+},
+....
+```
 
 ## Sample Output
 
