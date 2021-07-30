@@ -22,7 +22,7 @@ class Configuration
     /** @var array|string[] */
     public $ignorePaths = [];
 
-    public function __construct(string $path, bool $showSnippets, bool $hideProgress, bool $showSummary)
+    public function __construct(?string $path, bool $showSnippets, bool $hideProgress, bool $showSummary)
     {
         $this->path = $path;
         $this->showSnippets = $showSnippets;
@@ -32,7 +32,7 @@ class Configuration
 
     public function validate(): self
     {
-        if (! file_exists($this->path)) {
+        if (! file_exists($this->path ?? '')) {
             throw new \InvalidArgumentException('Invalid input file or path provided.');
         }
 

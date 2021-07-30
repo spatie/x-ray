@@ -9,6 +9,8 @@ use Permafrost\RayScan\Configuration\ConfigurationFactory;
 use Permafrost\RayScan\Printers\ConsoleResultsPrinter;
 use Permafrost\RayScan\Printers\ResultsPrinter;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\HelperSet;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -43,10 +45,17 @@ class ScanCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->initializeProps($input, $output)
-            ->printStatus($output)
-            ->scanPaths()
-            ->printResults();
+        try {
+            $this->initializeProps($input, $output)
+                ->printStatus($output)
+                ->scanPaths()
+                ->printResults();
+        } catch(\InvalidArgumentException $e) {
+            $output->writeln('<fg=yellow;options=bold>Error: </>' . $e->getMessage());
+            //$this->getApplication()->run(new ArrayInput(['--help']));
+
+            return Command::FAILURE;
+        }
 
         return count($this->scanResults) ? Command::FAILURE : Command::SUCCESS;
     }
