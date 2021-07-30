@@ -35,7 +35,7 @@ class ConsoleResultsPrinterTest extends TestCase
     public function it_prints_a_summary_without_a_table()
     {
         $path = __DIR__ . '/../fixtures/fixture1.php';
-        $config = $this->createConfiguration($path, null, ['path' => $path]);
+        $config = $this->createConfiguration([$path], null, ['path' => $path]);
         $output = new FakeOutput();
         $printer = new ConsoleResultsPrinter($output, $config);
         $printer->consoleColor = new FakeConsoleColor();

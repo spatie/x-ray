@@ -61,7 +61,7 @@ class ScanCommandTest extends TestCase
     /** @test */
     public function it_executes_the_command_with_a_valid_path()
     {
-        $path = __DIR__ . '/../fixtures';
+        $path = [__DIR__ . '/../fixtures'];
         $input = $this->createInput(['path' => $path, '--no-progress' => true, '--snippets' => true]);
 
         $this->command->printer = new FakeConsoleResultsPrinter($this->createConfigurationFromInput($input));

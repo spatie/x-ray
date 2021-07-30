@@ -25,22 +25,22 @@ class ConfigurationFactoryTest extends TestCase
     /** @test */
     public function it_creates_a_configuration_object()
     {
-        $path = realpath(__DIR__.'/../fixtures/fixture1.php');
-        $input = $this->createInput(['path' => [$path], '--no-progress' => true, '--snippets' => true]);
+        $path = [realpath(__DIR__.'/../fixtures/fixture1.php')];
+        $input = $this->createInput(['path' => $path, '--no-progress' => true, '--snippets' => true]);
 
         $config = ConfigurationFactory::create($input, __DIR__ . '/../data');
 
         $this->assertTrue($config->showSnippets);
         $this->assertTrue($config->hideProgress);
-        $this->assertEquals($path, $config->path);
+        $this->assertEquals($path, $config->paths);
     }
 
     /** @test */
     public function it_throws_an_exception_when_validating_the_configuration_if_the_filename_does_not_exist()
     {
-        $filename = realpath(__DIR__.'/../fixtures/missing.php');
+        $filename = [realpath(__DIR__.'/../fixtures/missing.php')];
 
-        $input = $this->createInput(['path' => [$filename], '--no-progress' => true]);
+        $input = $this->createInput(['path' => $filename, '--no-progress' => true]);
         $config = ConfigurationFactory::create($input, __DIR__ . '/../data');
 
         $this->expectException(\InvalidArgumentException::class);
@@ -51,9 +51,9 @@ class ConfigurationFactoryTest extends TestCase
     /** @test */
     public function it_does_not_throw_an_exception_when_validating_the_configuration_if_the_filename_exists()
     {
-        $filename = realpath(__DIR__.'/../fixtures/fixture1.php');
+        $filename = [realpath(__DIR__.'/../fixtures/fixture1.php')];
 
-        $input = $this->createInput(['path' => [$filename], '--no-progress' => true]);
+        $input = $this->createInput(['path' => $filename, '--no-progress' => true]);
         $config = ConfigurationFactory::create($input, __DIR__ . '/../data');
         $hasException = false;
 
