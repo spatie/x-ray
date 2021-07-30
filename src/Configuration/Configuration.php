@@ -16,18 +16,22 @@ class Configuration
     /** @var bool */
     public $showSummary = false;
 
+    /** @var bool */
+    public $compactMode = false;
+
     /** @var array|string[] */
     public $ignoreFunctions = [];
 
     /** @var array|string[] */
     public $ignorePaths = [];
 
-    public function __construct(?array $paths, bool $showSnippets, bool $hideProgress, bool $showSummary)
+    public function __construct(?array $paths, bool $showSnippets, bool $hideProgress, bool $showSummary, bool $compactMode = false)
     {
         $this->paths = $paths ?? [];
         $this->showSnippets = $showSnippets;
         $this->hideProgress = $hideProgress;
         $this->showSummary = $showSummary;
+        $this->compactMode = $compactMode;
     }
 
     public function validate(): self

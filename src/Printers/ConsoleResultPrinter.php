@@ -14,12 +14,14 @@ class ConsoleResultPrinter extends ResultPrinter
     /** @var ConsoleColor|null */
     public $consoleColor = null;
 
+    public static $printedHeader = false;
+
     /**
      * @param OutputInterface $output
      */
     public function print($output, SearchResult $result): void
     {
-        $this->printHeader($output, $result);
+        $this->printResultLine($output, $result);
 
         if ($this->config->showSnippets) {
             $bounds = Bounds::create($result->location->startLine(), $result->location->endLine());
@@ -30,12 +32,18 @@ class ConsoleResultPrinter extends ResultPrinter
         }
     }
 
-    protected function printHeader(OutputInterface $output, SearchResult $result): void
+    protected function printResultLine(OutputInterface $output, SearchResult $result)
     {
         $filename = str_replace(getcwd() . DIRECTORY_SEPARATOR, './', $result->file()->filename);
 
-        if ($this->config->showSnippets) {
-            $output->writeln('');
+        if ($this->config->compactMode) {
+            if (! self::$printedHeader) {
+                $output->writeln(' <fg=#169b3c>❱</> scan complete.');
+                $output->writeln('');
+
+                self::$printedHeader = true;
+            }
+            return $this->printCompactResultLine($output, $result);
         }
 
         $nodeName = Str::afterLast($result->node->name(), '->');
@@ -44,5 +52,18 @@ class ConsoleResultPrinter extends ResultPrinter
         $output->writeln(" Line Num: <options=bold>{$result->location->startLine}</>");
         $output->writeln(" Found   : <fg=#e53e3e>{$nodeName}</>");
         $output->writeln(' ------');
+    }
+
+    protected function printCompactResultLine(OutputInterface $output, SearchResult $result)
+    {
+        $filename = str_replace(getcwd() . DIRECTORY_SEPARATOR, './', $result->file()->filename);
+
+        $output->writeln(" {$filename}:<fg=#52525B>{$result->location->startLine}</>");
+
+        if ($this->config->showSnippets) {
+            $output->writeln('');
+        }
+
+        return true;
     }
 }

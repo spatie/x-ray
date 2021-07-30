@@ -39,6 +39,7 @@ class ScanCommand extends Command
             ->addOption('no-progress', 'P', InputOption::VALUE_NONE, 'Don\'t display the progress bar')
             ->addOption('snippets', 'S', InputOption::VALUE_NONE, 'Display highlighted code snippets')
             ->addOption('summary', 's', InputOption::VALUE_NONE, 'Display a table summarizing the results')
+            ->addOption('compact', 'c', InputOption::VALUE_NONE, 'Display results in a compact format')
             ->setDescription('Scans a directory or filename for calls to ray(), rd() and Ray::*.');
     }
 
