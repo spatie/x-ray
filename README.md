@@ -90,6 +90,30 @@ return [
 ];
 ```
 
+## Git hooks
+
+In some cases you may want to use a git `pre-commit` hook to avoid commiting any `ray()` calls:
+
+```bash
+#!/bin/sh
+
+echo "Checking for ray() calls...\n"
+
+ray-scan -s .
+rayScanExitCode=$?
+
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+
+localPreCommitExitCode=0
+if [ -e ./.git/hooks/pre-commit ]; then
+    ./.git/hooks/pre-commit "$@"
+    localPreCommitExitCode=$?
+fi
+
+exit $rayScanExitCode || $localPreCommitExitCode
+```
+
+
 ## Sample Output
 
 ![image](https://user-images.githubusercontent.com/5508707/126883494-57cffebc-6fb1-4dff-9e10-148770437fcc.png)
