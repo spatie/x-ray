@@ -46,6 +46,10 @@ Specify either a valid path name or a valid filename to scan:
 ./vendor/bin/ray-scan ./app
 ./vendor/bin/ray-scan ./app/Models/User.php
 
+# scan multiple files or directories at once
+./vendor/bin/ray-scan ./app/Models/*.php
+./vendor/bin/ray-scan ./app ./tests
+
 # display code snippets
 ./vendor/bin/ray-scan ./src --snippets
 ./vendor/bin/ray-scan ./src -S
@@ -55,6 +59,9 @@ Specify either a valid path name or a valid filename to scan:
 
 # display only a summary of the discovered calls
 ./vendor/bin/ray-scan ./src --summary
+
+# display only minimal scan results
+./vendor/bin/ray-scan -c ./app
 ```
 
 ## Available Options
@@ -64,6 +71,7 @@ Specify either a valid path name or a valid filename to scan:
 |`--no-progress` or `-P` | Don't display the progress bar while scanning files |
 |`--snippets` or `-S` | Display code snippets from located calls |
 |`--summary` or `-s` | Display a summary of the files/calls discovered |
+|`--compact` or `-c` | Display each result on a single line, with minimal output | 
 
 ## Configuration files
 

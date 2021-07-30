@@ -15,7 +15,7 @@ trait CreatesTestConfiguration
     protected function createInput(array $input)
     {
         $inputDefinition = new InputDefinition([
-            new InputArgument('path', InputArgument::REQUIRED),
+            new InputArgument('path', InputArgument::IS_ARRAY),
             new InputOption('no-progress', 'P', InputOption::VALUE_NONE),
             new InputOption('snippets', 'S', InputOption::VALUE_NONE),
             new InputOption('summary', 's', InputOption::VALUE_NONE),
@@ -24,8 +24,12 @@ trait CreatesTestConfiguration
         return new ArrayInput($input, $inputDefinition);
     }
 
-    protected function createConfiguration(string $path, ?string $configPath = null, ?array $options = null): Configuration
+    protected function createConfiguration($path, ?string $configPath = null, ?array $options = null): Configuration
     {
+        if (!is_array($path)) {
+            $path = [$path];
+        }
+
         $configPath = $configPath ?? __DIR__ . '/../data';
         $options = $options ?? ['path' => $path, '--no-progress' => true, '--snippets' => false];
 

@@ -15,8 +15,12 @@ class CodeScanner
     /** @var array */
     protected $paths;
 
-    public function __construct(Configuration $config, string $path)
+    public function __construct(Configuration $config, $path)
     {
+        if (! is_array($path)) {
+            $path = [$path];
+        }
+
         $this->config = $config;
         $this->paths = $this->loadDirectoryFiles($path);
     }
@@ -71,28 +75,31 @@ class CodeScanner
         return $this->paths;
     }
 
-    protected function loadDirectoryFiles(string $path): array
+    protected function loadDirectoryFiles(array $paths): array
     {
-        if (is_file($path)) {
-            return [realpath($path)];
-        }
-
-        $finder = Finder::create()
-            ->ignoreDotFiles(true)
-            ->ignoreVCS(true)
-            ->ignoreVCSIgnored(file_exists("{$path}/.gitignore"))
-            ->ignoreUnreadableDirs(true)
-            ->in($path)
-            ->exclude($this->config->ignorePaths)
-            ->exclude('vendor')
-            ->exclude('node_modules')
-            ->name('*.php')
-            ->files();
-
         $result = [];
 
-        foreach ($finder as $file) {
-            $result[] = $file;
+        foreach($paths as $path) {
+            if (is_file($path)) {
+                $result[] = realpath($path);
+                continue;
+            }
+
+            $finder = Finder::create()
+                ->ignoreDotFiles(true)
+                ->ignoreVCS(true)
+                ->ignoreVCSIgnored(file_exists("{$path}/.gitignore"))
+                ->ignoreUnreadableDirs(true)
+                ->in($path)
+                ->exclude($this->config->ignorePaths)
+                ->exclude('vendor')
+                ->exclude('node_modules')
+                ->name('*.php')
+                ->files();
+
+            foreach ($finder as $file) {
+                $result[] = $file;
+            }
         }
 
         return $result;
