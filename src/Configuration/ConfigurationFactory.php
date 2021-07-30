@@ -16,13 +16,13 @@ class ConfigurationFactory
 
     public static function create(InputInterface $input, ?string $configDirectory = null): Configuration
     {
-        $path = $input->getArgument('path');
+        $paths = $input->getArgument('path');
 
         $hideProgress = $input->hasOption('no-progress') && $input->getOption('no-progress') === true;
         $showSnippets = $input->hasOption('snippets') && $input->getOption('snippets') === true;
         $showSummary = $input->hasOption('summary') && $input->getOption('summary') === true;
 
-        $result = new Configuration($path, $showSnippets, $hideProgress, $showSummary);
+        $result = new Configuration($paths, $showSnippets, $hideProgress, $showSummary);
 
         $options = (new static())->getSettingsFromConfigFile($configDirectory);
 

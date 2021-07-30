@@ -9,6 +9,9 @@ use Permafrost\RayScan\Configuration\ConfigurationFactory;
 use Permafrost\RayScan\Printers\ConsoleResultsPrinter;
 use Permafrost\RayScan\Printers\ResultsPrinter;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\Input;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -34,7 +37,7 @@ class ScanCommand extends Command
     protected function configure(): void
     {
         $this->setName('scan')
-            ->addArgument('path')
+            ->addArgument('path', InputArgument::IS_ARRAY)
             ->addOption('no-progress', 'P', InputOption::VALUE_NONE, 'Don\'t display the progress bar')
             ->addOption('snippets', 'S', InputOption::VALUE_NONE, 'Display highlighted code snippets')
             ->addOption('summary', 's', InputOption::VALUE_NONE, 'Display a table summarizing the results')
@@ -63,7 +66,7 @@ class ScanCommand extends Command
         $this->style = new SymfonyStyle($input, $output);
         $this->config = ConfigurationFactory::create($input)->validate();
         $this->printer = new ConsoleResultsPrinter($output, $this->config);
-        $this->scanner = new CodeScanner($this->config, $this->config->path);
+        $this->scanner = new CodeScanner($this->config, $this->config->paths);
 
         return $this;
     }
