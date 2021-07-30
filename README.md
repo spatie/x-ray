@@ -133,17 +133,16 @@ You can also use `ray-scan` with husky in your `package.json` configuration:
 ....
 ```
 
-## Sample Output
+## Screenshots
 
-![image](https://user-images.githubusercontent.com/5508707/126883494-57cffebc-6fb1-4dff-9e10-148770437fcc.png)
-
-![image](https://user-images.githubusercontent.com/5508707/126883434-3bc6fbad-73c1-4144-a587-cdf59c74b6ce.png)
-
-![image](https://user-images.githubusercontent.com/5508707/126883461-f56e74c9-f427-4f59-8ece-385b5d013b78.png)
-
-![image](https://user-images.githubusercontent.com/5508707/126883470-1224ed2b-38ed-4772-9d8b-65f71539119d.png)
-
-![image](https://user-images.githubusercontent.com/5508707/126909292-8a8fa93e-7a45-4c65-855f-30edb0092806.png)
+<p>
+    <img width="450" src="https://user-images.githubusercontent.com/5508707/126883494-57cffebc-6fb1-4dff-9e10-148770437fcc.png" alt="output">
+    <img src="https://user-images.githubusercontent.com/5508707/127717212-6cd02efc-e148-4aca-80bd-070bd4649dc2.png" alt="compact output">
+    <img width="450" height="180" src="https://user-images.githubusercontent.com/5508707/126883461-f56e74c9-f427-4f59-8ece-385b5d013b78.png" alt="">
+    <img width="450" height="180" src="https://user-images.githubusercontent.com/5508707/126883434-3bc6fbad-73c1-4144-a587-cdf59c74b6ce.png" alt="">
+    <img width="450" src="https://user-images.githubusercontent.com/5508707/126883470-1224ed2b-38ed-4772-9d8b-65f71539119d.png" alt="">
+    <img width="450" src="https://user-images.githubusercontent.com/5508707/126909292-8a8fa93e-7a45-4c65-855f-30edb0092806.png" alt="">
+</p>
 
 ## Testing
 
