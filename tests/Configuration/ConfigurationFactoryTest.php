@@ -14,7 +14,7 @@ class ConfigurationFactoryTest extends TestCase
     protected function createInput(array $input)
     {
         $inputDefinition = new InputDefinition([
-            new InputArgument('path', InputArgument::REQUIRED),
+            new InputArgument('path', InputArgument::IS_ARRAY),
             new InputOption('no-progress', 'P', InputOption::VALUE_NONE),
             new InputOption('snippets', 'S', InputOption::VALUE_NONE),
         ]);
@@ -26,7 +26,7 @@ class ConfigurationFactoryTest extends TestCase
     public function it_creates_a_configuration_object()
     {
         $path = realpath(__DIR__.'/../fixtures/fixture1.php');
-        $input = $this->createInput(['path' => $path, '--no-progress' => true, '--snippets' => true]);
+        $input = $this->createInput(['path' => [$path], '--no-progress' => true, '--snippets' => true]);
 
         $config = ConfigurationFactory::create($input, __DIR__ . '/../data');
 
@@ -40,7 +40,7 @@ class ConfigurationFactoryTest extends TestCase
     {
         $filename = realpath(__DIR__.'/../fixtures/missing.php');
 
-        $input = $this->createInput(['path' => $filename, '--no-progress' => true]);
+        $input = $this->createInput(['path' => [$filename], '--no-progress' => true]);
         $config = ConfigurationFactory::create($input, __DIR__ . '/../data');
 
         $this->expectException(\InvalidArgumentException::class);
@@ -53,7 +53,7 @@ class ConfigurationFactoryTest extends TestCase
     {
         $filename = realpath(__DIR__.'/../fixtures/fixture1.php');
 
-        $input = $this->createInput(['path' => $filename, '--no-progress' => true]);
+        $input = $this->createInput(['path' => [$filename], '--no-progress' => true]);
         $config = ConfigurationFactory::create($input, __DIR__ . '/../data');
         $hasException = false;
 

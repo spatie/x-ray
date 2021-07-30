@@ -11,7 +11,7 @@ class CodeScannerTest extends TestCase
 {
     protected function getConfig(): Configuration
     {
-        return new Configuration(__DIR__, false, false, false);
+        return new Configuration([__DIR__], false, false, false);
     }
 
     /** @test */
