@@ -85,8 +85,6 @@ class CodeScanner
                 continue;
             }
 
-            print_r($path);
-
             $finder = Finder::create()
                 ->ignoreDotFiles(true)
                 ->ignoreVCS(true)

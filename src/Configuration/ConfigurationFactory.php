@@ -18,6 +18,10 @@ class ConfigurationFactory
     {
         $paths = $input->getArgument('path');
 
+        if (! is_array($paths)) {
+            $paths = [$paths];
+        }
+
         $hideProgress = $input->hasOption('no-progress') && $input->getOption('no-progress') === true;
         $showSnippets = $input->hasOption('snippets') && $input->getOption('snippets') === true;
         $showSummary = $input->hasOption('summary') && $input->getOption('summary') === true;
