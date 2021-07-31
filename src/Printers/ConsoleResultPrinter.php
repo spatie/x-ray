@@ -14,8 +14,6 @@ class ConsoleResultPrinter extends ResultPrinter
     /** @var ConsoleColor|null */
     public $consoleColor = null;
 
-    public static $printedHeader = false;
-
     /**
      * @param OutputInterface $output
      */
@@ -37,20 +35,13 @@ class ConsoleResultPrinter extends ResultPrinter
         $filename = str_replace(getcwd() . DIRECTORY_SEPARATOR, './', $result->file()->filename);
 
         if ($this->config->compactMode) {
-//            if (! self::$printedHeader) {
-//                $output->writeln(' <fg=#169b3c>❱</> scan complete.');
-//                $output->writeln('');
-//
-//                self::$printedHeader = true;
-//            }
             return $this->printCompactResultLine($output, $result);
         }
 
         $nodeName = Str::afterLast($result->node->name(), '->');
 
-        $output->writeln(" Filename: {$filename}");
-        $output->writeln(" Line Num: <options=bold>{$result->location->startLine}</>");
-        $output->writeln(" Found   : <fg=#e53e3e>{$nodeName}</>");
+        $output->writeln(" File:  {$filename}:<options=bold>{$result->location->startLine}</>");
+        $output->writeln(" Call:  <fg=#e53e3e>{$nodeName}</>");
         $output->writeln(' ------');
     }
 

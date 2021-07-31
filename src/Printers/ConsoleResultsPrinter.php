@@ -15,7 +15,11 @@ class ConsoleResultsPrinter extends ResultsPrinter
     {
         $this->printer()->consoleColor = $this->consoleColor;
 
-        $this->output->writeln(" <fg=#169b3c>❱</> scan complete.\n");
+        $this->output->writeln(" <fg=#169b3c>❱</> scan complete.");
+
+        if (count($results)) {
+            $this->output->writeln('');
+        }
 
         foreach ($results as $scanResult) {
             foreach ($scanResult->results as $result) {
@@ -37,17 +41,16 @@ class ConsoleResultsPrinter extends ResultsPrinter
             $this->renderSummaryTable($files);
         }
 
-        if ($this->config->showSnippets) {
-            $this->output->writeln('');
-            $this->output->writeln(' ---');
-        }
-
         if ($totalFiles === 0) {
-            $this->output->writeln(" No function or static method calls found.");
+            $this->output->writeln(" <fg=#169b3c>✔</> No references to ray were found.");
         }
 
         if ($totalFiles > 0) {
-            $this->output->writeln(" Found {$totalCalls} function calls in {$totalFiles} files.");
+            if (! $this->config->showSnippets) {
+                $this->output->writeln('');
+            }
+
+            $this->output->writeln(" <fg=#ef4444>❗</>Found {$totalCalls} references in {$totalFiles} files.");
         }
     }
 

@@ -97,7 +97,7 @@ class ScanCommand extends Command
 
     protected function printStatus(OutputInterface $output): self
     {
-        $output->writeln('Scanning for ray calls...');
+        $output->writeln(' <fg=#169b3c>❱</> scanning for ray calls...');
 
         return $this;
     }
