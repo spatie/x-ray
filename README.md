@@ -39,29 +39,18 @@ composer require permafrost-dev/ray-scan --dev
 
 ## Usage
 
-Specify either a valid path name or a valid filename to scan:
+Specify one or more valid pathnames and/or filenames to scan:
 
 ```bash
-./vendor/bin/ray-scan /some/project/path/src
-./vendor/bin/ray-scan ./app
-./vendor/bin/ray-scan ./app/Models/User.php
+./vendor/bin/ray-scan ./app/Actions/MyAction.php ./app/Models/*.php ./tests
+./vendor/bin/ray-scan ./app --snippets
 
-# scan multiple files or directories at once
-./vendor/bin/ray-scan ./app/Models/*.php
-./vendor/bin/ray-scan ./app ./tests
-
-# display code snippets
-./vendor/bin/ray-scan ./src --snippets
-./vendor/bin/ray-scan ./src -S
-
-# don't display progress bar
-./vendor/bin/ray-scan ./src --no-progress
-
-# display only a summary of the discovered calls
+# display only a summary of the located calls
 ./vendor/bin/ray-scan ./src --summary
 
-# display only minimal scan results
-./vendor/bin/ray-scan -c ./app
+# display minimal scan results
+./vendor/bin/ray-scan ./app --compact
+./vendor/bin/ray-scan ./app --compact --no-progress
 ```
 
 ## Available Options
