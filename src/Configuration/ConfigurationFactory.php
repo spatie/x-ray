@@ -26,6 +26,7 @@ class ConfigurationFactory
         $showSnippets = $input->hasOption('snippets') && $input->getOption('snippets') === true;
         $showSummary = $input->hasOption('summary') && $input->getOption('summary') === true;
         $compactMode = $input->hasOption('compact') && $input->getOption('compact') === true;
+        $ignorePathsOption = $input->hasOption('ignore') ? $input->getOption('ignore') : [];
 
         $result = new Configuration($paths, $showSnippets, $hideProgress, $showSummary, $compactMode);
 
@@ -33,6 +34,10 @@ class ConfigurationFactory
 
         $result->ignorePaths = $options['ignore']['paths'] ?? [];
         $result->ignoreFunctions = $options['ignore']['functions'] ?? [];
+
+
+        $result->ignorePaths = array_merge($result->ignorePaths, $ignorePathsOption);
+
 
         return $result;
     }
