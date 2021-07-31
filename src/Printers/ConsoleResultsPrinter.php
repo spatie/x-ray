@@ -15,15 +15,17 @@ class ConsoleResultsPrinter extends ResultsPrinter
     {
         $this->printer()->consoleColor = $this->consoleColor;
 
-        $this->output->writeln(" <fg=#169b3c>❱</> scan complete.");
+        $this->output->writeln(" <fg=#3B82F6>❱</> scan complete.");
 
         if (count($results)) {
             $this->output->writeln('');
         }
 
-        foreach ($results as $scanResult) {
-            foreach ($scanResult->results as $result) {
-                $this->printer()->print($this->output, $result);
+        if (! $this->config->showSummary) {
+            foreach ($results as $scanResult) {
+                foreach ($scanResult->results as $result) {
+                    $this->printer()->print($this->output, $result);
+                }
             }
         }
 
@@ -37,21 +39,23 @@ class ConsoleResultsPrinter extends ResultsPrinter
         $totalCalls = array_sum(array_values($functions));
         $totalFiles = count($files);
 
+        if ($totalFiles === 0) {
+            $this->output->writeln(" <fg=#169b3c>✔</> No references to ray were found.");
+            return;
+        }
+
         if ($this->config->showSummary) {
             $this->renderSummaryTable($files);
         }
 
-        if ($totalFiles === 0) {
-            $this->output->writeln(" <fg=#169b3c>✔</> No references to ray were found.");
+        if (! $this->config->isDefaultMode()) {
+            $this->output->writeln('');
         }
 
-        if ($totalFiles > 0) {
-            if (! $this->config->showSnippets) {
-                $this->output->writeln('');
-            }
+        $callsWord = $totalCalls === 1 ? 'call' : 'calls';
+        $filesWord = $totalFiles === 1 ? 'file' : 'files';
 
-            $this->output->writeln(" <fg=#ef4444>❗</>Found {$totalCalls} references in {$totalFiles} files.");
-        }
+        $this->output->writeln(" <fg=#ef4444>❗</>Found {$totalCalls} {$callsWord} in {$totalFiles} {$filesWord}.");
     }
 
     protected function summarizeCalls(array $results): array
@@ -96,7 +100,7 @@ class ConsoleResultsPrinter extends ResultsPrinter
         $table = new Table($this->output);
 
         $table
-            ->setHeaders(['Filename', 'Call Count'])
+            ->setHeaders(['Filename ', 'Call Count '])
             ->setRows($rows);
 
         $table->render();

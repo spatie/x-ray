@@ -40,9 +40,11 @@ class ConsoleResultPrinter extends ResultPrinter
 
         $nodeName = Str::afterLast($result->node->name(), '->');
 
-        $output->writeln(" File:  {$filename}:<options=bold>{$result->location->startLine}</>");
-        $output->writeln(" Call:  <fg=#e53e3e>{$nodeName}</>");
-        $output->writeln(' ------');
+        $output->writeln(" <fg=#78716C;options=bold>❱</> <fg=#e53e3e>{$nodeName}</>");
+        $output->writeln(" <fg=#78716C;options=bold>❱</> {$filename}:<options=bold>{$result->location->startLine}</>");
+
+        //e53e3e
+       $output->writeln('');
     }
 
     protected function printCompactResultLine(OutputInterface $output, SearchResult $result)

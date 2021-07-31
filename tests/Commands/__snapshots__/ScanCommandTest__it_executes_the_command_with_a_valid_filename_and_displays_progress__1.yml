@@ -1,11 +1,10 @@
 - |4+
-     <fg=#169b3c>❱</> scanning for ray calls... 0/1 [░░░░░░░░░░░░░░░░░░░░░░░░░░░░]   0%
+     <fg=#3B82F6>❱</> scanning for ray calls... 0/1 [░░░░░░░░░░░░░░░░░░░░░░░░░░░░]   0%
      1/1 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%
 
-- ' <fg=#169b3c>❱</> scan complete.'
+- ' <fg=#3B82F6>❱</> scan complete.'
 - ''
-- ' File:  ./tests/fixtures/fixture1.php:<options=bold>2</>'
-- ' Call:  <fg=#e53e3e>ray</>'
-- ' ------'
+- ' <fg=#78716C;options=bold>❱</> <fg=#e53e3e>ray</>'
+- ' <fg=#78716C;options=bold>❱</> ./tests/fixtures/fixture1.php:<options=bold>2</>'
 - ''
-- ' <fg=#ef4444>❗</>Found 1 references in 1 files.'
+- ' <fg=#ef4444>❗</>Found 1 call in 1 file.'

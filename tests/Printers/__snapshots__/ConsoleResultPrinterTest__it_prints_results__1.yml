@@ -1,6 +1,6 @@
-- ' File:  fixture1.php:<options=bold>3</>'
-- ' Call:  <fg=#e53e3e>test</>'
-- ' ------'
+- ' <fg=#78716C;options=bold>❱</> <fg=#e53e3e>test</>'
+- ' <fg=#78716C;options=bold>❱</> fixture1.php:<options=bold>3</>'
+- ''
 - |4
      ❱❱    3▕  
            4▕      echo strtolower('TEST') . PHP_EOL;

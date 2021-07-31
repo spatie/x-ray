@@ -49,4 +49,10 @@ class Configuration
         return $this;
     }
 
+    public function isDefaultMode(): bool
+    {
+        return ! $this->showSummary
+            && ! $this->compactMode;
+    }
+
 }
