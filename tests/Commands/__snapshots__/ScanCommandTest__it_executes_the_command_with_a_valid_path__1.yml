@@ -1,7 +1,8 @@
-- 'Scanning for ray calls...'
-- ' Filename: ./tests/fixtures/fixture1.php'
-- ' Line Num: <options=bold>2</>'
-- ' Found   : <fg=#e53e3e>ray</>'
+- ' <fg=#169b3c>❱</> scanning for ray calls...'
+- ' <fg=#169b3c>❱</> scan complete.'
+- ''
+- ' File:  ./tests/fixtures/fixture1.php:<options=bold>2</>'
+- ' Call:  <fg=#e53e3e>ray</>'
 - ' ------'
 - |4
            1▕  <?php
@@ -10,6 +11,4 @@
            4▕      echo strtolower('TEST') . PHP_EOL;
            5▕  
            6▕      echo strtoupper('test') . PHP_EOL;
-- ''
-- ' ---'
-- ' Found 1 function calls in 1 files.'
+- ' <fg=#ef4444>❗</>Found 1 references in 1 files.'

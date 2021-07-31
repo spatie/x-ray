@@ -3,4 +3,5 @@
 - +--+--+
 - '| ./tests/fixtures/fixture1.php | 1 |'
 - +--+--+
-- ' Found 1 function calls in 1 files.'
+- ''
+- ' <fg=#ef4444>❗</>Found 1 references in 1 files.'
