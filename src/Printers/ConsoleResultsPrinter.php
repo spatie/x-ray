@@ -41,20 +41,21 @@ class ConsoleResultsPrinter extends ResultsPrinter
 
         if ($totalFiles === 0) {
             $this->output->writeln(" <fg=#169b3c>✔</> No references to ray were found.");
+            return;
         }
 
-        if ($totalFiles > 0) {
-            if ($this->config->showSummary) {
-                $this->renderSummaryTable($files);
-                $this->output->writeln('');
-            }
-
-            if ($this->config->compactMode) {
-                $this->output->writeln('');
-            }
-
-            $this->output->writeln(" <fg=#ef4444>❗</>Found {$totalCalls} references in {$totalFiles} files.");
+        if ($this->config->showSummary) {
+            $this->renderSummaryTable($files);
         }
+
+        if (! $this->config->isDefaultMode()) {
+            $this->output->writeln('');
+        }
+
+        $callsWord = $totalCalls === 1 ? 'call' : 'calls';
+        $filesWord = $totalFiles === 1 ? 'file' : 'files';
+
+        $this->output->writeln(" <fg=#ef4444>❗</>Found {$totalCalls} {$callsWord} in {$totalFiles} {$filesWord}.");
     }
 
     protected function summarizeCalls(array $results): array
