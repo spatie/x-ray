@@ -147,7 +147,7 @@ jobs:
         os: [ubuntu-latest]
         php: [8.0, 7.4, 7.3]
 
-    name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
+    name: P${{ matrix.php }} - ${{ matrix.os }}
 
     steps:
       - name: Checkout code
