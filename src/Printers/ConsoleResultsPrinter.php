@@ -15,6 +15,8 @@ class ConsoleResultsPrinter extends ResultsPrinter
     {
         $this->printer()->consoleColor = $this->consoleColor;
 
+        $this->output->writeln(" <fg=#169b3c>❱</> scan complete.\n");
+
         foreach ($results as $scanResult) {
             foreach ($scanResult->results as $result) {
                 $this->printer()->print($this->output, $result);

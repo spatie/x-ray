@@ -37,12 +37,12 @@ class ConsoleResultPrinter extends ResultPrinter
         $filename = str_replace(getcwd() . DIRECTORY_SEPARATOR, './', $result->file()->filename);
 
         if ($this->config->compactMode) {
-            if (! self::$printedHeader) {
-                $output->writeln(' <fg=#169b3c>❱</> scan complete.');
-                $output->writeln('');
-
-                self::$printedHeader = true;
-            }
+//            if (! self::$printedHeader) {
+//                $output->writeln(' <fg=#169b3c>❱</> scan complete.');
+//                $output->writeln('');
+//
+//                self::$printedHeader = true;
+//            }
             return $this->printCompactResultLine($output, $result);
         }
 
