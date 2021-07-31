@@ -91,6 +91,7 @@ class CodeScanner
                 ->ignoreVCSIgnored(file_exists("{$path}/.gitignore"))
                 ->ignoreUnreadableDirs(true)
                 ->in($path)
+                ->notName($this->config->ignorePaths)
                 ->exclude($this->config->ignorePaths)
                 ->exclude('vendor')
                 ->exclude('node_modules')
