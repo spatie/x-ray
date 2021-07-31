@@ -1,9 +1,11 @@
-- |+
-    Scanning for ray calls... 0/1 [░░░░░░░░░░░░░░░░░░░░░░░░░░░░]   0%
+- |4+
+     <fg=#169b3c>❱</> scanning for ray calls... 0/1 [░░░░░░░░░░░░░░░░░░░░░░░░░░░░]   0%
      1/1 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%
 
-- ' Filename: ./tests/fixtures/fixture1.php'
-- ' Line Num: <options=bold>2</>'
-- ' Found   : <fg=#e53e3e>ray</>'
+- ' <fg=#169b3c>❱</> scan complete.'
+- ''
+- ' File:  ./tests/fixtures/fixture1.php:<options=bold>2</>'
+- ' Call:  <fg=#e53e3e>ray</>'
 - ' ------'
-- ' Found 1 function calls in 1 files.'
+- ''
+- ' <fg=#ef4444>❗</>Found 1 references in 1 files.'
