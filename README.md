@@ -46,7 +46,7 @@ Specify one or more valid pathnames and/or filenames to scan:
 ./vendor/bin/ray-scan ./app --snippets
 
 # display only a summary of the located calls
-./vendor/bin/ray-scan ./src --summary
+./vendor/bin/ray-scan ./src --summary --ignore=./src/MyClass.php
 
 # display minimal scan results
 ./vendor/bin/ray-scan ./app --compact
@@ -61,6 +61,7 @@ Specify one or more valid pathnames and/or filenames to scan:
 |`--snippets` or `-S` | Display code snippets from located calls |
 |`--summary` or `-s` | Display a summary of the files/calls discovered |
 |`--compact` or `-c` | Display each result on a single line, with minimal output | 
+|`--ignore` or `-i` | Ignore a file or path.  Can be specified multiple times. |
 
 ## Configuration files
 
