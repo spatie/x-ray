@@ -27,7 +27,7 @@ The primary use case is when calls to `ray()` cannot be left in source code befo
 
 The exit code of the `ray-scan` command is zero if no ray calls are found, and non-zero if calls are found.  This allows the package to be used in an automated environment such as Github Workflows.
 
-Visit [myray.app](https://myray.app) for information on downloading the excellent Ray debugging app from Spatie.
+Visit [myray.app](https://myray.app) for information on downloading the Ray debugging app.
 
 ---
 
