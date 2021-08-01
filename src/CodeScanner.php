@@ -107,6 +107,8 @@ class CodeScanner
             }
         }
 
+        sort($result);
+
         return $result;
     }
 
