@@ -15,7 +15,7 @@ class ConsoleResultsPrinter extends ResultsPrinter
     {
         $this->printer()->consoleColor = $this->consoleColor;
 
-        $this->output->writeln(" <fg=#3B82F6>❱</> scan complete.");
+        MessagePrinter::status($this->output, 'scan complete.');
 
         if (count($results)) {
             $this->output->writeln('');
@@ -40,7 +40,7 @@ class ConsoleResultsPrinter extends ResultsPrinter
         $totalFiles = count($files);
 
         if ($totalFiles === 0) {
-            $this->output->writeln(" <fg=#169b3c>✔</> No references to ray were found.");
+            MessagePrinter::success($this->output, 'No references to ray were found.');
             return;
         }
 
@@ -55,7 +55,7 @@ class ConsoleResultsPrinter extends ResultsPrinter
         $callsWord = $totalCalls === 1 ? 'call' : 'calls';
         $filesWord = $totalFiles === 1 ? 'file' : 'files';
 
-        $this->output->writeln(" <fg=#ef4444>❗</>Found {$totalCalls} {$callsWord} in {$totalFiles} {$filesWord}.");
+        MessagePrinter::warning($this->output, "Found {$totalCalls} {$callsWord} in {$totalFiles} {$filesWord}.");
     }
 
     protected function summarizeCalls(array $results): array

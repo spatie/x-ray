@@ -9,6 +9,7 @@ use Permafrost\RayScan\Configuration\ConfigurationFactory;
 use Permafrost\RayScan\Printers\ConsoleResultsPrinter;
 use Permafrost\RayScan\Printers\ResultsPrinter;
 use Permafrost\RayScan\Printers\ScanProgressPrinter;
+use Permafrost\RayScan\Printers\MessagePrinter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -106,7 +107,7 @@ class ScanCommand extends Command
 
     protected function printStatus(OutputInterface $output): self
     {
-        $output->writeln(' <fg=#3B82F6>❱</> scanning for ray calls...');
+        MessagePrinter::status($output, 'scanning for ray calls...');
 
         return $this;
     }

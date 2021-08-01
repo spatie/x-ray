@@ -21,9 +21,13 @@ class ScanProgressPrinter
 
     public function print(string $filename, bool $hasResults): void
     {
-        $prefix = $hasResults ? '<fg=red;options=bold>✗' : '<fg=green>✔';
+        if ($hasResults) {
+            MessagePrinter::failure($this->output, $filename, '   ');
 
-        $this->output->writeln("   $prefix</> $filename");
+            return;
+        }
+
+        MessagePrinter::success($this->output, $filename, '   ');
     }
 }
 
