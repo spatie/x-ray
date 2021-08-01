@@ -19,19 +19,27 @@ class Configuration
     /** @var bool */
     public $compactMode = false;
 
+    /** @var bool */
+    public $verboseMode = false;
+
     /** @var array|string[] */
     public $ignoreFunctions = [];
 
     /** @var array|string[] */
     public $ignorePaths = [];
 
-    public function __construct(?array $paths, bool $showSnippets, bool $hideProgress, bool $showSummary, bool $compactMode = false)
+    public function __construct(?array $paths, bool $showSnippets, bool $hideProgress, bool $showSummary, bool $compactMode = false, bool $verboseMode = false)
     {
         $this->paths = $paths ?? [];
         $this->showSnippets = $showSnippets;
         $this->hideProgress = $hideProgress;
         $this->showSummary = $showSummary;
         $this->compactMode = $compactMode;
+        $this->verboseMode = $verboseMode;
+
+        if ($this->verboseMode) {
+            $this->hideProgress = true;
+        }
     }
 
     public function validate(): self
