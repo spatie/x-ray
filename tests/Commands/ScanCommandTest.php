@@ -40,6 +40,7 @@ class ScanCommandTest extends TestCase
             new InputArgument('path', InputArgument::REQUIRED),
             new InputOption('no-progress', 'P', InputOption::VALUE_NONE),
             new InputOption('snippets', 'S', InputOption::VALUE_NONE),
+            new InputOption('verbose', 'v', InputOption::VALUE_NONE),
             new InputOption('ignore', 'i', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY),
         ]);
 
@@ -86,6 +87,21 @@ class ScanCommandTest extends TestCase
         $this->command->execute($input, $this->output);
 
         $this->assertCount(1, $this->command->scanner->paths());
+        $this->assertMatchesSnapshot($this->output->writtenData);
+    }
+
+    /** @test */
+    public function it_executes_the_command_with_a_valid_path_and_displays_verbose_output()
+    {
+        $path = ['tests/fixtures'];
+        $input = $this->createInput(['path' => $path, '--no-progress' => true, '--snippets' => false, '--verbose' => true]);
+
+        $this->command->printer = new FakeConsoleResultsPrinter($this->createConfigurationFromInput($input));
+        $this->command->printer->consoleColor = new FakeConsoleColor();
+
+
+        $this->command->execute($input, $this->output);
+
         $this->assertMatchesSnapshot($this->output->writtenData);
     }
 
