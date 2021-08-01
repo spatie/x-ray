@@ -8,6 +8,7 @@ use Permafrost\RayScan\Configuration\Configuration;
 use Permafrost\RayScan\Configuration\ConfigurationFactory;
 use Permafrost\RayScan\Printers\ConsoleResultsPrinter;
 use Permafrost\RayScan\Printers\ResultsPrinter;
+use Permafrost\RayScan\Printers\ScanProgressPrinter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -22,6 +23,9 @@ class ScanCommand extends Command
 
     /** @var ResultsPrinter */
     public $printer;
+
+    /** @var \Permafrost\RayScan\Printers\ScanProgressPrinter */
+    public $verbosePrinter;
 
     /** @var CodeScanner */
     public $scanner;
@@ -66,6 +70,7 @@ class ScanCommand extends Command
         $this->style = new SymfonyStyle($input, $output);
         $this->config = ConfigurationFactory::create($input)->validate();
         $this->printer = new ConsoleResultsPrinter($output, $this->config);
+        $this->verbosePrinter = new ScanProgressPrinter($output, $this->config);
         $this->scanner = new CodeScanner($this->config, $this->config->paths);
 
         return $this;
@@ -77,10 +82,13 @@ class ScanCommand extends Command
             $this->style->progressStart(count($this->scanner->paths()));
         }
 
-        $this->scanResults = $this->scanner->scan($paths, function() {
+        $this->scanResults = $this->scanner->scan($paths, function($path, $results) {
             if (! $this->config->hideProgress) {
-                usleep(500);
                 $this->style->progressAdvance();
+            }
+
+            if ($this->config->verboseMode) {
+                $this->verbosePrinter->print($path, count($results->results) > 0);
             }
         });
 

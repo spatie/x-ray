@@ -48,10 +48,14 @@ class CodeScanner
                 continue;
             }
 
+            if ($this->config->verboseMode) {
+
+            }
+
             $scanResults = $this->scanFile($path);
 
             if ($postScanCallback) {
-                $postScanCallback();
+                $postScanCallback($path, $scanResults);
             }
 
             if (! $scanResults) {
@@ -102,6 +106,8 @@ class CodeScanner
                 $result[] = $file;
             }
         }
+
+        sort($result);
 
         return $result;
     }

@@ -19,6 +19,7 @@ trait CreatesTestConfiguration
             new InputOption('no-progress', 'P', InputOption::VALUE_NONE),
             new InputOption('snippets', 'S', InputOption::VALUE_NONE),
             new InputOption('summary', 's', InputOption::VALUE_NONE),
+            new InputOption('verbose', 'v', InputOption::VALUE_NONE),
         ]);
 
         return new ArrayInput($input, $inputDefinition);
