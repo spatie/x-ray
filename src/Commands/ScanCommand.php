@@ -6,11 +6,13 @@ use Permafrost\PhpCodeSearch\Results\SearchResult;
 use Permafrost\RayScan\CodeScanner;
 use Permafrost\RayScan\Configuration\Configuration;
 use Permafrost\RayScan\Configuration\ConfigurationFactory;
+use Permafrost\RayScan\Exceptions\MissingArgumentException;
 use Permafrost\RayScan\Printers\ConsoleResultsPrinter;
 use Permafrost\RayScan\Printers\ResultsPrinter;
 use Permafrost\RayScan\Printers\ScanProgressPrinter;
 use Permafrost\RayScan\Printers\MessagePrinter;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -39,7 +41,7 @@ class ScanCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('scan')
+        $this->setName('ray-scan')
             ->addArgument('path', InputArgument::IS_ARRAY)
             ->addOption('no-progress', 'P', InputOption::VALUE_NONE, 'Don\'t display the progress bar')
             ->addOption('snippets', 'S', InputOption::VALUE_NONE, 'Display highlighted code snippets')
@@ -58,10 +60,14 @@ class ScanCommand extends Command
                 ->printResults();
         } catch(\InvalidArgumentException $e) {
             $output->writeln('<fg=yellow;options=bold>Error: </>' . $e->getMessage());
-            //$this->getApplication()->run(new ArrayInput(['--help']));
 
             return Command::FAILURE;
+        } catch (MissingArgumentException $e) {
+            $this->getApplication()->run(new ArrayInput(['--help']));
+
+            return Command::SUCCESS;
         }
+
 
         return count($this->scanResults) ? Command::FAILURE : Command::SUCCESS;
     }

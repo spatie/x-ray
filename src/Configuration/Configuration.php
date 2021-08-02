@@ -2,6 +2,8 @@
 
 namespace Permafrost\RayScan\Configuration;
 
+use Permafrost\RayScan\Exceptions\MissingArgumentException;
+
 class Configuration
 {
     /** @var array|string[] */
@@ -45,7 +47,7 @@ class Configuration
     public function validate(): self
     {
         if (count($this->paths) === 0) {
-            throw new \InvalidArgumentException('Please provide an input file or path.');
+            throw MissingArgumentException::make('Please provide an input file or path.');
         }
 
         foreach($this->paths as $path) {
