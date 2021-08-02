@@ -21,13 +21,13 @@ composer install
 
 ---
 
-Scan source code for calls to `ray()`, `rd()` and `Ray::*` _(static calls)_ from the [spatie/ray](https://github.com/spatie/ray) and [spatie/laravel-ray](https://github.com/spatie/laravel-ray) _(and other)_ packages.
+Quickly scan source code for calls to `ray()`, `rd()`, `Ray::*`, and `->ray()` helper methods from the [spatie/ray](https://github.com/spatie/ray) and [spatie/laravel-ray](https://github.com/spatie/laravel-ray) packages.
 
-The primary use case for this package is when calls to `ray()` cannot be left in the source code before deploying, even if ray is disabled.  This package does NOT remove the function calls, it only displays their locations so they can be removed manually.
+The primary use case is when calls to `ray()` cannot be left in source code before deploying, even if ray is disabled.  This package does NOT remove the calls, it simply displays their locations so they can be removed manually.
 
 The exit code of the `ray-scan` command is zero if no ray calls are found, and non-zero if calls are found.  This allows the package to be used in an automated environment such as Github Workflows.
 
-See [myray.app](https://myray.app) for information on downloading the Ray debugging app.
+Visit [myray.app](https://myray.app) for information on downloading the Ray debugging app.
 
 ---
 
@@ -42,26 +42,25 @@ composer require permafrost-dev/ray-scan --dev
 Specify one or more valid pathnames and/or filenames to scan:
 
 ```bash
-./vendor/bin/ray-scan ./app/Actions/MyAction.php ./app/Models/*.php ./tests
-./vendor/bin/ray-scan ./app --snippets
+./vendor/bin/ray-scan ./app/Actions/MyAction.php ./app/Models/*.php ./tests --snippets
 
-# display only a summary of the located calls
-./vendor/bin/ray-scan ./src --summary --ignore=./src/MyClass.php
+# display a summary table of the located calls with some files ignored
+./vendor/bin/ray-scan ./src ./tests --summary -i src/MyClass.php -i 'test/fixtures/*.php'
 
-# display minimal scan results
-./vendor/bin/ray-scan ./app --compact
-./vendor/bin/ray-scan ./app --compact --no-progress
+# display each filename & pass/fail status, along with compact results
+./vendor/bin/ray-scan -cv ./app
 ```
 
 ## Available Options
 
 | Flag | Description
 |---|---|
+|`--compact` or `-c` | Minimal output.  Display each result on a single line. |
+|`--ignore` or `-i` | Ignore a file or path, can be specified multiple times. Accepts glob patterns. |
 |`--no-progress` or `-P` | Don't display the progress bar while scanning files |
 |`--snippets` or `-S` | Display code snippets from located calls |
 |`--summary` or `-s` | Display a summary of the files/calls discovered |
-|`--compact` or `-c` | Display each result on a single line, with minimal output | 
-|`--ignore` or `-i` | Ignore a file or path.  Can be specified multiple times. |
+|`--verbose` or `-v` | Display each filename and pass/fail status while scanning. Implies `--no-progress`. |
 
 ## Configuration files
 
