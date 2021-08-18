@@ -1,6 +1,6 @@
 - ' <fg=#3B82F6>❱</> scanning for ray calls...'
 - '   <fg=red;options=bold>✗</> tests/fixtures/fixture1.php'
-- '   <fg=#169b3c>✔</> tests/fixtures/fixture2.php'
+- '   <fg=yellow;options=bold>❗</><fg=#FACC15>tests/fixtures/fixture2.php <fg=#DC2626>(syntax or parsing error)</></>'
 - '   <fg=#169b3c>✔</> tests/fixtures/fixture3.php'
 - '   <fg=#169b3c>✔</> tests/fixtures/sub1/empty1.php'
 - ' <fg=#3B82F6>❱</> scan complete.'
