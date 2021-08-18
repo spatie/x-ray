@@ -2,8 +2,6 @@
 
 namespace Permafrost\RayScan\Configuration;
 
-use Permafrost\PhpCodeSearch\Support\Arr;
-
 class ConfigurationItemList
 {
     /** @var array */

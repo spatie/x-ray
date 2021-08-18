@@ -91,5 +91,4 @@ class ConfigurationFactory
 
         return '';
     }
-
 }
