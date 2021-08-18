@@ -27,7 +27,7 @@ trait CreatesTestConfiguration
 
     protected function createConfiguration($path, ?string $configPath = null, ?array $options = null): Configuration
     {
-        if (!is_array($path)) {
+        if (! is_array($path)) {
             $path = [$path];
         }
 

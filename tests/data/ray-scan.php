@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'ignore' => [    
-        'functions' => [],    
+    'ignore' => [
+        'functions' => [],
         'paths' => [
             '*/vendor/*',
         ],

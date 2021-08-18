@@ -41,6 +41,7 @@ class ConsoleResultsPrinter extends ResultsPrinter
 
         if ($totalFiles === 0) {
             MessagePrinter::success($this->output, 'No references to ray were found.');
+
             return;
         }
 
@@ -65,15 +66,15 @@ class ConsoleResultsPrinter extends ResultsPrinter
 
         // count number of files and functions found
         /** @var FileSearchResults $scanResult */
-        foreach($results as $scanResult) {
+        foreach ($results as $scanResult) {
             foreach ($scanResult->results as $result) {
-                if (!isset($files[$result->file()->filename])) {
+                if (! isset($files[$result->file()->filename])) {
                     $files[$result->file()->filename] = 0;
                 }
 
                 $files[$result->file()->filename]++;
 
-                if (!isset($functions[$result->node->name()])) {
+                if (! isset($functions[$result->node->name()])) {
                     $functions[$result->node->name()] = 0;
                 }
 
@@ -93,7 +94,7 @@ class ConsoleResultsPrinter extends ResultsPrinter
     {
         $rows = [];
 
-        foreach($fileCounts as $filename => $count) {
+        foreach ($fileCounts as $filename => $count) {
             $rows[] = [$this->makeFilenameRelative($filename), $count];
         }
 

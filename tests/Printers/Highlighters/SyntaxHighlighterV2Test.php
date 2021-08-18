@@ -25,5 +25,4 @@ class SyntaxHighlighterV2Test extends TestCase
 
         $this->assertMatchesSnapshot($highlighter->highlightSnippet($snippet, Bounds::create(3, 3)));
     }
-
 }

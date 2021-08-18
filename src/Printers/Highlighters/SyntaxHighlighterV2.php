@@ -12,20 +12,20 @@ use Permafrost\RayScan\Support\Str;
  */
 class SyntaxHighlighterV2
 {
-    public const TOKEN_COMMENT    = 'token_comment';
-    public const TOKEN_DEFAULT    = 'token_default';
-    public const TOKEN_HTML       = 'token_html';
-    public const TOKEN_KEYWORD    = 'token_keyword';
-    public const TOKEN_STRING     = 'token_string';
-    public const TOKEN_VARIABLE   = 'token_variable';
+    public const TOKEN_COMMENT = 'token_comment';
+    public const TOKEN_DEFAULT = 'token_default';
+    public const TOKEN_HTML = 'token_html';
+    public const TOKEN_KEYWORD = 'token_keyword';
+    public const TOKEN_STRING = 'token_string';
+    public const TOKEN_VARIABLE = 'token_variable';
     public const ACTUAL_LINE_MARK = 'actual_line_mark';
-    public const LINE_NUMBER      = 'line_number';
+    public const LINE_NUMBER = 'line_number';
 
-    protected const ARROW_SYMBOL_UTF8   = ' ❱❱';//➜';
-    protected const DELIMITER_UTF8      = '▕ ';
+    protected const ARROW_SYMBOL_UTF8 = ' ❱❱';//➜';
+    protected const DELIMITER_UTF8 = '▕ ';
     protected const LINE_NUMBER_DIVIDER = 'line_divider';
-    protected const MARKED_LINE_NUMBER  = 'marked_line';
-    protected const WIDTH               = 4;
+    protected const MARKED_LINE_NUMBER = 'marked_line';
+    protected const WIDTH = 4;
     protected const TARGET_LINE = 'target_line';
 
     /**
@@ -34,16 +34,16 @@ class SyntaxHighlighterV2
      * @var array
      */
     protected const THEME = [
-        self::TOKEN_STRING  => ['color_70'],
+        self::TOKEN_STRING => ['color_70'],
         self::TOKEN_VARIABLE => ['color_141'],
         self::TOKEN_COMMENT => ['dark_gray', 'italic'],
         self::TOKEN_KEYWORD => ['color_208'],
         self::TOKEN_DEFAULT => ['default'],
-        self::TOKEN_HTML    => ['blue', 'bold'],
+        self::TOKEN_HTML => ['blue', 'bold'],
 
-        self::ACTUAL_LINE_MARK    => ['red', 'bold'],
-        self::LINE_NUMBER         => ['dark_gray'],
-        self::MARKED_LINE_NUMBER  => ['italic', 'bold'],
+        self::ACTUAL_LINE_MARK => ['red', 'bold'],
+        self::LINE_NUMBER => ['dark_gray'],
+        self::MARKED_LINE_NUMBER => ['italic', 'bold'],
         self::LINE_NUMBER_DIVIDER => ['dark_gray'],
         self::TARGET_LINE => ['bold', 'italic'], //'bg_color_25'],
     ];
@@ -52,15 +52,15 @@ class SyntaxHighlighterV2
     protected $color;
 
     protected const DEFAULT_THEME = [
-        self::TOKEN_STRING  => 'red',
+        self::TOKEN_STRING => 'red',
         self::TOKEN_COMMENT => 'yellow',
         self::TOKEN_KEYWORD => 'green',
         self::TOKEN_DEFAULT => 'default',
-        self::TOKEN_HTML    => 'cyan',
+        self::TOKEN_HTML => 'cyan',
 
-        self::ACTUAL_LINE_MARK    => 'dark_gray',
-        self::LINE_NUMBER         => 'dark_gray',
-        self::MARKED_LINE_NUMBER  => 'dark_gray',
+        self::ACTUAL_LINE_MARK => 'dark_gray',
+        self::LINE_NUMBER => 'dark_gray',
+        self::MARKED_LINE_NUMBER => 'dark_gray',
         self::LINE_NUMBER_DIVIDER => 'dark_gray',
     ];
 
@@ -84,7 +84,7 @@ class SyntaxHighlighterV2
         $this->color = $color ?? new ConsoleColor();
 
         foreach (self::DEFAULT_THEME as $name => $styles) {
-            if (!$this->color->hasTheme($name)) {
+            if (! $this->color->hasTheme($name)) {
                 $this->color->addTheme($name, $styles);
             }
         }
@@ -107,7 +107,7 @@ class SyntaxHighlighterV2
         $tokenLines = [];
         $index = 0;
 
-        foreach($tempTokenLines as $line) {
+        foreach ($tempTokenLines as $line) {
             if (isset($lineNumbers[$index])) {
                 $tokenLines[$lineNumbers[$index]] = $line;
             }
@@ -138,9 +138,9 @@ class SyntaxHighlighterV2
 
         $tokens = token_get_all($source);
 
-        $output      = [];
+        $output = [];
         $currentType = null;
-        $buffer      = '';
+        $buffer = '';
         $newType = null;
 
         foreach ($tokens as $token) {
@@ -171,24 +171,29 @@ class SyntaxHighlighterV2
                     case T_FUNC_C:
                     case T_TRAIT_C:
                         $newType = self::TOKEN_DEFAULT;
+
                         break;
 
                     case T_VARIABLE:
                         $newType = self::TOKEN_VARIABLE;
+
                         break;
 
                     case T_COMMENT:
                     case T_DOC_COMMENT:
                         $newType = self::TOKEN_COMMENT;
+
                         break;
 
                     case T_ENCAPSED_AND_WHITESPACE:
                     case T_CONSTANT_ENCAPSED_STRING:
                         $newType = self::TOKEN_STRING;
+
                         break;
 
                     case T_INLINE_HTML:
                         $newType = self::TOKEN_HTML;
+
                         break;
 
                     default:
@@ -207,8 +212,8 @@ class SyntaxHighlighterV2
             }
 
             if ($currentType !== $newType) {
-                $output[]    = [$currentType, $buffer];
-                $buffer      = '';
+                $output[] = [$currentType, $buffer];
+                $buffer = '';
                 $currentType = $newType;
             }
 
@@ -231,7 +236,7 @@ class SyntaxHighlighterV2
             foreach (explode("\n", $token[1]) as $count => $tokenLine) {
                 if ($count > 0) {
                     $lines[] = $line;
-                    $line    = [];
+                    $line = [];
                 }
 
                 if ($tokenLine === '') {
@@ -290,7 +295,7 @@ class SyntaxHighlighterV2
     {
         $lineStrlen = strlen((string) (array_key_last($lines) + 1));
         $lineStrlen = $lineStrlen < self::WIDTH ? self::WIDTH : $lineStrlen;
-        $snippet    = '';
+        $snippet = '';
         $mark = str_pad($this->arrow . ' ', 4, ' ', STR_PAD_LEFT);
 
         foreach ($lines as $lineNum => $line) {
@@ -321,5 +326,4 @@ class SyntaxHighlighterV2
     {
         return $this->color->apply($style, str_pad((string)$lineNum, $lineStrlen, ' ', STR_PAD_LEFT));
     }
-
 }

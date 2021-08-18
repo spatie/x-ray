@@ -22,7 +22,7 @@ class ConsoleColorTest extends TestCase
     /** @test */
     public function it_sets_the_defined_themes()
     {
-        $themes = ['token_string'  => ['color_70']];
+        $themes = ['token_string' => ['color_70']];
         $color = new ConsoleColor();
         $color->setThemes($themes);
 
@@ -77,5 +77,4 @@ class ConsoleColorTest extends TestCase
         $color->setForceStyle(false);
         $this->assertFalse($color->isStyleForced());
     }
-
 }

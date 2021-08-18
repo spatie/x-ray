@@ -44,7 +44,7 @@ class ConsoleResultPrinter extends ResultPrinter
         $output->writeln(" <fg=#78716C;options=bold>❱</> {$filename}:<options=bold>{$result->location->startLine}</>");
 
         //e53e3e
-       $output->writeln('');
+        $output->writeln('');
     }
 
     protected function printCompactResultLine(OutputInterface $output, SearchResult $result)

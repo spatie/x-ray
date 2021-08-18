@@ -59,7 +59,7 @@ class ConfigurationFactoryTest extends TestCase
 
         try {
             $config->validate();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $hasException = true;
         }
 

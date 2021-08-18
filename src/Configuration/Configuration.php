@@ -50,8 +50,8 @@ class Configuration
             throw MissingArgumentException::make('Please provide an input file or path.');
         }
 
-        foreach($this->paths as $path) {
-            if (!file_exists($path)) {
+        foreach ($this->paths as $path) {
+            if (! file_exists($path)) {
                 throw new \InvalidArgumentException('Invalid input file or path provided: ' . $path);
             }
         }
@@ -64,5 +64,4 @@ class Configuration
         return ! $this->showSummary
             && ! $this->compactMode;
     }
-
 }

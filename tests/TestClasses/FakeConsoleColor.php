@@ -10,5 +10,4 @@ class FakeConsoleColor extends ConsoleColor
     {
         return $text;
     }
-
 }

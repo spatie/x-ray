@@ -127,5 +127,4 @@ class ScanCommandTest extends TestCase
 
         $this->assertMatchesSnapshot($this->output->writtenData);
     }
-
 }

@@ -8,5 +8,4 @@ class MissingArgumentException extends \Exception
     {
         return new static($message);
     }
-
 }

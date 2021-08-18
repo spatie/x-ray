@@ -43,7 +43,7 @@ class CodeScanner
 
         $results = [];
 
-        foreach($paths as $path) {
+        foreach ($paths as $path) {
             if ($this->isPathIgnored($path)) {
                 continue;
             }
@@ -79,9 +79,10 @@ class CodeScanner
     {
         $result = [];
 
-        foreach($paths as $path) {
+        foreach ($paths as $path) {
             if (is_file($path)) {
                 $result[] = realpath($path);
+
                 continue;
             }
 
@@ -118,7 +119,7 @@ class CodeScanner
             return true;
         }
 
-        foreach($this->config->ignorePaths as $ignoreFile) {
+        foreach ($this->config->ignorePaths as $ignoreFile) {
             $ignoreFile = str_replace(['*', '?', '~'], ['.*', '.', '\\~'], $ignoreFile);
 
             if (preg_match('~' . $ignoreFile . '~', $path) === 1) {
