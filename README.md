@@ -87,92 +87,9 @@ return [
 ];
 ```
 
-## Git hooks
+## Automation
 
-In some cases you may want to use a git `pre-commit` hook to avoid commiting any `ray()` calls:
-
-```bash
-#!/bin/sh
-
-echo "Checking for ray() calls...\n"
-
-ray-scan -s .
-rayScanExitCode=$?
-
-printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
-
-localPreCommitExitCode=0
-if [ -e ./.git/hooks/pre-commit ]; then
-    ./.git/hooks/pre-commit "$@"
-    localPreCommitExitCode=$?
-fi
-
-exit $rayScanExitCode || $localPreCommitExitCode
-```
-
-You can also use `ray-scan` with husky in your `package.json` configuration:
-
-```json
-...
-"husky": {
-    "hooks": {
-        "pre-commit": "lint-staged && ray-scan -s ."
-    }
-},
-....
-```
-
-## Github workflows
-
-You may use `ray-scan` within a github workflow to help ensure you don't commit any calls to `ray()`.
-
-The following example workflow runs unit tests with PHPUnit and then runs `ray-scan`:
-
-```yaml
-name: run-tests
-
-on: 
-  push:
-    branches:
-      - main
-  pull_request:
-
-jobs:
-  test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ubuntu-latest]
-        php: [8.0, 7.4, 7.3]
-
-    name: P${{ matrix.php }} - ${{ matrix.os }}
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
-          coverage: pcov
-
-      - name: Setup problem matchers
-        run: |
-          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
-
-      - name: Install dependencies
-        run: composer update --prefer-stable --prefer-dist --no-interaction
-
-      - name: Execute tests
-        run: ./vendor/bin/phpunit
-        
-      - name: Check for ray calls
-        run: ./vendor/bin/ray-scan . --compact
-```
+`ray-scan` was designed to be used not only as a manual utilitiy, but in conjuction with automation tools.  You can use `ray-scan` with [Github Actions](docs/github-actions.md) and/or [git hooks](docs/git-hooks.md).
 
 ## Screenshots
 
