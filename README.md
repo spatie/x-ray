@@ -70,27 +70,25 @@ Specify one or more valid pathnames and/or filenames to scan:
 
 ## Configuration files
 
-Create a file named `ray-scan.php` in the root directory of your project to configure the package.
+Create a file named `ray-scan.yml` or `ray-scan.yml.dist` in the root directory of your project to configure the package.
 
-```php
-<?php
+If the configuration file exists, it must have the root sections `functions` and `paths`.
 
-return [
-    'ignore' => [
-        // don't flag these functions as errors    
-        'functions' => [
-            'rd',
-        ],
-    
-        // don't scan these filenames or paths; 
-        // glob patterns are supported.
-        'paths' => [
-            'test1.php',
-            '*/tests/*',
-            'app/Http/*'
-        ],                
-    ],
-];
+Each section may have an `ignore` or `include` item, both, or neither.  Each item contains an array of strings, and includes override ignores if an entry exists in both.  Add a `*` item to ignore or include all matches _(make sure to quote the asterisk)_.  
+
+By default, `functions.include` matches the `ray` and `rd` functions.
+
+```yaml
+functions:
+  include:
+    - '*'
+
+paths:
+  include:
+    - 'tests/fixtures/*'
+  ignore:
+    - tests
+    - 'SettingsTest.php'
 ```
 
 ## Automation
