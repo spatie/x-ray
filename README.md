@@ -41,12 +41,20 @@ Specify one or more valid pathnames and/or filenames to scan:
 
 ```bash
 ./vendor/bin/ray-scan ./app/Actions/MyAction.php ./app/Models/*.php ./tests --snippets
+```
 
+```bash
 # display a summary table of the located calls with some files ignored
-./vendor/bin/ray-scan ./src ./tests --summary -i src/MyClass.php -i 'test/fixtures/*.php'
+./vendor/bin/ray-scan \
+  --summary \
+  --ignore src/MyClass.php \
+  --ignore 'test/fixtures/*.php' \
+  ./src ./tests
+```
 
+```bash
 # display each filename & pass/fail status, along with compact results
-./vendor/bin/ray-scan -cv ./app
+./vendor/bin/ray-scan ./app --compact --verbose
 ```
 
 ## Available Options
