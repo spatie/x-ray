@@ -20,12 +20,13 @@
     "require": {
         "php": "^7.3|^8.0",
         "permafrost-dev/code-snippets": "^1.2.0",
-        "permafrost-dev/php-code-search": "^1.7",
+        "permafrost-dev/php-code-search": "^1.10.5",
         "symfony/console": "^5.3",
         "symfony/finder": "^5.3"
     },
     "require-dev": {
         "permafrost-dev/coverage-check": "^1.0",
+        "phpstan/phpstan": "^0.12.92",
         "phpunit/phpunit": "^9.5",
         "spatie/phpunit-snapshot-assertions": "^4.2"
     },
@@ -40,7 +41,8 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit"
+        "test": "vendor/bin/phpunit",
+        "phpstan": "vendor/bin/phpstan analyse"
     },
     "config": {
         "sort-packages": true
