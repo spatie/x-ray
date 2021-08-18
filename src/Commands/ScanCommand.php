@@ -9,7 +9,6 @@ use Permafrost\RayScan\Configuration\ConfigurationFactory;
 use Permafrost\RayScan\Exceptions\MissingArgumentException;
 use Permafrost\RayScan\Printers\ConsoleResultsPrinter;
 use Permafrost\RayScan\Printers\ResultsPrinter;
-use Permafrost\RayScan\Printers\ScanProgressPrinter;
 use Permafrost\RayScan\Printers\MessagePrinter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -27,8 +26,8 @@ class ScanCommand extends Command
     /** @var ResultsPrinter */
     public $printer;
 
-    /** @var \Permafrost\RayScan\Printers\ScanProgressPrinter */
-    public $verbosePrinter;
+    /** @var OutputInterface */
+    public $output;
 
     /** @var CodeScanner */
     public $scanner;
@@ -55,7 +54,7 @@ class ScanCommand extends Command
     {
         try {
             $this->initializeProps($input, $output)
-                ->printStatus($output)
+                ->printStatus()
                 ->scanPaths()
                 ->printResults();
         } catch(\InvalidArgumentException $e) {
@@ -68,16 +67,15 @@ class ScanCommand extends Command
             return Command::SUCCESS;
         }
 
-
         return count($this->scanResults) ? Command::FAILURE : Command::SUCCESS;
     }
 
     protected function initializeProps(InputInterface $input, OutputInterface $output): self
     {
+        $this->output = $output;
         $this->style = new SymfonyStyle($input, $output);
         $this->config = ConfigurationFactory::create($input)->validate();
         $this->printer = new ConsoleResultsPrinter($output, $this->config);
-        $this->verbosePrinter = new ScanProgressPrinter($output, $this->config);
         $this->scanner = new CodeScanner($this->config, $this->config->paths);
 
         return $this;
@@ -95,7 +93,13 @@ class ScanCommand extends Command
             }
 
             if ($this->config->verboseMode) {
-                $this->verbosePrinter->print($path, count($results->results) > 0);
+                if (count($results->results) > 0 || $results->hasErrors()) {
+                    MessagePrinter::failure($this->output, $path, '   ');
+                }
+
+                if (count($results->results) === 0) {
+                    MessagePrinter::success($this->output, $path, '   ');
+                }
             }
         });
 
@@ -111,9 +115,9 @@ class ScanCommand extends Command
         $this->printer->print($this->scanResults);
     }
 
-    protected function printStatus(OutputInterface $output): self
+    protected function printStatus(): self
     {
-        MessagePrinter::status($output, 'scanning for ray calls...');
+        MessagePrinter::status($this->output, 'scanning for ray calls...');
 
         return $this;
     }
