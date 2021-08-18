@@ -29,8 +29,6 @@ The exit code of the `ray-scan` command is zero if no ray calls are found, and n
 
 Visit [myray.app](https://myray.app) for information on downloading the Ray debugging app.
 
----
-
 ## Installation
 
 ```bash
@@ -118,6 +116,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 ## Credits
 
 - [Patrick Organ](https://github.com/patinthehat)
+- [Tom Witkowski](https://github.com/Gummibeer)
 - [All Contributors](../../contributors)
 
 ## License
