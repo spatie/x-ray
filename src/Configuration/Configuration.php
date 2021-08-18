@@ -24,11 +24,11 @@ class Configuration
     /** @var bool */
     public $verboseMode = false;
 
-    /** @var array|string[] */
-    public $ignoreFunctions = [];
+    /** @var ConfigurationItemList */
+    public $pathnames;
 
-    /** @var array|string[] */
-    public $ignorePaths = [];
+    /** @var ConfigurationItemList */
+    public $functions;
 
     public function __construct(?array $paths, bool $showSnippets, bool $hideProgress, bool $showSummary, bool $compactMode = false, bool $verboseMode = false)
     {
@@ -42,6 +42,9 @@ class Configuration
         if ($this->verboseMode) {
             $this->hideProgress = true;
         }
+
+        $this->functions = ConfigurationItemList::make(['ray', 'rd']);
+        $this->pathnames = new ConfigurationItemList();
     }
 
     public function validate(): self
@@ -63,5 +66,18 @@ class Configuration
     {
         return ! $this->showSummary
             && ! $this->compactMode;
+    }
+
+    /**
+     * @param array $options
+     * @param array $ignorePathsOption
+     */
+    public function loadOptionsFromConfigurationFile(array $options, array $ignorePathsOption): void
+    {
+        $this->functions->ignore = array_unique($options['functions']['ignore'] ?? []);
+        $this->functions->include = array_unique($options['functions']['include'] ?? []);
+
+        $this->pathnames->ignore = array_unique(array_merge($options['paths']['ignore'] ?? [], $ignorePathsOption));
+        $this->pathnames->include = array_unique($options['paths']['include'] ?? []);
     }
 }

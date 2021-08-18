@@ -22,7 +22,8 @@
         "permafrost-dev/code-snippets": "^1.2.0",
         "permafrost-dev/php-code-search": "^1.10.5",
         "symfony/console": "^5.3",
-        "symfony/finder": "^5.3"
+        "symfony/finder": "^5.3",
+        "symfony/yaml": "^4.0 || ^5.3 || ^6.0"
     },
     "require-dev": {
         "permafrost-dev/coverage-check": "^1.0",
