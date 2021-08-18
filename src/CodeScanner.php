@@ -30,7 +30,7 @@ class CodeScanner
         $searcher = new Searcher();
 
         return $searcher
-            ->functions(['ray', 'rd'])
+            ->functions($this->config->functions->values())
             ->methods(['ray'])
             ->static(['Ray'])
             ->classes(['Ray'])
@@ -87,13 +87,15 @@ class CodeScanner
             }
 
             $finder = Finder::create()
+                ->followLinks()
                 ->ignoreDotFiles(true)
                 ->ignoreVCS(true)
-                ->ignoreVCSIgnored(file_exists("{$path}/.gitignore"))
+                ->ignoreVCSIgnored($path === getcwd() && file_exists("{$path}/.gitignore"))
                 ->ignoreUnreadableDirs(true)
-                ->in($path)
-                ->notName($this->config->ignorePaths)
-                ->exclude($this->config->ignorePaths)
+                ->in(array_unique(array_merge([$path], $this->config->pathnames->included())))
+                ->name(array_unique($this->config->pathnames->included()))
+                ->notName($this->config->pathnames->ignored())
+                ->exclude($this->config->pathnames->ignored())
                 ->exclude('vendor')
                 ->exclude('node_modules')
                 ->name('*.php')
@@ -111,18 +113,34 @@ class CodeScanner
 
     protected function isPathIgnored(string $path): bool
     {
-        if (in_array($path, $this->config->ignorePaths, true)) {
+        if (in_array($path, $this->config->pathnames->included(), true)) {
+            return false;
+        }
+
+        if (in_array(basename($path), $this->config->pathnames->included(), true)) {
+            return false;
+        }
+
+        if (in_array($path, $this->config->pathnames->ignored(), true)) {
             return true;
         }
 
-        if (in_array(basename($path), $this->config->ignorePaths, true)) {
+        if (in_array(basename($path), $this->config->pathnames->ignored(), true)) {
             return true;
         }
 
-        foreach ($this->config->ignorePaths as $ignoreFile) {
-            $ignoreFile = str_replace(['*', '?', '~'], ['.*', '.', '\\~'], $ignoreFile);
+        foreach ($this->config->pathnames->included() as $pathname) {
+            $pathname = str_replace(['*', '?', '~'], ['.*', '.', '\\~'], $pathname);
 
-            if (preg_match('~' . $ignoreFile . '~', $path) === 1) {
+            if (preg_match('~' . $pathname . '~', $path) === 1) {
+                return false;
+            }
+        }
+
+        foreach ($this->config->pathnames->ignored() as $pathname) {
+            $pathname = str_replace(['*', '?', '~'], ['.*', '.', '\\~'], $pathname);
+
+            if (preg_match('~' . $pathname . '~', $path) === 1) {
                 return true;
             }
         }

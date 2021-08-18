@@ -12,3 +12,4 @@ vendor
 .php-cs-fixer.cache
 *.log
 *.cache
+ray-scan.yml

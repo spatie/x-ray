@@ -3,6 +3,7 @@
 namespace Permafrost\RayScan\Configuration;
 
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Some code borrowed from spatie/ray:
@@ -30,12 +31,9 @@ class ConfigurationFactory
         $ignorePathsOption = $input->hasOption('ignore') ? $input->getOption('ignore') : [];
 
         $result = new Configuration($paths, $showSnippets, $hideProgress, $showSummary, $compactMode, $verboseMode);
-
         $options = (new static())->getSettingsFromConfigFile($configDirectory);
 
-        $result->ignorePaths = $options['ignore']['paths'] ?? [];
-        $result->ignoreFunctions = $options['ignore']['functions'] ?? [];
-        $result->ignorePaths = array_merge($result->ignorePaths, $ignorePathsOption);
+        $result->loadOptionsFromConfigurationFile($options, $ignorePathsOption);
 
         return $result;
     }
@@ -48,7 +46,7 @@ class ConfigurationFactory
             return [];
         }
 
-        $options = include $configFilePath;
+        $options = Yaml::parseFile($configFilePath);
 
         return $options ?? [];
     }
@@ -65,7 +63,8 @@ class ConfigurationFactory
     protected function searchConfigFilesOnDisk(?string $configDirectory = null): string
     {
         $configNames = [
-            'ray-scan.php',
+            'ray-scan.yml.dist',
+            'ray-scan.yml',
         ];
 
         $configDirectory = $configDirectory ?? (string)getcwd();
@@ -92,4 +91,5 @@ class ConfigurationFactory
 
         return '';
     }
+
 }
