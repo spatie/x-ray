@@ -23,4 +23,9 @@ class MessagePrinter
     {
         $output->writeln("{$indent}<fg=#ef4444>❗</>{$message}");
     }
+
+    public static function error($output, string $message, string $indent = ' '): void
+    {
+        $output->writeln("{$indent}<fg=yellow;options=bold>❗</><fg=#FACC15>{$message}</>");
+    }
 }

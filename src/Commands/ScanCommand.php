@@ -93,7 +93,12 @@ class ScanCommand extends Command
             }
 
             if ($this->config->verboseMode) {
-                if (count($results->results) > 0 || $results->hasErrors()) {
+                if ($results->hasErrors()) {
+                    MessagePrinter::error($this->output, $path . ' <fg=#DC2626>(syntax or parsing error)</>', '   ');
+                    return;
+                }
+
+                if (count($results->results) > 0) {
                     MessagePrinter::failure($this->output, $path, '   ');
                 }
 
