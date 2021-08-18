@@ -95,7 +95,7 @@ return [
 
 ## Automation
 
-`ray-scan` was designed to be used not only as a manual utilitiy, but in conjuction with automation tools.  
+`ray-scan` was designed to be used not only as a manual utility, but in conjunction with automation tools.  
 
 You can use `ray-scan` with [Github Actions](docs/github-actions.md) and/or [git hooks](docs/git-hooks.md).
 
