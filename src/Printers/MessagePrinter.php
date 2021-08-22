@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\RayScan\Printers;
+namespace Spatie\XRay\Printers;
 
 class MessagePrinter
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\RayScan\Support;
+namespace Spatie\XRay\Support;
 
 class Str
 {

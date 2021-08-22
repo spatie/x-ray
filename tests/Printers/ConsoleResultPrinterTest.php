@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\RayScan\Tests\Printers;
+namespace Spatie\XRay\Tests\Printers;
 
 use Permafrost\CodeSnippets\CodeSnippet;
 use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
@@ -10,11 +10,11 @@ use Permafrost\PhpCodeSearch\Support\File;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Name;
 use PHPUnit\Framework\TestCase;
-use Spatie\RayScan\Printers\ConsoleResultPrinter;
-use Spatie\RayScan\Tests\TestClasses\FakeConsoleColor;
-use Spatie\RayScan\Tests\TestClasses\FakeOutput;
-use Spatie\RayScan\Tests\Traits\CreatesTestConfiguration;
 use Spatie\Snapshots\MatchesSnapshots;
+use Spatie\XRay\Printers\ConsoleResultPrinter;
+use Spatie\XRay\Tests\TestClasses\FakeConsoleColor;
+use Spatie\XRay\Tests\TestClasses\FakeOutput;
+use Spatie\XRay\Tests\Traits\CreatesTestConfiguration;
 
 class ConsoleResultPrinterTest extends TestCase
 {

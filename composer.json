@@ -33,12 +33,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\RayScan\\": "src/"
+            "Spatie\\XRay\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\RayScan\\Tests\\": "tests"
+            "Spatie\\XRay\\Tests\\": "tests"
         }
     },
     "scripts": {

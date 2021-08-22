@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\RayScan\Printers\Highlighters;
+namespace Spatie\XRay\Printers\Highlighters;
 
 /**
  * Original source from nunomaduro/collision:

@@ -1,14 +1,14 @@
 <?php
 
-namespace Spatie\RayScan\Tests\Printers;
+namespace Spatie\XRay\Tests\Printers;
 
 use PHPUnit\Framework\TestCase;
-use Spatie\RayScan\CodeScanner;
-use Spatie\RayScan\Printers\ConsoleResultsPrinter;
-use Spatie\RayScan\Tests\TestClasses\FakeConsoleColor;
-use Spatie\RayScan\Tests\TestClasses\FakeOutput;
-use Spatie\RayScan\Tests\Traits\CreatesTestConfiguration;
 use Spatie\Snapshots\MatchesSnapshots;
+use Spatie\XRay\CodeScanner;
+use Spatie\XRay\Printers\ConsoleResultsPrinter;
+use Spatie\XRay\Tests\TestClasses\FakeConsoleColor;
+use Spatie\XRay\Tests\TestClasses\FakeOutput;
+use Spatie\XRay\Tests\Traits\CreatesTestConfiguration;
 
 class ConsoleResultsPrinterTest extends TestCase
 {

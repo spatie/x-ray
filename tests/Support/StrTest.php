@@ -1,9 +1,9 @@
 <?php
 
-namespace Spatie\RayScan\Tests\Support;
+namespace Spatie\XRay\Tests\Support;
 
 use PHPUnit\Framework\TestCase;
-use Spatie\RayScan\Support\Str;
+use Spatie\XRay\Support\Str;
 
 class StrTest extends TestCase
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\RayScan;
+namespace Spatie\XRay;
 
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
 use Permafrost\PhpCodeSearch\Searcher;
-use Spatie\RayScan\Configuration\Configuration;
+use Spatie\XRay\Configuration\Configuration;
 use Symfony\Component\Finder\Finder;
 
 class CodeScanner

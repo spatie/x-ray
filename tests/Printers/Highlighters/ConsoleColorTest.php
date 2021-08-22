@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\RayScan\Tests\Printers\Highlighters;
+namespace Spatie\XRay\Tests\Printers\Highlighters;
 
 use PHPUnit\Framework\TestCase;
-use Spatie\RayScan\Printers\Highlighters\ConsoleColor;
 use Spatie\Snapshots\MatchesSnapshots;
+use Spatie\XRay\Printers\Highlighters\ConsoleColor;
 
 class ConsoleColorTest extends TestCase
 {

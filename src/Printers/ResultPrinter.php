@@ -1,9 +1,9 @@
 <?php
 
-namespace Spatie\RayScan\Printers;
+namespace Spatie\XRay\Printers;
 
 use Permafrost\PhpCodeSearch\Results\SearchResult;
-use Spatie\RayScan\Configuration\Configuration;
+use Spatie\XRay\Configuration\Configuration;
 use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class ResultPrinter
