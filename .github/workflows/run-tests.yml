@@ -8,6 +8,8 @@ on:
 
 jobs:
   test:
+    env:
+      ENABLE_CODECOV: true
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true
@@ -33,11 +35,11 @@ jobs:
         run: |
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
-          
+
       - name: Get composer cache directory path
         id: composer-cache-dir-path
         run: echo "::set-output name=dir::$(composer config cache-files-dir --global)"
-          
+
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
@@ -51,6 +53,7 @@ jobs:
         run: ./vendor/bin/phpunit --coverage-clover clover.xml -d --without-creating-snapshots
 
       - name: Upload coverage to Codecov
+        if: ${{ env.ENABLE_CODECOV  == true }}
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
