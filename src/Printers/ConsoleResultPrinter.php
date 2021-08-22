@@ -41,7 +41,7 @@ class ConsoleResultPrinter extends ResultPrinter
         $nodeName = Str::afterLast($result->node->name(), '->');
 
         $output->writeln(" <fg=#78716C;options=bold>❱</> Found: <fg=#e53e3e>{$nodeName}</>");
-        $output->writeln(" <fg=#78716C;options=bold>❱</> File : {$filename}:<options=bold>{$result->location->startLine}</>");
+        $output->writeln(" <fg=#78716C;options=bold>❱</> File : {$filename}:<options=bold>{$result->location->startLine()}</>");
 
         //e53e3e
         $output->writeln('');
@@ -51,7 +51,7 @@ class ConsoleResultPrinter extends ResultPrinter
     {
         $filename = str_replace(getcwd() . DIRECTORY_SEPARATOR, './', $result->file()->filename);
 
-        $output->writeln(" {$filename}:<fg=#52525B>{$result->location->startLine}</>");
+        $output->writeln(" {$filename}:<fg=#52525B>{$result->location->startLine()}</>");
 
         if ($this->config->showSnippets) {
             $output->writeln('');
