@@ -10,17 +10,6 @@
     <img src="https://codecov.io/gh/permafrost-dev/ray-scan/branch/main/graph/badge.svg?token=JPmlhRV95Y" alt="code coverage">
 </p>
 
----
-
-Testing instructions:  Clone the repo, then run:
-
-```bash
-composer install
-./bin/ray-scan . -S
-```
-
----
-
 Quickly scan source code for calls to `ray()`, `rd()`, `Ray::*`, and `->ray()` helper methods from the [spatie/ray](https://github.com/spatie/ray) and [spatie/laravel-ray](https://github.com/spatie/laravel-ray) packages.
 
 The primary use case is when calls to `ray()` cannot be left in source code before deploying, even if ray is disabled.  This package does NOT remove the calls, it simply displays their locations so they can be removed manually.
@@ -43,8 +32,9 @@ Specify one or more valid pathnames and/or filenames to scan:
 ./vendor/bin/ray-scan ./app/Actions/MyAction.php ./app/Models/*.php ./tests --snippets
 ```
 
+Display a summary table of the located calls within `./src` and `./tests` while also ignoring some files:
+
 ```bash
-# display a summary table of the located calls with some files ignored
 ./vendor/bin/ray-scan \
   --summary \
   --ignore src/MyClass.php \
@@ -52,8 +42,9 @@ Specify one or more valid pathnames and/or filenames to scan:
   ./src ./tests
 ```
 
+Display each filename & pass/fail status, along with compact results:
+
 ```bash
-# display each filename & pass/fail status, along with compact results
 ./vendor/bin/ray-scan ./app --compact --verbose
 ```
 
@@ -122,6 +113,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 ## Credits
 
 - [Patrick Organ](https://github.com/patinthehat)
+- [Alex Vanderbist](https://github.com/AlexVanderbist)
 - [Tom Witkowski](https://github.com/Gummibeer)
 - [All Contributors](../../contributors)
 

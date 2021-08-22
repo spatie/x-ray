@@ -27,7 +27,7 @@ You can also use `ray-scan` with husky in your `package.json` configuration:
 ...
 "husky": {
     "hooks": {
-        "pre-commit": "lint-staged && ray-scan -s ."
+        "pre-commit": "lint-staged && .ray-scan -s ."
     }
 },
 ....
