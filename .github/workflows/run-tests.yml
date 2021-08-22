@@ -8,8 +8,6 @@ on:
 
 jobs:
   test:
-    env:
-      ENABLE_CODECOV: true
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true
