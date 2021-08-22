@@ -40,8 +40,8 @@ class ConsoleResultPrinter extends ResultPrinter
 
         $nodeName = Str::afterLast($result->node->name(), '->');
 
-        $output->writeln(" <fg=#78716C;options=bold>❱</> <fg=#e53e3e>{$nodeName}</>");
-        $output->writeln(" <fg=#78716C;options=bold>❱</> {$filename}:<options=bold>{$result->location->startLine}</>");
+        $output->writeln(" <fg=#78716C;options=bold>❱</> Found: <fg=#e53e3e>{$nodeName}</>");
+        $output->writeln(" <fg=#78716C;options=bold>❱</> File : {$filename}:<options=bold>{$result->location->startLine}</>");
 
         //e53e3e
         $output->writeln('');
