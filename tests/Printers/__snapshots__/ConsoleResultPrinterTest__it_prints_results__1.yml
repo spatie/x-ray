@@ -1,5 +1,5 @@
-- ' <fg=#78716C;options=bold>❱</> <fg=#e53e3e>test</>'
-- ' <fg=#78716C;options=bold>❱</> fixture1.php:<options=bold>3</>'
+- ' <fg=#78716C;options=bold>❱</> Found: <fg=#e53e3e>test</>'
+- ' <fg=#78716C;options=bold>❱</> File : fixture1.php:<options=bold>3</>'
 - ''
 - |4
      ❱❱    3▕  
