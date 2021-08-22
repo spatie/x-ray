@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\RayScan\Configuration;
+namespace Spatie\XRay\Configuration;
 
 class ConfigurationItemList
 {

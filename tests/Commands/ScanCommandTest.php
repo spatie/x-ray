@@ -1,14 +1,14 @@
 <?php
 
-namespace Spatie\RayScan\Tests\Commands;
+namespace Spatie\XRay\Tests\Commands;
 
 use PHPUnit\Framework\TestCase;
-use Spatie\RayScan\Commands\ScanCommand;
-use Spatie\RayScan\Tests\TestClasses\FakeConsoleColor;
-use Spatie\RayScan\Tests\TestClasses\FakeConsoleResultsPrinter;
-use Spatie\RayScan\Tests\TestClasses\FakeOutput;
-use Spatie\RayScan\Tests\Traits\CreatesTestConfiguration;
 use Spatie\Snapshots\MatchesSnapshots;
+use Spatie\XRay\Commands\ScanCommand;
+use Spatie\XRay\Tests\TestClasses\FakeConsoleColor;
+use Spatie\XRay\Tests\TestClasses\FakeConsoleResultsPrinter;
+use Spatie\XRay\Tests\TestClasses\FakeOutput;
+use Spatie\XRay\Tests\Traits\CreatesTestConfiguration;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;

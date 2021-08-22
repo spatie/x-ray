@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\RayScan\Exceptions;
+namespace Spatie\XRay\Exceptions;
 
 class MissingArgumentException extends \Exception
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\RayScan\Configuration;
+namespace Spatie\XRay\Configuration;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Yaml\Yaml;

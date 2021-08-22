@@ -1,9 +1,9 @@
 <?php
 
-namespace Spatie\RayScan\Printers;
+namespace Spatie\XRay\Printers;
 
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
-use Spatie\RayScan\Printers\Highlighters\ConsoleColor;
+use Spatie\XRay\Printers\Highlighters\ConsoleColor;
 use Symfony\Component\Console\Helper\Table;
 
 class ConsoleResultsPrinter extends ResultsPrinter

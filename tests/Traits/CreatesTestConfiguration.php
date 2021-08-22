@@ -1,9 +1,9 @@
 <?php
 
-namespace Spatie\RayScan\Tests\Traits;
+namespace Spatie\XRay\Tests\Traits;
 
-use Spatie\RayScan\Configuration\Configuration;
-use Spatie\RayScan\Configuration\ConfigurationFactory;
+use Spatie\XRay\Configuration\Configuration;
+use Spatie\XRay\Configuration\ConfigurationFactory;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;

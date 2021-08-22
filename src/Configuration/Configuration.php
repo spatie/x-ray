@@ -1,8 +1,8 @@
 <?php
 
-namespace Spatie\RayScan\Configuration;
+namespace Spatie\XRay\Configuration;
 
-use Spatie\RayScan\Exceptions\MissingArgumentException;
+use Spatie\XRay\Exceptions\MissingArgumentException;
 
 class Configuration
 {

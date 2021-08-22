@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\RayScan\Tests\TestClasses;
+namespace Spatie\XRay\Tests\TestClasses;
 
 use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 use Symfony\Component\Console\Formatter\OutputFormatterStyleInterface;
