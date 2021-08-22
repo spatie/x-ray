@@ -1,7 +1,7 @@
 {
-    "name": "spatie/ray-scan",
+    "name": "spatie/x-ray",
     "description": "Find calls to ray() before deploying your code",
-    "homepage": "https://github.com/spatie/ray-scan",
+    "homepage": "https://github.com/spatie/x-ray",
     "license": "MIT",
     "keywords": [
         "spatie",
@@ -50,7 +50,7 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "bin": "bin/ray-scan",
+    "bin": "bin/x-ray",
     "funding": [
         {
             "type": "github",

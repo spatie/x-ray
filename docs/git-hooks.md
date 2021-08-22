@@ -7,7 +7,7 @@ In some cases you may want to use a git `pre-commit` hook to avoid commiting any
 
 echo "Checking for ray() calls...\n"
 
-ray-scan -s .
+x-ray -s .
 rayScanExitCode=$?
 
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
@@ -27,7 +27,7 @@ You can also use `ray-scan` with husky in your `package.json` configuration:
 ...
 "husky": {
     "hooks": {
-        "pre-commit": "lint-staged && .ray-scan -s ."
+        "pre-commit": "lint-staged && .x-ray -s ."
     }
 },
 ....

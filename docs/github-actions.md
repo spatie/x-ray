@@ -47,5 +47,5 @@ jobs:
         run: ./vendor/bin/phpunit
         
       - name: Check for ray calls
-        run: ./vendor/bin/ray-scan . --compact
+        run: ./vendor/bin/x-ray . --compact
 ```
