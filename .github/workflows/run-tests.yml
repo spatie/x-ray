@@ -50,14 +50,7 @@ jobs:
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Execute tests
-        run: ./vendor/bin/phpunit --coverage-clover clover.xml -d --without-creating-snapshots
-
-      - name: Upload coverage to Codecov
-        if: ${{ env.ENABLE_CODECOV  == true }}
-        uses: codecov/codecov-action@v2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: clover.xml
+        run: ./vendor/bin/phpunit -d --without-creating-snapshots
 
       - name: Enforce minimum code coverage
         run: ./vendor/bin/coverage-check clover.xml -r 75
