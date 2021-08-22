@@ -12,7 +12,7 @@ if (file_exists(__DIR__.'/../../../autoload.php')) {
 use Spatie\RayScan\Commands\ScanCommand;
 use Symfony\Component\Console\Application;
 
-$application = new Application('ray-scan', '1.0.0');
+$application = new Application('x-ray', '1.0.0');
 $command = new ScanCommand();
 
 $application->add($command);
