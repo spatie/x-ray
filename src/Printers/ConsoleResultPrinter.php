@@ -1,12 +1,12 @@
 <?php
 
-namespace Permafrost\RayScan\Printers;
+namespace Spatie\RayScan\Printers;
 
 use Permafrost\CodeSnippets\Bounds;
 use Permafrost\PhpCodeSearch\Results\SearchResult;
-use Permafrost\RayScan\Printers\Highlighters\ConsoleColor;
-use Permafrost\RayScan\Printers\Highlighters\SyntaxHighlighterV2;
-use Permafrost\RayScan\Support\Str;
+use Spatie\RayScan\Printers\Highlighters\ConsoleColor;
+use Spatie\RayScan\Printers\Highlighters\SyntaxHighlighterV2;
+use Spatie\RayScan\Support\Str;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleResultPrinter extends ResultPrinter

@@ -1,6 +1,6 @@
 <?php
 
-namespace Permafrost\RayScan\Exceptions;
+namespace Spatie\RayScan\Exceptions;
 
 class MissingArgumentException extends \Exception
 {

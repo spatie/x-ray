@@ -1,19 +1,19 @@
 <?php
 
-namespace Permafrost\RayScan\Tests\Printers;
+namespace Spatie\RayScan\Tests\Printers;
 
 use Permafrost\CodeSnippets\CodeSnippet;
 use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\FunctionCallNode;
 use Permafrost\PhpCodeSearch\Results\SearchResult;
 use Permafrost\PhpCodeSearch\Support\File;
-use Permafrost\RayScan\Printers\ConsoleResultPrinter;
-use Permafrost\RayScan\Tests\TestClasses\FakeConsoleColor;
-use Permafrost\RayScan\Tests\TestClasses\FakeOutput;
-use Permafrost\RayScan\Tests\Traits\CreatesTestConfiguration;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Name;
 use PHPUnit\Framework\TestCase;
+use Spatie\RayScan\Printers\ConsoleResultPrinter;
+use Spatie\RayScan\Tests\TestClasses\FakeConsoleColor;
+use Spatie\RayScan\Tests\TestClasses\FakeOutput;
+use Spatie\RayScan\Tests\Traits\CreatesTestConfiguration;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class ConsoleResultPrinterTest extends TestCase

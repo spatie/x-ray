@@ -1,12 +1,12 @@
 <?php
 
-namespace Permafrost\RayScan\Tests\Printers\Highlighters;
+namespace Spatie\RayScan\Tests\Printers\Highlighters;
 
 use Permafrost\CodeSnippets\Bounds;
 use Permafrost\CodeSnippets\CodeSnippet;
-use Permafrost\RayScan\Printers\Highlighters\SyntaxHighlighterV2;
-use Permafrost\RayScan\Tests\TestClasses\FakeConsoleColor;
 use PHPUnit\Framework\TestCase;
+use Spatie\RayScan\Printers\Highlighters\SyntaxHighlighterV2;
+use Spatie\RayScan\Tests\TestClasses\FakeConsoleColor;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class SyntaxHighlighterV2Test extends TestCase

@@ -1,13 +1,13 @@
 # ray-scan
 
 <p align="center">
-    <img src="https://static.permafrost.dev/images/ray-scan/ray-scan-logo.png" alt="ray-scan logo" height="200" style="block">
+    <img src="https://static.permafrost.dev/images/ray-scan/ray-scan-logo.png" alt="ray-scan logo" height="200" style="display:block">
     <br><br>
-    <!--img src="https://img.shields.io/packagist/v/permafrost-dev/ray-scan.svg" alt="Packagist Version"-->  
-    <img src="https://img.shields.io/github/v/release/permafrost-dev/ray-scan.svg?sort=semver&logo=github" alt="Package Version">
-    <img src="https://img.shields.io/github/license/permafrost-dev/ray-scan.svg?logo=opensourceinitiative" alt="license">
-    <img src="https://github.com/permafrost-dev/ray-scan/actions/workflows/run-tests.yml/badge.svg?branch=main" alt="Test Run Status">
-    <img src="https://codecov.io/gh/permafrost-dev/ray-scan/branch/main/graph/badge.svg?token=JPmlhRV95Y" alt="code coverage">
+    <!--img src="https://img.shields.io/packagist/v/spatie/ray-scan.svg" alt="Packagist Version"-->  
+    <img src="https://img.shields.io/github/v/release/spatie/ray-scan.svg?sort=semver&logo=github" alt="Package Version">
+    <img src="https://img.shields.io/github/license/spatie/ray-scan.svg?logo=opensourceinitiative" alt="license">
+    <img src="https://github.com/spatie/ray-scan/actions/workflows/run-tests.yml/badge.svg?branch=main" alt="Test Run Status">
+    <!--<img src="https://codecov.io/gh/permafrost-dev/ray-scan/branch/main/graph/badge.svg?token=JPmlhRV95Y" alt="code coverage">-->
 </p>
 
 Quickly scan source code for calls to `ray()`, `rd()`, `Ray::*`, and `->ray()` helper methods from the [spatie/ray](https://github.com/spatie/ray) and [spatie/laravel-ray](https://github.com/spatie/laravel-ray) packages.
@@ -21,7 +21,7 @@ Visit [myray.app](https://myray.app) for information on downloading the Ray debu
 ## Installation
 
 ```bash
-composer require permafrost-dev/ray-scan --dev
+composer require spatie/ray-scan --dev
 ```
 
 ## Usage

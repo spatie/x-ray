@@ -1,15 +1,15 @@
 <?php
 
-namespace Permafrost\RayScan\Commands;
+namespace Spatie\RayScan\Commands;
 
 use Permafrost\PhpCodeSearch\Results\SearchResult;
-use Permafrost\RayScan\CodeScanner;
-use Permafrost\RayScan\Configuration\Configuration;
-use Permafrost\RayScan\Configuration\ConfigurationFactory;
-use Permafrost\RayScan\Exceptions\MissingArgumentException;
-use Permafrost\RayScan\Printers\ConsoleResultsPrinter;
-use Permafrost\RayScan\Printers\MessagePrinter;
-use Permafrost\RayScan\Printers\ResultsPrinter;
+use Spatie\RayScan\CodeScanner;
+use Spatie\RayScan\Configuration\Configuration;
+use Spatie\RayScan\Configuration\ConfigurationFactory;
+use Spatie\RayScan\Exceptions\MissingArgumentException;
+use Spatie\RayScan\Printers\ConsoleResultsPrinter;
+use Spatie\RayScan\Printers\MessagePrinter;
+use Spatie\RayScan\Printers\ResultsPrinter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
