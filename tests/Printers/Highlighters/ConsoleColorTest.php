@@ -1,9 +1,9 @@
 <?php
 
-namespace Permafrost\RayScan\Tests\Printers\Highlighters;
+namespace Spatie\RayScan\Tests\Printers\Highlighters;
 
-use Permafrost\RayScan\Printers\Highlighters\ConsoleColor;
 use PHPUnit\Framework\TestCase;
+use Spatie\RayScan\Printers\Highlighters\ConsoleColor;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class ConsoleColorTest extends TestCase

@@ -1,13 +1,13 @@
 <?php
 
-namespace Permafrost\RayScan\Tests\Printers;
+namespace Spatie\RayScan\Tests\Printers;
 
-use Permafrost\RayScan\CodeScanner;
-use Permafrost\RayScan\Printers\ConsoleResultsPrinter;
-use Permafrost\RayScan\Tests\TestClasses\FakeConsoleColor;
-use Permafrost\RayScan\Tests\TestClasses\FakeOutput;
-use Permafrost\RayScan\Tests\Traits\CreatesTestConfiguration;
 use PHPUnit\Framework\TestCase;
+use Spatie\RayScan\CodeScanner;
+use Spatie\RayScan\Printers\ConsoleResultsPrinter;
+use Spatie\RayScan\Tests\TestClasses\FakeConsoleColor;
+use Spatie\RayScan\Tests\TestClasses\FakeOutput;
+use Spatie\RayScan\Tests\Traits\CreatesTestConfiguration;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class ConsoleResultsPrinterTest extends TestCase

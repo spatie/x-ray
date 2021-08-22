@@ -1,9 +1,9 @@
 <?php
 
-namespace Permafrost\RayScan\Tests\Configuration;
+namespace Spatie\RayScan\Tests\Configuration;
 
-use Permafrost\RayScan\Configuration\ConfigurationFactory;
 use PHPUnit\Framework\TestCase;
+use Spatie\RayScan\Configuration\ConfigurationFactory;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;

@@ -1,11 +1,11 @@
 <?php
 
-namespace Permafrost\RayScan\Tests;
+namespace Spatie\RayScan\Tests;
 
 use Permafrost\PhpCodeSearch\Support\File;
-use Permafrost\RayScan\CodeScanner;
-use Permafrost\RayScan\Configuration\Configuration;
 use PHPUnit\Framework\TestCase;
+use Spatie\RayScan\CodeScanner;
+use Spatie\RayScan\Configuration\Configuration;
 
 class CodeScannerTest extends TestCase
 {

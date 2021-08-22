@@ -1,6 +1,6 @@
 <?php
 
-namespace Permafrost\RayScan\Support;
+namespace Spatie\RayScan\Support;
 
 class Str
 {

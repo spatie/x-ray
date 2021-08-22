@@ -1,6 +1,6 @@
 <?php
 
-namespace Permafrost\RayScan\Tests\TestClasses;
+namespace Spatie\RayScan\Tests\TestClasses;
 
 use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 use Symfony\Component\Console\Formatter\OutputFormatterStyleInterface;

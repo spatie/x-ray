@@ -1,9 +1,9 @@
 <?php
 
-namespace Permafrost\RayScan\Tests\TestClasses;
+namespace Spatie\RayScan\Tests\TestClasses;
 
-use Permafrost\RayScan\Configuration\Configuration;
-use Permafrost\RayScan\Printers\ConsoleResultsPrinter;
+use Spatie\RayScan\Configuration\Configuration;
+use Spatie\RayScan\Printers\ConsoleResultsPrinter;
 
 class FakeConsoleResultsPrinter extends ConsoleResultsPrinter
 {

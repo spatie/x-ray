@@ -1,10 +1,10 @@
 <?php
 
-namespace Permafrost\RayScan\Printers\Highlighters;
+namespace Spatie\RayScan\Printers\Highlighters;
 
 use Permafrost\CodeSnippets\Bounds;
 use Permafrost\CodeSnippets\CodeSnippet;
-use Permafrost\RayScan\Support\Str;
+use Spatie\RayScan\Support\Str;
 
 /**
  * Original code taken from nunomaduro/collision

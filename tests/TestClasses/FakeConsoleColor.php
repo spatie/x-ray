@@ -1,8 +1,8 @@
 <?php
 
-namespace Permafrost\RayScan\Tests\TestClasses;
+namespace Spatie\RayScan\Tests\TestClasses;
 
-use Permafrost\RayScan\Printers\Highlighters\ConsoleColor;
+use Spatie\RayScan\Printers\Highlighters\ConsoleColor;
 
 class FakeConsoleColor extends ConsoleColor
 {

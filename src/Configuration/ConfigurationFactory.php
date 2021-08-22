@@ -1,6 +1,6 @@
 <?php
 
-namespace Permafrost\RayScan\Configuration;
+namespace Spatie\RayScan\Configuration;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Yaml\Yaml;
