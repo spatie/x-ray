@@ -1,8 +1,8 @@
 <?php
 
-namespace Permafrost\RayScan\Printers;
+namespace Spatie\XRay\Printers;
 
-use Permafrost\RayScan\Configuration\Configuration;
+use Spatie\XRay\Configuration\Configuration;
 use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class ResultsPrinter

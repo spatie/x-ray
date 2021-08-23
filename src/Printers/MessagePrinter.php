@@ -1,6 +1,6 @@
 <?php
 
-namespace Permafrost\RayScan\Printers;
+namespace Spatie\XRay\Printers;
 
 class MessagePrinter
 {

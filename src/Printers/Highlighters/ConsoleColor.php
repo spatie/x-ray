@@ -1,6 +1,6 @@
 <?php
 
-namespace Permafrost\RayScan\Printers\Highlighters;
+namespace Spatie\XRay\Printers\Highlighters;
 
 /**
  * Original source from nunomaduro/collision:

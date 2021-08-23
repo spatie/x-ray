@@ -1,15 +1,15 @@
 <?php
 
-namespace Permafrost\RayScan\Commands;
+namespace Spatie\XRay\Commands;
 
 use Permafrost\PhpCodeSearch\Results\SearchResult;
-use Permafrost\RayScan\CodeScanner;
-use Permafrost\RayScan\Configuration\Configuration;
-use Permafrost\RayScan\Configuration\ConfigurationFactory;
-use Permafrost\RayScan\Exceptions\MissingArgumentException;
-use Permafrost\RayScan\Printers\ConsoleResultsPrinter;
-use Permafrost\RayScan\Printers\MessagePrinter;
-use Permafrost\RayScan\Printers\ResultsPrinter;
+use Spatie\XRay\CodeScanner;
+use Spatie\XRay\Configuration\Configuration;
+use Spatie\XRay\Configuration\ConfigurationFactory;
+use Spatie\XRay\Exceptions\MissingArgumentException;
+use Spatie\XRay\Printers\ConsoleResultsPrinter;
+use Spatie\XRay\Printers\MessagePrinter;
+use Spatie\XRay\Printers\ResultsPrinter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
@@ -40,7 +40,7 @@ class ScanCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('ray-scan')
+        $this->setName('x-ray')
             ->addArgument('path', InputArgument::IS_ARRAY)
             ->addOption('no-progress', 'P', InputOption::VALUE_NONE, 'Don\'t display the progress bar')
             ->addOption('snippets', 'S', InputOption::VALUE_NONE, 'Display highlighted code snippets')

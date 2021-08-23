@@ -1,6 +1,6 @@
 <?php
 
-namespace Permafrost\RayScan\Configuration;
+namespace Spatie\XRay\Configuration;
 
 class ConfigurationItemList
 {

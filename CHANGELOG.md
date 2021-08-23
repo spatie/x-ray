@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `ray-scan` will be documented in this file.
+All notable changes to `x-ray` will be documented in this file.
 
 ---
 

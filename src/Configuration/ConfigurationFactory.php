@@ -1,6 +1,6 @@
 <?php
 
-namespace Permafrost\RayScan\Configuration;
+namespace Spatie\XRay\Configuration;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Yaml\Yaml;
@@ -63,8 +63,8 @@ class ConfigurationFactory
     protected function searchConfigFilesOnDisk(?string $configDirectory = null): string
     {
         $configNames = [
-            'ray-scan.yml.dist',
-            'ray-scan.yml',
+            'x-ray.yml.dist',
+            'x-ray.yml',
         ];
 
         $configDirectory = $configDirectory ?? (string)getcwd();

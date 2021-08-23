@@ -1,9 +1,9 @@
 <?php
 
-namespace Permafrost\RayScan\Tests\Support;
+namespace Spatie\XRay\Tests\Support;
 
-use Permafrost\RayScan\Support\Str;
 use PHPUnit\Framework\TestCase;
+use Spatie\XRay\Support\Str;
 
 class StrTest extends TestCase
 {

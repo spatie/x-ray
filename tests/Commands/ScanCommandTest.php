@@ -1,14 +1,14 @@
 <?php
 
-namespace Permafrost\RayScan\Tests\Commands;
+namespace Spatie\XRay\Tests\Commands;
 
-use Permafrost\RayScan\Commands\ScanCommand;
-use Permafrost\RayScan\Tests\TestClasses\FakeConsoleColor;
-use Permafrost\RayScan\Tests\TestClasses\FakeConsoleResultsPrinter;
-use Permafrost\RayScan\Tests\TestClasses\FakeOutput;
-use Permafrost\RayScan\Tests\Traits\CreatesTestConfiguration;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
+use Spatie\XRay\Commands\ScanCommand;
+use Spatie\XRay\Tests\TestClasses\FakeConsoleColor;
+use Spatie\XRay\Tests\TestClasses\FakeConsoleResultsPrinter;
+use Spatie\XRay\Tests\TestClasses\FakeOutput;
+use Spatie\XRay\Tests\Traits\CreatesTestConfiguration;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;

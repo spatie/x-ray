@@ -1,10 +1,10 @@
 <?php
 
-namespace Permafrost\RayScan\Tests\Printers\Highlighters;
+namespace Spatie\XRay\Tests\Printers\Highlighters;
 
-use Permafrost\RayScan\Printers\Highlighters\ConsoleColor;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
+use Spatie\XRay\Printers\Highlighters\ConsoleColor;
 
 class ConsoleColorTest extends TestCase
 {

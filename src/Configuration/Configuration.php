@@ -1,8 +1,8 @@
 <?php
 
-namespace Permafrost\RayScan\Configuration;
+namespace Spatie\XRay\Configuration;
 
-use Permafrost\RayScan\Exceptions\MissingArgumentException;
+use Spatie\XRay\Exceptions\MissingArgumentException;
 
 class Configuration
 {

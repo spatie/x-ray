@@ -1,7 +1,7 @@
 {
-    "name": "permafrost-dev/ray-scan",
+    "name": "spatie/x-ray",
     "description": "Find calls to ray() before deploying your code",
-    "homepage": "https://github.com/permafrost-dev/ray-scan",
+    "homepage": "https://github.com/spatie/x-ray",
     "license": "MIT",
     "keywords": [
         "spatie",
@@ -23,22 +23,22 @@
         "permafrost-dev/php-code-search": "^1.10.5",
         "symfony/console": "^5.3",
         "symfony/finder": "^5.3",
-        "symfony/yaml": "^4.0 || ^5.3 || ^6.0"
+        "symfony/yaml": "^5.3"
     },
     "require-dev": {
-        "permafrost-dev/coverage-check": "^1.0",
+        "permafrost-dev/coverage-check": "^1.2.0",
         "phpstan/phpstan": "^0.12.92",
         "phpunit/phpunit": "^9.5",
         "spatie/phpunit-snapshot-assertions": "^4.2"
     },
     "autoload": {
         "psr-4": {
-            "Permafrost\\RayScan\\": "src/"
+            "Spatie\\XRay\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Permafrost\\RayScan\\Tests\\": "tests"
+            "Spatie\\XRay\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -50,11 +50,15 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "bin": "bin/ray-scan",
+    "bin": "bin/x-ray",
     "funding": [
         {
             "type": "github",
             "url": "https://github.com/sponsors/permafrost-dev"
+        },
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/spatie"
         }
     ]
 }
