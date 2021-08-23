@@ -49,6 +49,3 @@ jobs:
 
       - name: Execute tests
         run: ./vendor/bin/phpunit -d --without-creating-snapshots
-
-      - name: Enforce minimum code coverage
-        run: ./vendor/bin/coverage-check clover.xml -r 75
