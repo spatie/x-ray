@@ -5,11 +5,6 @@ namespace Spatie\XRay\Configuration;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Yaml\Yaml;
 
-/**
- * Some code borrowed from spatie/ray:
- *
- * @link https://github.com/spatie/ray/blob/main/src/Settings/SettingsFactory.php
- */
 class ConfigurationFactory
 {
     /** @var array|string[] */

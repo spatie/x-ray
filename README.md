@@ -1,4 +1,4 @@
-# x-ray
+# Quickly scan source code for calls to Ray
 
 <p align="center">
     <img src="https://static.permafrost.dev/images/x-ray/x-ray-logo.png" alt="x-ray logo" height="200" style="display:block">
@@ -9,7 +9,7 @@
     <img src="https://github.com/spatie/x-ray/actions/workflows/run-tests.yml/badge.svg?branch=main" alt="Test Run Status">
 </p>
 
-Quickly scan source code for calls to `ray()`, `rd()`, `Ray::*`, and `->ray()` helper methods from the [spatie/ray](https://github.com/spatie/ray) and [spatie/laravel-ray](https://github.com/spatie/laravel-ray) packages.
+This package can quickly scan source code for calls to `ray()`, `rd()`, `Ray::*`, and `->ray()` helper methods from the [spatie/ray](https://github.com/spatie/ray) and [spatie/laravel-ray](https://github.com/spatie/laravel-ray) packages.
 
 The primary use case is when calls to `ray()` cannot be left in source code before deploying, even if ray is disabled.  This package does NOT remove the calls, it simply displays their locations so they can be removed manually.
 
@@ -25,7 +25,7 @@ composer require spatie/x-ray --dev
 
 ## Usage
 
-Specify one or more valid pathnames and/or filenames to scan:
+Specify one or more valid path names and/or filenames to scan:
 
 ```bash
 ./vendor/bin/x-ray ./app/Actions/MyAction.php ./app/Models/*.php ./tests --snippets
