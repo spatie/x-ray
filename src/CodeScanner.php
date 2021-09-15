@@ -114,13 +114,13 @@ class CodeScanner
             true => $this->config->pathnames->ignored(),
         ];
 
-        foreach($pathMap as $result => $paths) {
+        foreach ($pathMap as $result => $paths) {
             if (in_array($path, $paths, true) || in_array(basename($path), $paths, true)) {
                 return (bool)$result;
             }
         }
 
-        foreach($pathMap as $result => $paths) {
+        foreach ($pathMap as $result => $paths) {
             foreach ($paths as $pathname) {
                 $pathname = str_replace(['*', '?', '~'], ['.*', '.', '\\~'], $pathname);
 
