@@ -8,12 +8,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class ResultPrinter
 {
-    /** @var Configuration */
-    protected $config;
-
-    public function __construct(Configuration $config)
+    public function __construct(protected Configuration $config)
     {
-        $this->config = $config;
+        //
     }
 
     abstract public function print(OutputInterface $output, SearchResult $result): void;

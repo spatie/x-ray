@@ -9,19 +9,15 @@ use Symfony\Component\Finder\Finder;
 
 class CodeScanner
 {
-    /** @var Configuration */
-    protected $config;
-
     /** @var array */
     protected $paths;
 
-    public function __construct(Configuration $config, $path)
+    public function __construct(protected Configuration $config, string | array $path)
     {
         if (! is_array($path)) {
             $path = [$path];
         }
 
-        $this->config = $config;
         $this->paths = $this->loadDirectoryFiles($path);
     }
 
@@ -113,37 +109,58 @@ class CodeScanner
 
     protected function isPathIgnored(string $path): bool
     {
-        if (in_array($path, $this->config->pathnames->included(), true)) {
-            return false;
-        }
+        $pathMap = [
+            false => $this->config->pathnames->included(),
+            true => $this->config->pathnames->ignored(),
+        ];
 
-        if (in_array(basename($path), $this->config->pathnames->included(), true)) {
-            return false;
-        }
-
-        if (in_array($path, $this->config->pathnames->ignored(), true)) {
-            return true;
-        }
-
-        if (in_array(basename($path), $this->config->pathnames->ignored(), true)) {
-            return true;
-        }
-
-        foreach ($this->config->pathnames->included() as $pathname) {
-            $pathname = str_replace(['*', '?', '~'], ['.*', '.', '\\~'], $pathname);
-
-            if (preg_match('~' . $pathname . '~', $path) === 1) {
-                return false;
+        foreach($pathMap as $result => $paths) {
+            if (in_array($path, $paths, true) || in_array(basename($path), $paths, true)) {
+                return (bool)$result;
             }
         }
 
-        foreach ($this->config->pathnames->ignored() as $pathname) {
-            $pathname = str_replace(['*', '?', '~'], ['.*', '.', '\\~'], $pathname);
+        foreach($pathMap as $result => $paths) {
+            foreach ($paths as $pathname) {
+                $pathname = str_replace(['*', '?', '~'], ['.*', '.', '\\~'], $pathname);
 
-            if (preg_match('~' . $pathname . '~', $path) === 1) {
-                return true;
+                if (preg_match('~' . $pathname . '~', $path) === 1) {
+                    return (bool)$result;
+                }
             }
         }
+
+//        if (in_array($path, $this->config->pathnames->included(), true)) {
+//            return false;
+//        }
+//
+//        if (in_array(basename($path), $this->config->pathnames->included(), true)) {
+//            return false;
+//        }
+//
+//        if (in_array($path, $this->config->pathnames->ignored(), true)) {
+//            return true;
+//        }
+//
+//        if (in_array(basename($path), $this->config->pathnames->ignored(), true)) {
+//            return true;
+//        }
+
+//        foreach ($this->config->pathnames->included() as $pathname) {
+//            $pathname = str_replace(['*', '?', '~'], ['.*', '.', '\\~'], $pathname);
+//
+//            if (preg_match('~' . $pathname . '~', $path) === 1) {
+//                return false;
+//            }
+//        }
+//
+//        foreach ($this->config->pathnames->ignored() as $pathname) {
+//            $pathname = str_replace(['*', '?', '~'], ['.*', '.', '\\~'], $pathname);
+//
+//            if (preg_match('~' . $pathname . '~', $path) === 1) {
+//                return true;
+//            }
+//        }
 
         return false;
     }

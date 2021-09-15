@@ -2,42 +2,26 @@
 
 namespace Spatie\XRay\Configuration;
 
+use InvalidArgumentException;
 use Spatie\XRay\Exceptions\MissingArgumentException;
 
 class Configuration
 {
-    /** @var array|string[] */
-    public $paths;
-
-    /** @var bool */
-    public $showSnippets = false;
-
-    /** @var bool */
-    public $hideProgress = false;
-
-    /** @var bool */
-    public $showSummary = false;
-
-    /** @var bool */
-    public $compactMode = false;
-
-    /** @var bool */
-    public $verboseMode = false;
-
     /** @var ConfigurationItemList */
     public $pathnames;
 
     /** @var ConfigurationItemList */
     public $functions;
 
-    public function __construct(?array $paths, bool $showSnippets, bool $hideProgress, bool $showSummary, bool $compactMode = false, bool $verboseMode = false)
-    {
+    public function __construct(
+        public ?array $paths,
+        public bool $showSnippets,
+        public bool $hideProgress,
+        public bool $showSummary,
+        public bool $compactMode = false,
+        public bool $verboseMode = false,
+    ) {
         $this->paths = $paths ?? [];
-        $this->showSnippets = $showSnippets;
-        $this->hideProgress = $hideProgress;
-        $this->showSummary = $showSummary;
-        $this->compactMode = $compactMode;
-        $this->verboseMode = $verboseMode;
 
         if ($this->verboseMode) {
             $this->hideProgress = true;
@@ -55,7 +39,7 @@ class Configuration
 
         foreach ($this->paths as $path) {
             if (! file_exists($path)) {
-                throw new \InvalidArgumentException('Invalid input file or path provided: ' . $path);
+                throw new InvalidArgumentException('Invalid input file or path provided: ' . $path);
             }
         }
 

@@ -2,6 +2,7 @@
 
 namespace Spatie\XRay\Commands;
 
+use InvalidArgumentException;
 use Permafrost\PhpCodeSearch\Results\SearchResult;
 use Spatie\XRay\CodeScanner;
 use Spatie\XRay\Configuration\Configuration;
@@ -57,12 +58,12 @@ class ScanCommand extends Command
                 ->printStatus()
                 ->scanPaths()
                 ->printResults();
-        } catch (\InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             $output->writeln('<fg=yellow;options=bold>Error: </>' . $e->getMessage());
 
             return Command::FAILURE;
         } catch (MissingArgumentException $e) {
-            $this->getApplication()->run(new ArrayInput(['--help']));
+            $this->getApplication()?->run(new ArrayInput(['--help']));
 
             return Command::SUCCESS;
         }

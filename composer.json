@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^8.0",
         "permafrost-dev/code-snippets": "^1.2.0",
         "permafrost-dev/php-code-search": "^1.10.5",
         "symfony/console": "^5.3",

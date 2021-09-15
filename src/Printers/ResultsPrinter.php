@@ -10,16 +10,11 @@ abstract class ResultsPrinter
     /** @var ResultPrinter */
     protected $printer = null;
 
-    /** @var Configuration */
-    protected $config;
-
-    /** @var OutputInterface */
-    protected $output;
-
-    public function __construct(OutputInterface $output, Configuration $config)
-    {
-        $this->output = $output;
-        $this->config = $config;
+    public function __construct(
+        protected OutputInterface $output,
+        protected Configuration $config,
+    ) {
+        //
     }
 
     abstract public function print(array $results): void;
