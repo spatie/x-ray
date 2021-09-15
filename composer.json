@@ -1,6 +1,6 @@
 {
     "name": "spatie/x-ray",
-    "description": "Find calls to ray() before deploying your code",
+    "description": "Quickly scan source code for calls to Ray",
     "homepage": "https://github.com/spatie/x-ray",
     "license": "MIT",
     "keywords": [
