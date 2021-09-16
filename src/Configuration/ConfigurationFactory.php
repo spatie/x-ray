@@ -17,19 +17,28 @@ class ConfigurationFactory
             $paths = [$paths];
         }
 
-        $hideProgress = $input->hasOption('no-progress') && $input->getOption('no-progress') === true;
-        $showSnippets = $input->hasOption('snippets') && $input->getOption('snippets') === true;
-        $showSummary = $input->hasOption('summary') && $input->getOption('summary') === true;
-        $compactMode = $input->hasOption('compact') && $input->getOption('compact') === true;
-        $verboseMode = $input->hasOption('verbose') && $input->getOption('verbose') === true;
-        $ignorePathsOption = $input->hasOption('ignore') ? $input->getOption('ignore') : [];
+        $hideProgress = self::getOption($input, 'no-progress', false);
+        $showSnippets = self::getOption($input, 'snippets', false);
+        $showSummary = self::getOption($input, 'summary', false);
+        $compactMode = self::getOption($input, 'compact', false);
+        $verboseMode = self::getOption($input, 'verbose', false);
+        $ignorePaths = self::getOption($input, 'ignore', []);
 
         $result = new Configuration($paths, $showSnippets, $hideProgress, $showSummary, $compactMode, $verboseMode);
         $options = (new static())->getSettingsFromConfigFile($configDirectory);
 
-        $result->loadOptionsFromConfigurationFile($options, $ignorePathsOption);
+        $result->loadOptionsFromConfigurationFile($options, $ignorePaths);
 
         return $result;
+    }
+
+    protected static function getOption(InputInterface $input, string $name, mixed $default): mixed
+    {
+        if (! $input->hasOption($name)) {
+            return $default;
+        }
+
+        return $input->getOption($name);
     }
 
     public function getSettingsFromConfigFile(?string $configDirectory = null): array
