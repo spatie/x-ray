@@ -7,8 +7,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class ConfigurationFactory
 {
-    /** @var array|string[] */
-    public static $cache = [];
+    public static array $cache = [];
 
     public static function create(InputInterface $input, ?string $configDirectory = null): Configuration
     {

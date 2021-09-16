@@ -11,13 +11,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleResultPrinter extends ResultPrinter
 {
-    /** @var ConsoleColor|null */
-    public $consoleColor = null;
+    public ?ConsoleColor $consoleColor = null;
 
-    /**
-     * @param OutputInterface $output
-     */
-    public function print($output, SearchResult $result): void
+    public function print(OutputInterface $output, SearchResult $result): void
     {
         $this->printResultLine($output, $result);
 

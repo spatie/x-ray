@@ -21,23 +21,17 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ScanCommand extends Command
 {
-    /** @var Configuration */
-    protected $config;
+    protected Configuration $config;
 
-    /** @var ResultsPrinter */
-    public $printer;
+    public ResultsPrinter $printer;
 
-    /** @var OutputInterface */
-    public $output;
+    public OutputInterface $output;
 
-    /** @var CodeScanner */
-    public $scanner;
+    public CodeScanner $scanner;
 
-    /** @var array|SearchResult[] */
-    public $scanResults = [];
+    public array $scanResults = [];
 
-    /** @var SymfonyStyle */
-    public $style;
+    public SymfonyStyle $style;
 
     protected function configure(): void
     {

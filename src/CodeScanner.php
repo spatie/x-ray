@@ -9,8 +9,7 @@ use Symfony\Component\Finder\Finder;
 
 class CodeScanner
 {
-    /** @var array */
-    protected $paths;
+    protected array $paths;
 
     public function __construct(protected Configuration $config, string | array $path)
     {

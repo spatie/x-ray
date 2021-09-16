@@ -7,8 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class ResultsPrinter
 {
-    /** @var ResultPrinter */
-    protected $printer = null;
+    protected ?ResultPrinter $printer = null;
 
     public function __construct(
         protected OutputInterface $output,

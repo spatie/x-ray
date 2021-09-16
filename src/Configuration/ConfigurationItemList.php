@@ -4,17 +4,13 @@ namespace Spatie\XRay\Configuration;
 
 class ConfigurationItemList
 {
-    /** @var array */
-    public $include = [];
+    public array $include = [];
 
-    /** @var array */
-    public $ignore = [];
+    public array $ignore = [];
 
-    /** @var array */
-    public $default = [];
+    public array $default = [];
 
-    /** @var bool */
-    protected $isPartial = false;
+    protected bool $isPartial = false;
 
     public static function make(array $defaults, bool $isPartial = false): self
     {

@@ -7,11 +7,9 @@ use Spatie\XRay\Exceptions\MissingArgumentException;
 
 class Configuration
 {
-    /** @var ConfigurationItemList */
-    public $pathnames;
+    public ConfigurationItemList $pathnames;
 
-    /** @var ConfigurationItemList */
-    public $functions;
+    public ConfigurationItemList $functions;
 
     public function __construct(
         public ?array $paths,
@@ -52,10 +50,6 @@ class Configuration
             && ! $this->compactMode;
     }
 
-    /**
-     * @param array $options
-     * @param array $ignorePathsOption
-     */
     public function loadOptionsFromConfigurationFile(array $options, array $ignorePathsOption): void
     {
         $this->functions->ignore = array_unique($options['functions']['ignore'] ?? []);

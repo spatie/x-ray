@@ -8,8 +8,7 @@ use Symfony\Component\Console\Helper\Table;
 
 class ConsoleResultsPrinter extends ResultsPrinter
 {
-    /** @var ConsoleColor|null */
-    public $consoleColor = null;
+    public ?ConsoleColor $consoleColor = null;
 
     public function print(array $results): void
     {
