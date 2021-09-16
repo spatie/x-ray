@@ -3,7 +3,6 @@
 namespace Spatie\XRay\Commands;
 
 use InvalidArgumentException;
-use Permafrost\PhpCodeSearch\Results\SearchResult;
 use Spatie\XRay\CodeScanner;
 use Spatie\XRay\Configuration\Configuration;
 use Spatie\XRay\Configuration\ConfigurationFactory;
