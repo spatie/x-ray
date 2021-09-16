@@ -11,8 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleResultPrinter extends ResultPrinter
 {
-    /** @var ConsoleColor|null */
-    public $consoleColor = null;
+    public ?ConsoleColor $consoleColor = null;
 
     /**
      * @param OutputInterface $output
