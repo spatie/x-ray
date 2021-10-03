@@ -1,0 +1,2 @@
+- ' <fg=#ef4444>❗</>Found 1 call in 1 file.'
+- '::error file=tests/fixtures/fixture1.php,line=2,col=0::Found a ray call'

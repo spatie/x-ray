@@ -20,11 +20,12 @@ class ConfigurationFactory
         $hideProgress = self::getOption($input, 'no-progress', false);
         $showSnippets = self::getOption($input, 'snippets', false);
         $showSummary = self::getOption($input, 'summary', false);
+        $githubAnnotation = self::getOption($input, 'github', false);
         $compactMode = self::getOption($input, 'compact', false);
         $verboseMode = self::getOption($input, 'verbose', false);
         $ignorePaths = self::getOption($input, 'ignore', []);
 
-        $result = new Configuration($paths, $showSnippets, $hideProgress, $showSummary, $compactMode, $verboseMode);
+        $result = new Configuration($paths, $showSnippets, $hideProgress, $showSummary, $githubAnnotation, $compactMode, $verboseMode);
         $options = (new static())->getSettingsFromConfigFile($configDirectory);
 
         $result->loadOptionsFromConfigurationFile($options, $ignorePaths);
