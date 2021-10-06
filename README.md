@@ -52,6 +52,7 @@ Display each filename & pass/fail status, along with compact results:
 | Flag | Description
 |---|---|
 |`--compact` or `-c` | Minimal output.  Display each result on a single line. |
+|`--github` or `-g` | GitHub Annotation output.  Use `error` command to create annotation. Useful when you are running x-ray within GitHub Actions. |
 |`--ignore` or `-i` | Ignore a file or path, can be specified multiple times. Accepts glob patterns. |
 |`--no-progress` or `-P` | Don't display the progress bar while scanning files |
 |`--snippets` or `-S` | Display code snippets from located calls |

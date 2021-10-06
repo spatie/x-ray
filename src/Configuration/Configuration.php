@@ -16,6 +16,7 @@ class Configuration
         public bool $showSnippets,
         public bool $hideProgress,
         public bool $showSummary,
+        public bool $githubAnnotation = false,
         public bool $compactMode = false,
         public bool $verboseMode = false,
     ) {

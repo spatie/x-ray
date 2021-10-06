@@ -56,6 +56,10 @@ class ConsoleResultsPrinter extends ResultsPrinter
         $filesWord = $totalFiles === 1 ? 'file' : 'files';
 
         MessagePrinter::warning($this->output, "Found {$totalCalls} {$callsWord} in {$totalFiles} {$filesWord}.");
+
+        if ($this->config->githubAnnotation) {
+            $this->printGithubAnnotationLines($results);
+        }
     }
 
     protected function summarizeCalls(array $results): array
@@ -104,6 +108,21 @@ class ConsoleResultsPrinter extends ResultsPrinter
             ->setRows($rows);
 
         $table->render();
+    }
+
+    protected function printGithubAnnotationLines(array $results)
+    {
+        /** @var FileSearchResults $scanResult */
+        foreach ($results as $scanResult) {
+            foreach ($scanResult->results as $result) {
+                $this->output->writeln(sprintf(
+                    "::error file=%s,line=%d,col=%d::Found a ray call",
+                    str_replace(getcwd() . DIRECTORY_SEPARATOR, '', $result->file()->filename),
+                    $result->location->startLine(),
+                    $result->location->column(),
+                ));
+            }
+        }
     }
 
     protected function makeFilenameRelative(string $filename): string

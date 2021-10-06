@@ -40,6 +40,7 @@ class ScanCommand extends Command
             ->addOption('snippets', 'S', InputOption::VALUE_NONE, 'Display highlighted code snippets')
             ->addOption('summary', 's', InputOption::VALUE_NONE, 'Display a table summarizing the results')
             ->addOption('compact', 'c', InputOption::VALUE_NONE, 'Display results in a compact format')
+            ->addOption('github', 'g', InputOption::VALUE_NONE, 'Display results in a github annotation format')
             ->addOption('ignore', 'i',  InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Ignore one or more files/paths')
             ->setDescription('Scans a directory or filename for calls to ray(), rd() and Ray::*.');
     }
