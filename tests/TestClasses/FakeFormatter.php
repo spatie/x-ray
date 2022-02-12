@@ -14,7 +14,7 @@ class FakeFormatter implements OutputFormatterInterface
         // TODO: Implement setDecorated() method.
     }
 
-    public function isDecorated()
+    public function isDecorated() : bool
     {
         // TODO: Implement isDecorated() method.
     }
