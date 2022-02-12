@@ -21,7 +21,7 @@ class FakeOutput implements OutputInterface
         return $this->formatter;
     }
 
-    public function getVerbosity()
+    public function getVerbosity(): int
     {
         // TODO: Implement getVerbosity() method.
     }
