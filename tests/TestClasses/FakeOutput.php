@@ -16,7 +16,7 @@ class FakeOutput implements OutputInterface
         $this->formatter = new FakeFormatter();
     }
 
-    public function getFormatter()
+    public function getFormatter(): OutputFormatterInterface
     {
         return $this->formatter;
     }
