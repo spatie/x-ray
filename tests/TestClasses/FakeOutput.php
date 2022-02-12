@@ -24,6 +24,7 @@ class FakeOutput implements OutputInterface
     public function getVerbosity(): int
     {
         // TODO: Implement getVerbosity() method.
+        return 0;
     }
 
     public function isDebug()
