@@ -27,29 +27,29 @@ class FakeOutput implements OutputInterface
         return 0;
     }
 
-    public function isDebug()
+    public function isDebug(): bool
     {
-        // TODO: Implement isDebug() method.
+        return false;
     }
 
-    public function isDecorated()
+    public function isDecorated(): bool
     {
-        // TODO: Implement isDecorated() method.
+        return false;
     }
 
-    public function isQuiet()
+    public function isQuiet(): bool
     {
-        // TODO: Implement isQuiet() method.
+        return false;
     }
 
-    public function isVerbose()
+    public function isVerbose(): bool
     {
-        // TODO: Implement isVerbose() method.
+        return false;
     }
 
-    public function isVeryVerbose()
+    public function isVeryVerbose(): bool
     {
-        // TODO: Implement isVeryVerbose() method.
+        return false;
     }
 
     public function setDecorated(bool $decorated)
