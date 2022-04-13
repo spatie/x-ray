@@ -10,6 +10,7 @@
     <img src="https://img.shields.io/github/v/release/spatie/x-ray.svg?sort=semver&logo=github" alt="Package Version">
     <img src="https://img.shields.io/github/license/spatie/x-ray.svg?logo=opensourceinitiative" alt="license">
     <img src="https://github.com/spatie/x-ray/actions/workflows/run-tests.yml/badge.svg?branch=main" alt="Test Run Status">
+    <img src="https://img.shields.io/packagist/dt/spatie/x-ray.svg?style=flat-square" alt="Downloads" />
 </p>
 
 This package can quickly scan source code for calls to `ray()`, `rd()`, `Ray::*`, and `->ray()` helper methods from the [spatie/ray](https://github.com/spatie/ray) and [spatie/laravel-ray](https://github.com/spatie/laravel-ray) packages.
