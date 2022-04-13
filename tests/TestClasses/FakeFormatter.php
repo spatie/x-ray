@@ -2,37 +2,12 @@
 
 namespace Spatie\XRay\Tests\TestClasses;
 
-use Symfony\Component\Console\Formatter\OutputFormatterInterface;
+use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Formatter\OutputFormatterStyleInterface;
 
-class FakeFormatter implements OutputFormatterInterface
+class FakeFormatter extends OutputFormatter
 {
     public $styles = [];
-
-    public function setDecorated(?bool $decorated)
-    {
-        // TODO: Implement setDecorated() method.
-    }
-
-    public function isDecorated() : bool
-    {
-        // TODO: Implement isDecorated() method.
-    }
-
-    public function format(?string $message)
-    {
-        // TODO: Implement format() method.
-    }
-
-    public function getStyle(string $name)
-    {
-        return $this->styles[$name] ?? null;
-    }
-
-    public function hasStyle(string $name)
-    {
-        return isset($this->styles[$name]);
-    }
 
     public function setStyle(string $name, OutputFormatterStyleInterface $style)
     {

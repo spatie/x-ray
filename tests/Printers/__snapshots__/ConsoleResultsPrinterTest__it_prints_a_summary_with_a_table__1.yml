@@ -1,7 +1,7 @@
-- +--+--+
-- '|<info> Filename  </info>|<info> Call Count  </info>|'
-- +--+--+
-- '| ./tests/fixtures/fixture1.php | 1 |'
-- +--+--+
+- +-------------------------------+-------------+
+- '|<info> Filename                      </info>|<info> Call Count  </info>|'
+- +-------------------------------+-------------+
+- '| ./tests/fixtures/fixture1.php | 1           |'
+- +-------------------------------+-------------+
 - ''
 - ' <fg=#ef4444>❗</>Found 1 call in 1 file.'
