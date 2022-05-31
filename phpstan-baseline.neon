@@ -1,7 +1,0 @@
-
-parameters:
-	ignoreErrors:
-		-
-			message: "#Syntax error#"
-			count: 1
-			path: tests/fixtures/fixture2.php
