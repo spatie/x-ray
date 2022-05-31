@@ -1,5 +1,0 @@
-       1▕  <?php
-       2▕      ray('12345');
- ❱❱    3▕  
-       4▕      echo strtolower('TEST') . PHP_EOL;
-       5▕  
