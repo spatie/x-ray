@@ -1,7 +1,6 @@
 {
     "name": "spatie/x-ray",
     "description": "Quickly scan source code for calls to Ray",
-    "homepage": "https://github.com/spatie/x-ray",
     "license": "MIT",
     "keywords": [
         "spatie",
@@ -17,6 +16,17 @@
             "role": "Developer"
         }
     ],
+    "homepage": "https://github.com/spatie/x-ray",
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/permafrost-dev"
+        },
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/spatie"
+        }
+    ],
     "require": {
         "php": "^8.0",
         "permafrost-dev/code-snippets": "^1.2.0",
@@ -30,6 +40,8 @@
         "phpunit/phpunit": "^9.5",
         "spatie/phpunit-snapshot-assertions": "^4.2"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Spatie\\XRay\\": "src/"
@@ -40,24 +52,12 @@
             "Spatie\\XRay\\Tests\\": "tests"
         }
     },
-    "scripts": {
-        "test": "vendor/bin/phpunit",
-        "phpstan": "vendor/bin/phpstan analyse"
-    },
+    "bin": "bin/x-ray",
     "config": {
         "sort-packages": true
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "bin": "bin/x-ray",
-    "funding": [
-        {
-            "type": "github",
-            "url": "https://github.com/sponsors/permafrost-dev"
-        },
-        {
-            "type": "github",
-            "url": "https://github.com/sponsors/spatie"
-        }
-    ]
+    "scripts": {
+        "phpstan": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/phpunit"
+    }
 }
