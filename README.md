@@ -89,9 +89,9 @@ paths:
 
 ## Github workflows
 
-You may use `ray-scan` within a github workflow to help ensure you don't commit any calls to `ray()`.
+You may use `x-ray` within a github workflow to help ensure you don't commit any calls to `ray()`.
 
-The following example workflow runs unit tests with PHPUnit and then runs `ray-scan`:
+The following example workflow runs unit tests with PHPUnit and then runs `x-ray`:
 
 ```yaml
 name: run-tests
@@ -162,7 +162,7 @@ fi
 exit $rayScanExitCode || $localPreCommitExitCode
 ```
 
-You can also use `ray-scan` with husky in your `package.json` configuration:
+You can also use `x-ray` with husky in your `package.json` configuration:
 
 ```json
 ...
