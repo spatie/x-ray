@@ -9,7 +9,7 @@ class FakeFormatter extends OutputFormatter
 {
     public $styles = [];
 
-    public function setStyle(string $name, OutputFormatterStyleInterface $style)
+    public function setStyle(string $name, OutputFormatterStyleInterface $style): void
     {
         $this->styles[$name] = $style;
     }
