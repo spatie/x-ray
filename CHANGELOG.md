@@ -5,6 +5,27 @@ All notable changes to `x-ray` will be documented in this file.
 
 ---
 
+## 1.1.2 - 2023-12-19
+
+### What's Changed
+
+* Normalize composer.json by @patinthehat in https://github.com/spatie/x-ray/pull/42
+* Add Laravel Pint Support by @patinthehat in https://github.com/spatie/x-ray/pull/43
+* Bump aglipanci/laravel-pint-action from 1.0.0 to 2.1.0 by @dependabot in https://github.com/spatie/x-ray/pull/44
+* Bump aglipanci/laravel-pint-action from 2.1.0 to 2.2.0 by @dependabot in https://github.com/spatie/x-ray/pull/45
+* Bump aglipanci/laravel-pint-action from 2.2.0 to 2.3.0 by @dependabot in https://github.com/spatie/x-ray/pull/46
+* Bump actions/checkout from 3 to 4 by @dependabot in https://github.com/spatie/x-ray/pull/47
+* Replace old ray-scan references by @jasonvarga in https://github.com/spatie/x-ray/pull/49
+* Bump stefanzweifel/git-auto-commit-action from 4 to 5 by @dependabot in https://github.com/spatie/x-ray/pull/48
+* Allow Symfony 7.x by @thecaliskan in https://github.com/spatie/x-ray/pull/50
+
+### New Contributors
+
+* @jasonvarga made their first contribution in https://github.com/spatie/x-ray/pull/49
+* @thecaliskan made their first contribution in https://github.com/spatie/x-ray/pull/50
+
+**Full Changelog**: https://github.com/spatie/x-ray/compare/1.1.1...1.1.2
+
 ## 1.1.1 - 2022-06-29
 
 ### What's Changed
