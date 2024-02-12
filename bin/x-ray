@@ -13,8 +13,20 @@ use Spatie\XRay\Commands\ScanCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application('x-ray', '1.0.0');
-$command = new ScanCommand();
+$scanCommandName = 'x-ray';
 
-$application->add($command);
-$application->setDefaultCommand($command->getName(), true);
+if ($argv[1] === 'scan') {
+    $scanCommandName = 'scan';
+}
+
+$scanCommand = new ScanCommand($scanCommandName);
+$cleanCommand = new \Spatie\XRay\Commands\CleanCommand();
+
+$application->add($scanCommand);
+$application->add($cleanCommand);
+
+if (! in_array($argv[1], ['clean', 'scan'])) {
+    $application->setDefaultCommand($scanCommand->getName(), true);
+}
+
 $application->run();

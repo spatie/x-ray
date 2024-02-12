@@ -34,7 +34,7 @@ class ScanCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('x-ray')
+        $this->setName($this->getName())
             ->addArgument('path', InputArgument::IS_ARRAY)
             ->addOption('no-progress', 'P', InputOption::VALUE_NONE, 'Don\'t display the progress bar')
             ->addOption('snippets', 'S', InputOption::VALUE_NONE, 'Display highlighted code snippets')
