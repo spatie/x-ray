@@ -12,7 +12,7 @@
 
 This package can quickly scan source code for calls to `ray()`, `rd()`, `Ray::*`, and `->ray()` helper methods from the [spatie/ray](https://github.com/spatie/ray) and [spatie/laravel-ray](https://github.com/spatie/laravel-ray) packages.
 
-The primary use case is when calls to `ray()` cannot be left in source code before deploying, even if ray is disabled.  This package does NOT remove the calls, it simply displays their locations so they can be removed manually.
+The primary use case is when calls to `ray()` cannot be left in source code before deploying, even if ray is disabled.  This package can also remove the calls, via the `clean` command.
 
 The exit code of the `x-ray` command is zero if no ray calls are found, and non-zero if calls are found.  This allows the package to be used in an automated environment such as Github Workflows.
 
@@ -83,6 +83,20 @@ paths:
     - 'SettingsTest.php'
 ```
 
+## Removing calls
+
+The `clean` command will remove all calls to `ray()`, `rd()`, `Ray::*` and chained '->ray()' methods from the specified files or paths.
+
+```bash
+./vendor/bin/x-ray clean ./app/Actions/MyAction.php ./app/Models/*.php ./tests
+```
+
+Perform a dry run first:
+
+```bash
+./vendor/bin/x-ray clean ./app/Actions/MyAction.php ./app/Models/*.php ./tests --dry-run
+```
+
 ## Automation
 
 `x-ray` was designed to be used not only as a manual utility, but in conjunction with automation tools.  
@@ -109,13 +123,13 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        php: [8.1, 8.0, 7.4]
+        php: [8.3, 8.2]
 
     name: P${{ matrix.php }} - ${{ matrix.os }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -136,7 +150,7 @@ jobs:
         run: ./vendor/bin/phpunit
         
       - name: Check for ray calls
-        run: ./vendor/bin/x-ray . --compact
+        run: ./vendor/bin/x-ray . --github
 ```
 
 ## Git hooks
@@ -168,12 +182,11 @@ You can also use `x-ray` with husky in your `package.json` configuration:
 ...
 "husky": {
     "hooks": {
-        "pre-commit": "lint-staged && .x-ray -s ."
+        "pre-commit": "lint-staged && php ./vendor/bin/x-ray -s ."
     }
 },
 ....
 ```
-
 
 ## Screenshots
 
