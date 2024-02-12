@@ -36,9 +36,13 @@ class CleanCommand extends Command
         $path = $input->getArgument('path');
         $dryRun = $input->getOption('dry-run');
 
+        $configFn = file_exists('./remove-ray-rector.php')
+            ? './remove-ray-rector.php'
+            : './vendor/spatie/x-ray/remove-ray-rector.php';
+
         $flags = implode(' ', array_filter([
             $dryRun ? '--dry-run' : false,
-            '--config ./remove-ray-rector.php',
+            '--config '.$configFn,
         ]));
 
         passthru('php vendor/bin/rector process "'.$path.'" '.$flags.' >&2', $code);
