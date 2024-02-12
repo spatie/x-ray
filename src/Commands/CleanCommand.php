@@ -15,8 +15,11 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\AnsiColorMode;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Process\Process;
 
 class CleanCommand extends Command
 {
@@ -24,15 +27,22 @@ class CleanCommand extends Command
     {
         $this->setName('clean')
             ->addArgument('path', InputArgument::REQUIRED)
+            ->addOption('dry-run', 'd', InputOption::VALUE_NONE, 'Don\'t actually change any files')
             ->setDescription('Removes calls to ray(), ->ray(), rd() and Ray::*.');
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $path = $input->getArgument('path');
-        $code = 0;
-        passthru('php vendor/bin/rector process "'.$path.'" --dry-run --config ./remove-ray-rector.php', $code);
+        $dryRun = $input->getOption('dry-run');
 
-        return Command::SUCCESS;
+        $flags = implode(' ', array_filter([
+            $dryRun ? '--dry-run' : false,
+            '--config ./remove-ray-rector.php',
+        ]));
+
+        passthru('php vendor/bin/rector process "'.$path.'" '.$flags.' >&2', $code);
+
+        return $code === 0 ? Command::SUCCESS : Command::FAILURE;
     }
 }
