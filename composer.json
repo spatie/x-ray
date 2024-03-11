@@ -36,7 +36,7 @@
         "symfony/yaml": "^5.3|^6.0|^7.0"
     },
     "require-dev": {
-        "phpstan/phpstan": "^0.12.92",
+        "phpstan/phpstan": "^1.10.60",
         "phpunit/phpunit": "^9.5",
         "spatie/phpunit-snapshot-assertions": "^4.2"
     },
