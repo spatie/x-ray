@@ -5,6 +5,19 @@ All notable changes to `x-ray` will be documented in this file.
 
 ---
 
+## 1.2.0 - 2024-11-12
+
+### What's Changed
+
+* Bump aglipanci/laravel-pint-action from 2.3.0 to 2.3.1 by @dependabot in https://github.com/spatie/x-ray/pull/51
+* Bump actions/cache from 3 to 4 by @dependabot in https://github.com/spatie/x-ray/pull/52
+* Update phpstan/phpstan requirement from ^0.12.92 to ^1.10.60 by @dependabot in https://github.com/spatie/x-ray/pull/55
+* Bump dependabot/fetch-metadata from 1 to 2 by @dependabot in https://github.com/spatie/x-ray/pull/56
+* Bump aglipanci/laravel-pint-action from 2.3.1 to 2.4 by @dependabot in https://github.com/spatie/x-ray/pull/57
+* Update phpstan/phpstan requirement from ^1.10.60 to ^2.0.0 by @dependabot in https://github.com/spatie/x-ray/pull/58
+
+**Full Changelog**: https://github.com/spatie/x-ray/compare/1.1.2...1.2.0
+
 ## 1.1.2 - 2023-12-19
 
 ### What's Changed
