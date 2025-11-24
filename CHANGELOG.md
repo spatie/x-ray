@@ -5,6 +5,25 @@ All notable changes to `x-ray` will be documented in this file.
 
 ---
 
+## 1.2.1 - 2025-11-24
+
+### What's Changed
+
+* Bump aglipanci/laravel-pint-action from 2.4 to 2.5 by @dependabot[bot] in https://github.com/spatie/x-ray/pull/59
+* Bump stefanzweifel/git-auto-commit-action from 5 to 6 by @dependabot[bot] in https://github.com/spatie/x-ray/pull/60
+* Bump aglipanci/laravel-pint-action from 2.5 to 2.6 by @dependabot[bot] in https://github.com/spatie/x-ray/pull/61
+* Bump actions/checkout from 4 to 5 by @dependabot[bot] in https://github.com/spatie/x-ray/pull/62
+* Update issue template by @AlexVanderbist in https://github.com/spatie/x-ray/pull/64
+* Added Symfony 8 support to all symfony/* packages. by @thecaliskan in https://github.com/spatie/x-ray/pull/67
+* Bump actions/checkout from 5 to 6 by @dependabot[bot] in https://github.com/spatie/x-ray/pull/68
+* Bump stefanzweifel/git-auto-commit-action from 6 to 7 by @dependabot[bot] in https://github.com/spatie/x-ray/pull/65
+
+### New Contributors
+
+* @AlexVanderbist made their first contribution in https://github.com/spatie/x-ray/pull/64
+
+**Full Changelog**: https://github.com/spatie/x-ray/compare/1.2.0...1.2.1
+
 ## 1.2.0 - 2024-11-12
 
 ### What's Changed
