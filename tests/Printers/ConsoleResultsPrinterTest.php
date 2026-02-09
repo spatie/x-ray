@@ -18,11 +18,11 @@ class ConsoleResultsPrinterTest extends TestCase
     /** @test */
     public function it_prints_a_summary_with_a_table()
     {
-        $path = __DIR__ . '/../fixtures/fixture1.php';
+        $path = __DIR__.'/../fixtures/fixture1.php';
         $config = $this->createConfiguration($path, null, ['path' => $path, '--summary' => true]);
-        $output = new FakeOutput();
+        $output = new FakeOutput;
         $printer = new ConsoleResultsPrinter($output, $config);
-        $printer->consoleColor = new FakeConsoleColor();
+        $printer->consoleColor = new FakeConsoleColor;
         $scanner = new CodeScanner($config, $path);
 
         $results = $scanner->scan();
@@ -34,11 +34,11 @@ class ConsoleResultsPrinterTest extends TestCase
     /** @test */
     public function it_prints_a_summary_without_a_table()
     {
-        $path = __DIR__ . '/../fixtures/fixture1.php';
+        $path = __DIR__.'/../fixtures/fixture1.php';
         $config = $this->createConfiguration([$path], null, ['path' => $path]);
-        $output = new FakeOutput();
+        $output = new FakeOutput;
         $printer = new ConsoleResultsPrinter($output, $config);
-        $printer->consoleColor = new FakeConsoleColor();
+        $printer->consoleColor = new FakeConsoleColor;
         $scanner = new CodeScanner($config, $path);
 
         $results = $scanner->scan();
@@ -50,11 +50,11 @@ class ConsoleResultsPrinterTest extends TestCase
     /** @test */
     public function it_prints_a_summary_with_github_annotation()
     {
-        $path = __DIR__ . '/../fixtures/fixture1.php';
+        $path = __DIR__.'/../fixtures/fixture1.php';
         $config = $this->createConfiguration([$path], null, ['path' => $path, '--github' => true]);
-        $output = new FakeOutput();
+        $output = new FakeOutput;
         $printer = new ConsoleResultsPrinter($output, $config);
-        $printer->consoleColor = new FakeConsoleColor();
+        $printer->consoleColor = new FakeConsoleColor;
         $scanner = new CodeScanner($config, $path);
 
         $results = $scanner->scan();

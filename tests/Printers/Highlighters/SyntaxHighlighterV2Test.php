@@ -16,12 +16,12 @@ class SyntaxHighlighterV2Test extends TestCase
     /** @test */
     public function it_highlights_snippets()
     {
-        $highlighter = new SyntaxHighlighterV2(new FakeConsoleColor());
+        $highlighter = new SyntaxHighlighterV2(new FakeConsoleColor);
 
-        $snippet = (new CodeSnippet())
+        $snippet = (new CodeSnippet)
             ->surroundingLine(3)
             ->snippetLineCount(5)
-            ->fromFile(__DIR__ . '/../../fixtures/fixture1.php');
+            ->fromFile(__DIR__.'/../../fixtures/fixture1.php');
 
         $this->assertMatchesSnapshot($highlighter->highlightSnippet($snippet, Bounds::create(3, 3)));
     }

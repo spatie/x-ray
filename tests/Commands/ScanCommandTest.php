@@ -31,7 +31,7 @@ class ScanCommandTest extends TestCase
         parent::setUp();
 
         $this->command = new ScanCommand('scan');
-        $this->output = new FakeOutput();
+        $this->output = new FakeOutput;
     }
 
     protected function createInput(array $input): ArrayInput
@@ -50,10 +50,10 @@ class ScanCommandTest extends TestCase
     /** @test */
     public function it_executes_the_command_with_a_valid_filename()
     {
-        $input = $this->createInput(['path' => __DIR__ . '/../fixtures/fixture1.php', '--no-progress' => true, '--snippets' => true]);
+        $input = $this->createInput(['path' => __DIR__.'/../fixtures/fixture1.php', '--no-progress' => true, '--snippets' => true]);
 
         $this->command->printer = new FakeConsoleResultsPrinter($this->createConfigurationFromInput($input));
-        $this->command->printer->consoleColor = new FakeConsoleColor();
+        $this->command->printer->consoleColor = new FakeConsoleColor;
 
         $this->command->execute($input, $this->output);
 
@@ -63,11 +63,11 @@ class ScanCommandTest extends TestCase
     /** @test */
     public function it_executes_the_command_with_a_valid_path()
     {
-        $path = [__DIR__ . '/../fixtures'];
+        $path = [__DIR__.'/../fixtures'];
         $input = $this->createInput(['path' => $path, '--no-progress' => true, '--snippets' => true]);
 
         $this->command->printer = new FakeConsoleResultsPrinter($this->createConfigurationFromInput($input));
-        $this->command->printer->consoleColor = new FakeConsoleColor();
+        $this->command->printer->consoleColor = new FakeConsoleColor;
 
         $this->command->execute($input, $this->output);
 
@@ -77,12 +77,11 @@ class ScanCommandTest extends TestCase
     /** @test */
     public function it_executes_the_command_with_a_valid_path_and_ignores_the_specified_files()
     {
-        $path = [__DIR__ . '/../fixtures'];
+        $path = [__DIR__.'/../fixtures'];
         $input = $this->createInput(['path' => $path, '--no-progress' => true, '--snippets' => false, '--ignore' => ['fixture*.php']]);
 
         $this->command->printer = new FakeConsoleResultsPrinter($this->createConfigurationFromInput($input));
-        $this->command->printer->consoleColor = new FakeConsoleColor();
-
+        $this->command->printer->consoleColor = new FakeConsoleColor;
 
         $this->command->execute($input, $this->output);
 
@@ -97,8 +96,7 @@ class ScanCommandTest extends TestCase
         $input = $this->createInput(['path' => $path, '--no-progress' => true, '--snippets' => false, '--verbose' => true]);
 
         $this->command->printer = new FakeConsoleResultsPrinter($this->createConfigurationFromInput($input));
-        $this->command->printer->consoleColor = new FakeConsoleColor();
-
+        $this->command->printer->consoleColor = new FakeConsoleColor;
 
         $this->command->execute($input, $this->output);
 
@@ -108,9 +106,9 @@ class ScanCommandTest extends TestCase
     /** @test */
     public function it_executes_and_has_no_scan_results_and_returns_a_success_exit_code()
     {
-        $this->command->printer = new FakeConsoleResultsPrinter($this->createConfiguration(__DIR__ . '/../fixtures/fixture1.php'));
+        $this->command->printer = new FakeConsoleResultsPrinter($this->createConfiguration(__DIR__.'/../fixtures/fixture1.php'));
 
-        $input = $this->createInput(['path' => __DIR__ . '/../fixtures/fixture3.php', '--no-progress' => true]);
+        $input = $this->createInput(['path' => __DIR__.'/../fixtures/fixture3.php', '--no-progress' => true]);
 
         $result = $this->command->execute($input, $this->output);
 
@@ -120,8 +118,8 @@ class ScanCommandTest extends TestCase
     /** @test */
     public function it_executes_the_command_with_a_valid_filename_and_displays_progress()
     {
-        $input = $this->createInput(['path' => __DIR__ . '/../fixtures/fixture1.php']);
-        $this->command->printer = new FakeConsoleResultsPrinter($this->createConfiguration(__DIR__ . '/../fixtures/fixture1.php'));
+        $input = $this->createInput(['path' => __DIR__.'/../fixtures/fixture1.php']);
+        $this->command->printer = new FakeConsoleResultsPrinter($this->createConfiguration(__DIR__.'/../fixtures/fixture1.php'));
 
         $this->command->execute($input, $this->output);
 

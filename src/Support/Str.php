@@ -7,9 +7,7 @@ class Str
     /**
      * Determine if a given string starts with a given substring.
      *
-     * @param string $haystack
-     * @param string|string[] $needles
-     * @return bool
+     * @param  string|string[]  $needles
      */
     public static function startsWith(string $haystack, array|string $needles): bool
     {
@@ -24,10 +22,6 @@ class Str
 
     /**
      * Return the remainder of a string after the last occurrence of a given value.
-     *
-     * @param  string  $subject
-     * @param  string  $search
-     * @return string
      */
     public static function afterLast(string $subject, string $search): string
     {

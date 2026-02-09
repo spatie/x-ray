@@ -27,7 +27,7 @@ class Configuration
         }
 
         $this->functions = ConfigurationItemList::make(['ray', 'rd']);
-        $this->pathnames = new ConfigurationItemList();
+        $this->pathnames = new ConfigurationItemList;
     }
 
     public function validate(): self
@@ -38,7 +38,7 @@ class Configuration
 
         foreach ($this->paths as $path) {
             if (! file_exists($path)) {
-                throw new InvalidArgumentException('Invalid input file or path provided: ' . $path);
+                throw new InvalidArgumentException('Invalid input file or path provided: '.$path);
             }
         }
 

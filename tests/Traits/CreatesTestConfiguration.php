@@ -32,7 +32,7 @@ trait CreatesTestConfiguration
             $path = [$path];
         }
 
-        $configPath = $configPath ?? __DIR__ . '/../data';
+        $configPath = $configPath ?? __DIR__.'/../data';
         $options = $options ?? ['path' => $path, '--no-progress' => true, '--snippets' => false];
 
         $input = $this->createInput($options);
@@ -42,7 +42,7 @@ trait CreatesTestConfiguration
 
     protected function createConfigurationFromInput(InputInterface $input, ?string $configPath = null): Configuration
     {
-        $configPath = $configPath ?? __DIR__ . '/../data';
+        $configPath = $configPath ?? __DIR__.'/../data';
 
         return ConfigurationFactory::create($input, $configPath);
     }

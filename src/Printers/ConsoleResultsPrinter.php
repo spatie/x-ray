@@ -116,8 +116,8 @@ class ConsoleResultsPrinter extends ResultsPrinter
         foreach ($results as $scanResult) {
             foreach ($scanResult->results as $result) {
                 $this->output->writeln(sprintf(
-                    "::error file=%s,line=%d,col=%d::Found a ray call",
-                    str_replace(getcwd() . DIRECTORY_SEPARATOR, '', $result->file()->filename),
+                    '::error file=%s,line=%d,col=%d::Found a ray call',
+                    str_replace(getcwd().DIRECTORY_SEPARATOR, '', $result->file()->filename),
                     $result->location->startLine(),
                     $result->location->column(),
                 ));
@@ -127,6 +127,6 @@ class ConsoleResultsPrinter extends ResultsPrinter
 
     protected function makeFilenameRelative(string $filename): string
     {
-        return str_replace(getcwd() . DIRECTORY_SEPARATOR, './', $filename);
+        return str_replace(getcwd().DIRECTORY_SEPARATOR, './', $filename);
     }
 }
