@@ -9,7 +9,7 @@ class FakeConsoleResultPrinter extends ConsoleResultPrinter
 {
     public function print($output, SearchResult $result): void
     {
-        $result->file()->filename = str_replace(realpath(__DIR__ . '/../..'), '', $result->file()->getRealPath());
+        $result->file()->filename = str_replace(realpath(__DIR__.'/../..'), '', $result->file()->getRealPath());
 
         parent::print($output, $result);
     }

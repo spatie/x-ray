@@ -4,11 +4,13 @@ namespace Spatie\XRay\Printers\Highlighters;
 
 /**
  * Original source from nunomaduro/collision:
+ *
  * @link https://raw.githubusercontent.com/nunomaduro/collision/stable/src/ConsoleColor.php
  */
 class ConsoleColor
 {
     const FOREGROUND = 38;
+
     const BACKGROUND = 48;
 
     const COLOR256_REGEXP = '~^(bg_)?color_(\d{1,3})$~';
@@ -80,10 +82,7 @@ class ConsoleColor
     }
 
     /**
-     * @param string|array $style
-     * @param string       $text
-     *
-     * @return string
+     * @param  string|array  $style
      *
      * @throws InvalidStyleException
      * @throws \InvalidArgumentException
@@ -122,7 +121,7 @@ class ConsoleColor
             return $text;
         }
 
-        return $this->escSequence(implode(';', $sequences)) . $text . $this->escSequence(self::RESET_STYLE);
+        return $this->escSequence(implode(';', $sequences)).$text.$this->escSequence(self::RESET_STYLE);
     }
 
     public function setForceStyle(bool $forceStyle): void
@@ -144,7 +143,7 @@ class ConsoleColor
     }
 
     /**
-     * @param array|string $styles
+     * @param  array|string  $styles
      */
     public function addTheme(string $name, $styles): void
     {
@@ -157,7 +156,7 @@ class ConsoleColor
 
         foreach ($styles as $style) {
             if (! $this->isValidStyle($style)) {
-                throw new \Exception($style); //InvalidStyleException
+                throw new \Exception($style); // InvalidStyleException
             }
         }
 
@@ -233,18 +232,13 @@ class ConsoleColor
         return "$type;5;$value";
     }
 
-    /**
-     * @param string $style
-     *
-     * @return bool
-     */
     protected function isValidStyle(string $style): bool
     {
         return array_key_exists($style, self::STYLES) || preg_match(self::COLOR256_REGEXP, $style);
     }
 
     /**
-     * @param string|int $value
+     * @param  string|int  $value
      */
     protected function escSequence($value): string
     {

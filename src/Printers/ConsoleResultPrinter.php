@@ -28,7 +28,7 @@ class ConsoleResultPrinter extends ResultPrinter
 
     protected function printResultLine(OutputInterface $output, SearchResult $result)
     {
-        $filename = str_replace(getcwd() . DIRECTORY_SEPARATOR, './', $result->file()->filename);
+        $filename = str_replace(getcwd().DIRECTORY_SEPARATOR, './', $result->file()->filename);
 
         if ($this->config->compactMode) {
             return $this->printCompactResultLine($output, $result);
@@ -39,13 +39,13 @@ class ConsoleResultPrinter extends ResultPrinter
         $output->writeln(" <fg=#78716C;options=bold>❱</> Found: <fg=#e53e3e>{$nodeName}</>");
         $output->writeln(" <fg=#78716C;options=bold>❱</> File : {$filename}:<options=bold>{$result->location->startLine()}</>");
 
-        //e53e3e
+        // e53e3e
         $output->writeln('');
     }
 
     protected function printCompactResultLine(OutputInterface $output, SearchResult $result)
     {
-        $filename = str_replace(getcwd() . DIRECTORY_SEPARATOR, './', $result->file()->filename);
+        $filename = str_replace(getcwd().DIRECTORY_SEPARATOR, './', $result->file()->filename);
 
         $output->writeln(" {$filename}:<fg=#52525B>{$result->location->startLine()}</>");
 

@@ -26,7 +26,7 @@ class ConsoleResultPrinterTest extends TestCase
     {
         $file = new File(__DIR__.'/../fixtures/fixture1.php');
         $location = new GenericCodeLocation(3, 3);
-        $snippet = (new CodeSnippet())
+        $snippet = (new CodeSnippet)
             ->surroundingLine(4)
             ->snippetLineCount(3)
             ->fromFile($file->getRealPath());
@@ -35,12 +35,12 @@ class ConsoleResultPrinterTest extends TestCase
 
         $result = new SearchResult($node, $location, $snippet, basename($file->filename));
         $result->file()->filename = basename($file->filename);
-        $output = new FakeOutput();
+        $output = new FakeOutput;
 
         $options = ['path' => $file->getRealPath(), '--snippets' => true];
         $printer = new ConsoleResultPrinter($this->createConfiguration(__DIR__, null, $options));
 
-        $printer->consoleColor = new FakeConsoleColor();
+        $printer->consoleColor = new FakeConsoleColor;
 
         $printer->print($output, $result);
 

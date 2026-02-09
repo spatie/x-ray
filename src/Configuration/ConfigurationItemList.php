@@ -14,7 +14,7 @@ class ConfigurationItemList
 
     public static function make(array $defaults, bool $isPartial = false): self
     {
-        $result = new self();
+        $result = new self;
         $result->isPartial = $isPartial;
         $result->default = $defaults;
 
