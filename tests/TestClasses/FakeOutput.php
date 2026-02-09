@@ -41,7 +41,11 @@ class FakeOutput implements OutputInterface
 
     public function isQuiet(): bool
     {
-        // TODO: Implement isQuiet() method.
+        return false;
+    }
+
+    public function isSilent(): bool
+    {
         return false;
     }
 
