@@ -15,6 +15,10 @@ use Symfony\Component\Console\Application;
 $application = new Application('x-ray', '1.0.0');
 $command = new ScanCommand();
 
-$application->add($command);
+if (method_exists($application, 'addCommand')) {
+    $application->addCommand($command);
+} else {
+    $application->add($command);
+}
 $application->setDefaultCommand($command->getName(), true);
 $application->run();
