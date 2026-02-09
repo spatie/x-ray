@@ -26,7 +26,7 @@ class ConfigurationFactory
         $ignorePaths = self::getOption($input, 'ignore', []);
 
         $result = new Configuration($paths, $showSnippets, $hideProgress, $showSummary, $githubAnnotation, $compactMode, $verboseMode);
-        $options = (new static())->getSettingsFromConfigFile($configDirectory);
+        $options = (new static)->getSettingsFromConfigFile($configDirectory);
 
         $result->loadOptionsFromConfigurationFile($options, $ignorePaths);
 
@@ -71,7 +71,7 @@ class ConfigurationFactory
             'x-ray.yml',
         ];
 
-        $configDirectory = $configDirectory ?? (string)getcwd();
+        $configDirectory = $configDirectory ?? (string) getcwd();
 
         while (@is_dir($configDirectory)) {
             foreach ($configNames as $configName) {

@@ -41,7 +41,7 @@ class ScanCommand extends Command
             ->addOption('summary', 's', InputOption::VALUE_NONE, 'Display a table summarizing the results')
             ->addOption('compact', 'c', InputOption::VALUE_NONE, 'Display results in a compact format')
             ->addOption('github', 'g', InputOption::VALUE_NONE, 'Display results in a github annotation format')
-            ->addOption('ignore', 'i',  InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Ignore one or more files/paths')
+            ->addOption('ignore', 'i', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Ignore one or more files/paths')
             ->setDescription('Scans a directory or filename for calls to ray(), rd() and Ray::*.');
     }
 
@@ -53,7 +53,7 @@ class ScanCommand extends Command
                 ->scanPaths()
                 ->printResults();
         } catch (InvalidArgumentException $e) {
-            $output->writeln('<fg=yellow;options=bold>Error: </>' . $e->getMessage());
+            $output->writeln('<fg=yellow;options=bold>Error: </>'.$e->getMessage());
 
             return Command::FAILURE;
         } catch (MissingArgumentException $e) {
@@ -89,7 +89,7 @@ class ScanCommand extends Command
 
             if ($this->config->verboseMode) {
                 if ($results->hasErrors()) {
-                    MessagePrinter::error($this->output, $path . ' <fg=#DC2626>(syntax or parsing error)</>', '   ');
+                    MessagePrinter::error($this->output, $path.' <fg=#DC2626>(syntax or parsing error)</>', '   ');
 
                     return;
                 }

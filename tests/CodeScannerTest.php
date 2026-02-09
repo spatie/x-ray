@@ -17,9 +17,8 @@ class CodeScannerTest extends TestCase
     /** @test */
     public function it_scans_a_file()
     {
-        $file = new File(__DIR__ . '/fixtures/fixture1.php');
+        $file = new File(__DIR__.'/fixtures/fixture1.php');
         $scanner = new CodeScanner($this->getConfig(), $file->getRealPath());
-
 
         $results = $scanner->scanFile($file->getRealPath());
 
@@ -33,7 +32,7 @@ class CodeScannerTest extends TestCase
     /** @test */
     public function it_returns_an_error_for_parsing_errors()
     {
-        $file = new File(__DIR__ . '/fixtures/fixture2.php');
+        $file = new File(__DIR__.'/fixtures/fixture2.php');
         $scanner = new CodeScanner($this->getConfig(), $file->getRealPath());
 
         $results = $scanner->scanFile($file->getRealPath());

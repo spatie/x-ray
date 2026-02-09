@@ -11,7 +11,7 @@ class CodeScanner
 {
     protected array $paths;
 
-    public function __construct(protected Configuration $config, string | array $path)
+    public function __construct(protected Configuration $config, string|array $path)
     {
         if (! is_array($path)) {
             $path = [$path];
@@ -22,7 +22,7 @@ class CodeScanner
 
     public function scanFile(string $file): FileSearchResults
     {
-        $searcher = new Searcher();
+        $searcher = new Searcher;
 
         return $searcher
             ->functions($this->config->functions->values())
@@ -115,7 +115,7 @@ class CodeScanner
 
         foreach ($pathMap as $result => $paths) {
             if (in_array($path, $paths, true) || in_array(basename($path), $paths, true)) {
-                return (bool)$result;
+                return (bool) $result;
             }
         }
 
@@ -123,43 +123,43 @@ class CodeScanner
             foreach ($paths as $pathname) {
                 $pathname = str_replace(['*', '?', '~'], ['.*', '.', '\\~'], $pathname);
 
-                if (preg_match('~' . $pathname . '~', $path) === 1) {
-                    return (bool)$result;
+                if (preg_match('~'.$pathname.'~', $path) === 1) {
+                    return (bool) $result;
                 }
             }
         }
 
-//        if (in_array($path, $this->config->pathnames->included(), true)) {
-//            return false;
-//        }
-//
-//        if (in_array(basename($path), $this->config->pathnames->included(), true)) {
-//            return false;
-//        }
-//
-//        if (in_array($path, $this->config->pathnames->ignored(), true)) {
-//            return true;
-//        }
-//
-//        if (in_array(basename($path), $this->config->pathnames->ignored(), true)) {
-//            return true;
-//        }
+        //        if (in_array($path, $this->config->pathnames->included(), true)) {
+        //            return false;
+        //        }
+        //
+        //        if (in_array(basename($path), $this->config->pathnames->included(), true)) {
+        //            return false;
+        //        }
+        //
+        //        if (in_array($path, $this->config->pathnames->ignored(), true)) {
+        //            return true;
+        //        }
+        //
+        //        if (in_array(basename($path), $this->config->pathnames->ignored(), true)) {
+        //            return true;
+        //        }
 
-//        foreach ($this->config->pathnames->included() as $pathname) {
-//            $pathname = str_replace(['*', '?', '~'], ['.*', '.', '\\~'], $pathname);
-//
-//            if (preg_match('~' . $pathname . '~', $path) === 1) {
-//                return false;
-//            }
-//        }
-//
-//        foreach ($this->config->pathnames->ignored() as $pathname) {
-//            $pathname = str_replace(['*', '?', '~'], ['.*', '.', '\\~'], $pathname);
-//
-//            if (preg_match('~' . $pathname . '~', $path) === 1) {
-//                return true;
-//            }
-//        }
+        //        foreach ($this->config->pathnames->included() as $pathname) {
+        //            $pathname = str_replace(['*', '?', '~'], ['.*', '.', '\\~'], $pathname);
+        //
+        //            if (preg_match('~' . $pathname . '~', $path) === 1) {
+        //                return false;
+        //            }
+        //        }
+        //
+        //        foreach ($this->config->pathnames->ignored() as $pathname) {
+        //            $pathname = str_replace(['*', '?', '~'], ['.*', '.', '\\~'], $pathname);
+        //
+        //            if (preg_match('~' . $pathname . '~', $path) === 1) {
+        //                return true;
+        //            }
+        //        }
 
         return false;
     }

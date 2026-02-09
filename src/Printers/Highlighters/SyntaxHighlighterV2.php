@@ -8,24 +8,37 @@ use Spatie\XRay\Support\Str;
 
 /**
  * Original code taken from nunomaduro/collision
+ *
  * @link https://github.com/nunomaduro/collision/blob/stable/src/Highlighter.php
  */
 class SyntaxHighlighterV2
 {
     public const TOKEN_COMMENT = 'token_comment';
+
     public const TOKEN_DEFAULT = 'token_default';
+
     public const TOKEN_HTML = 'token_html';
+
     public const TOKEN_KEYWORD = 'token_keyword';
+
     public const TOKEN_STRING = 'token_string';
+
     public const TOKEN_VARIABLE = 'token_variable';
+
     public const ACTUAL_LINE_MARK = 'actual_line_mark';
+
     public const LINE_NUMBER = 'line_number';
 
-    protected const ARROW_SYMBOL_UTF8 = ' ❱❱';//➜';
+    protected const ARROW_SYMBOL_UTF8 = ' ❱❱'; // ➜';
+
     protected const DELIMITER_UTF8 = '▕ ';
+
     protected const LINE_NUMBER_DIVIDER = 'line_divider';
+
     protected const MARKED_LINE_NUMBER = 'marked_line';
+
     protected const WIDTH = 4;
+
     protected const TARGET_LINE = 'target_line';
 
     /**
@@ -45,7 +58,7 @@ class SyntaxHighlighterV2
         self::LINE_NUMBER => ['dark_gray'],
         self::MARKED_LINE_NUMBER => ['italic', 'bold'],
         self::LINE_NUMBER_DIVIDER => ['dark_gray'],
-        self::TARGET_LINE => ['bold', 'italic'], //'bg_color_25'],
+        self::TARGET_LINE => ['bold', 'italic'], // 'bg_color_25'],
     ];
 
     /** @var ConsoleColor */
@@ -81,7 +94,7 @@ class SyntaxHighlighterV2
 
     public function __construct(?ConsoleColor $color = null)
     {
-        $this->color = $color ?? new ConsoleColor();
+        $this->color = $color ?? new ConsoleColor;
 
         foreach (self::DEFAULT_THEME as $name => $styles) {
             if (! $this->color->hasTheme($name)) {
@@ -133,7 +146,7 @@ class SyntaxHighlighterV2
     protected function tokenize(string $source): array
     {
         if (! $this->hasOpenTag) {
-            $source = "<?"."php {$source}";
+            $source = '<?'."php {$source}";
         }
 
         $tokens = token_get_all($source);
@@ -148,7 +161,6 @@ class SyntaxHighlighterV2
                 switch ($token[0]) {
                     case T_WHITESPACE:
                         break;
-
 
                     case T_OPEN_TAG:
                         // mark the token as a keyword if it wasn't added automatically for tokenization
@@ -296,7 +308,7 @@ class SyntaxHighlighterV2
         $lineStrlen = strlen((string) (array_key_last($lines) + 1));
         $lineStrlen = $lineStrlen < self::WIDTH ? self::WIDTH : $lineStrlen;
         $snippet = '';
-        $mark = str_pad($this->arrow . ' ', 4, ' ', STR_PAD_LEFT);
+        $mark = str_pad($this->arrow.' ', 4, ' ', STR_PAD_LEFT);
 
         foreach ($lines as $lineNum => $line) {
             $coloredLineNumber = $this->coloredLineNumber(self::LINE_NUMBER, $lineNum, $lineStrlen);
@@ -316,7 +328,7 @@ class SyntaxHighlighterV2
 
             $snippet .= $coloredLineNumber;
             $snippet .= $this->color->apply(self::LINE_NUMBER_DIVIDER, $this->delimiter);
-            $snippet .= $line . PHP_EOL;
+            $snippet .= $line.PHP_EOL;
         }
 
         return $snippet;
@@ -324,6 +336,6 @@ class SyntaxHighlighterV2
 
     protected function coloredLineNumber(string $style, int $lineNum, int $lineStrlen): string
     {
-        return $this->color->apply($style, str_pad((string)$lineNum, $lineStrlen, ' ', STR_PAD_LEFT));
+        return $this->color->apply($style, str_pad((string) $lineNum, $lineStrlen, ' ', STR_PAD_LEFT));
     }
 }

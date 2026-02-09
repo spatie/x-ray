@@ -13,7 +13,7 @@ class FakeOutput implements OutputInterface
 
     public function __construct()
     {
-        $this->formatter = new FakeFormatter();
+        $this->formatter = new FakeFormatter;
     }
 
     public function getFormatter(): OutputFormatterInterface
@@ -82,9 +82,9 @@ class FakeOutput implements OutputInterface
             $this->writtenData[] = '';
         }
 
-        $this->writtenData[count($this->writtenData) - 1] .= $this->stripAnsi($messages) . ($newline ? PHP_EOL : '');
+        $this->writtenData[count($this->writtenData) - 1] .= $this->stripAnsi($messages).($newline ? PHP_EOL : '');
 
-        //$this->writtenData[] = $this->stripAnsi($messages);
+        // $this->writtenData[] = $this->stripAnsi($messages);
     }
 
     public function writeln($messages, int $options = 0): void
