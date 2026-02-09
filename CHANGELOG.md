@@ -5,6 +5,19 @@ All notable changes to `x-ray` will be documented in this file.
 
 ---
 
+## 1.2.2 - 2026-02-09
+
+### What's Changed
+
+* Bump actions/cache from 4 to 5 by @dependabot[bot] in https://github.com/spatie/x-ray/pull/70
+* Fix Symfony Console v8 compatibility by @freekmurze in https://github.com/spatie/x-ray/pull/71
+
+### New Contributors
+
+* @freekmurze made their first contribution in https://github.com/spatie/x-ray/pull/71
+
+**Full Changelog**: https://github.com/spatie/x-ray/compare/1.2.1...1.2.2
+
 ## 1.2.1 - 2025-11-24
 
 ### What's Changed
