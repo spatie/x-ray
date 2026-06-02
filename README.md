@@ -6,7 +6,7 @@
     <!--img src="https://img.shields.io/packagist/v/spatie/x-ray.svg" alt="Packagist Version"-->  
     <img src="https://img.shields.io/github/v/release/spatie/x-ray.svg?sort=semver&logo=github" alt="Package Version">
     <img src="https://img.shields.io/github/license/spatie/x-ray.svg?logo=opensourceinitiative" alt="license">
-    <img src="https://img.shields.io/github/actions/workflow/status/spatie/x-ray/run-tests.yml?style=flat-square" alt="Test Run Status">
+    <img src="https://github.com/spatie/x-ray/actions/workflows/run-tests.yml/badge.svg" alt="Test Run Status">
     <img src="https://img.shields.io/packagist/dt/spatie/x-ray.svg?style=flat-square" alt="Downloads" />
 </p>
 
