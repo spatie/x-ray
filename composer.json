@@ -38,7 +38,7 @@
     "require-dev": {
         "phpstan/phpstan": "^2.0.0",
         "phpunit/phpunit": "^9.5",
-        "spatie/phpunit-snapshot-assertions": "^4.2"
+        "spatie/phpunit-snapshot-assertions": "^5.4"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
