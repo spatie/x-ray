@@ -10,10 +10,10 @@ jobs:
   test:
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        php: [8.6, 8.5, 8.4, 8.3, 8.2, 8.1, 8.0]
+        php: ['8.6', '8.5', '8.4', '8.3']
         stability: [prefer-stable]
 
     name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
@@ -36,7 +36,7 @@ jobs:
 
       - name: Get composer cache directory path
         id: composer-cache-dir-path
-        run: echo "::set-output name=dir::$(composer config cache-files-dir --global)"
+        run: echo "dir=$(composer config cache-files-dir --global)" >> "$GITHUB_OUTPUT"
 
       - name: Cache dependencies
         uses: actions/cache@v6
@@ -47,5 +47,14 @@ jobs:
       - name: Install dependencies
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
+      - name: Validate dependencies
+        run: |
+          composer validate --strict
+          composer check-platform-reqs
+          composer audit
+
       - name: Execute tests
-        run: ./vendor/bin/phpunit -d --without-creating-snapshots
+        run: composer test
+        env:
+          CREATE_SNAPSHOTS: 'false'
+          UPDATE_SNAPSHOTS: 'false'

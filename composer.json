@@ -28,7 +28,7 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.3",
         "permafrost-dev/code-snippets": "^1.2.0",
         "permafrost-dev/php-code-search": "^1.10.5",
         "symfony/console": "^5.3|^6.0|^7.0|^8.0",
@@ -37,7 +37,7 @@
     },
     "require-dev": {
         "phpstan/phpstan": "^2.0.0",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^12.5",
         "spatie/phpunit-snapshot-assertions": "^5.4"
     },
     "minimum-stability": "dev",

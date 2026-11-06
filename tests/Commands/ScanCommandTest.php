@@ -2,6 +2,7 @@
 
 namespace Spatie\XRay\Tests\Commands;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 use Spatie\XRay\Commands\ScanCommand;
@@ -47,7 +48,7 @@ class ScanCommandTest extends TestCase
         return new ArrayInput($input, $inputDefinition);
     }
 
-    /** @test */
+    #[Test]
     public function it_executes_the_command_with_a_valid_filename()
     {
         $input = $this->createInput(['path' => __DIR__.'/../fixtures/fixture1.php', '--no-progress' => true, '--snippets' => true]);
@@ -55,12 +56,13 @@ class ScanCommandTest extends TestCase
         $this->command->printer = new FakeConsoleResultsPrinter($this->createConfigurationFromInput($input));
         $this->command->printer->consoleColor = new FakeConsoleColor;
 
-        $this->command->execute($input, $this->output);
+        $result = $this->command->execute($input, $this->output);
 
+        $this->assertSame(Command::FAILURE, $result);
         $this->assertMatchesSnapshot($this->output->writtenData);
     }
 
-    /** @test */
+    #[Test]
     public function it_executes_the_command_with_a_valid_path()
     {
         $path = [__DIR__.'/../fixtures'];
@@ -74,7 +76,7 @@ class ScanCommandTest extends TestCase
         $this->assertMatchesSnapshot($this->output->writtenData);
     }
 
-    /** @test */
+    #[Test]
     public function it_executes_the_command_with_a_valid_path_and_ignores_the_specified_files()
     {
         $path = [__DIR__.'/../fixtures'];
@@ -83,13 +85,14 @@ class ScanCommandTest extends TestCase
         $this->command->printer = new FakeConsoleResultsPrinter($this->createConfigurationFromInput($input));
         $this->command->printer->consoleColor = new FakeConsoleColor;
 
-        $this->command->execute($input, $this->output);
+        $result = $this->command->execute($input, $this->output);
 
+        $this->assertSame(Command::SUCCESS, $result);
         $this->assertCount(1, $this->command->scanner->paths());
         $this->assertMatchesSnapshot($this->output->writtenData);
     }
 
-    /** @test */
+    #[Test]
     public function it_executes_the_command_with_a_valid_path_and_displays_verbose_output()
     {
         $path = ['tests/fixtures'];
@@ -103,7 +106,7 @@ class ScanCommandTest extends TestCase
         $this->assertMatchesSnapshot($this->output->writtenData);
     }
 
-    /** @test */
+    #[Test]
     public function it_executes_and_has_no_scan_results_and_returns_a_success_exit_code()
     {
         $this->command->printer = new FakeConsoleResultsPrinter($this->createConfiguration(__DIR__.'/../fixtures/fixture1.php'));
@@ -115,7 +118,7 @@ class ScanCommandTest extends TestCase
         $this->assertEquals(Command::SUCCESS, $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_executes_the_command_with_a_valid_filename_and_displays_progress()
     {
         $input = $this->createInput(['path' => __DIR__.'/../fixtures/fixture1.php']);

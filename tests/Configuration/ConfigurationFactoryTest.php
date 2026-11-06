@@ -2,6 +2,7 @@
 
 namespace Spatie\XRay\Tests\Configuration;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Spatie\XRay\Configuration\ConfigurationFactory;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -22,7 +23,7 @@ class ConfigurationFactoryTest extends TestCase
         return new ArrayInput($input, $inputDefinition);
     }
 
-    /** @test */
+    #[Test]
     public function it_creates_a_configuration_object()
     {
         $path = [realpath(__DIR__.'/../fixtures/fixture1.php')];
@@ -35,7 +36,7 @@ class ConfigurationFactoryTest extends TestCase
         $this->assertEquals($path, $config->paths);
     }
 
-    /** @test */
+    #[Test]
     public function it_throws_an_exception_when_validating_the_configuration_if_the_filename_does_not_exist()
     {
         $filename = [realpath(__DIR__.'/../fixtures/missing.php')];
@@ -48,7 +49,7 @@ class ConfigurationFactoryTest extends TestCase
         $config->validate();
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_throw_an_exception_when_validating_the_configuration_if_the_filename_exists()
     {
         $filename = [realpath(__DIR__.'/../fixtures/fixture1.php')];

@@ -20,6 +20,8 @@ Visit [myray.app](https://myray.app) for information on downloading the Ray debu
 
 ## Installation
 
+Requires PHP 8.3 or later. Symfony 5.3, 6, 7, and 8 remain supported, subject to their own PHP requirements. This is a standalone CLI package; it does not require Laravel.
+
 ```bash
 composer require spatie/x-ray --dev
 ```
@@ -109,7 +111,7 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        php: [8.3, 8.2, 8.1]
+        php: ['8.5', '8.4', '8.3']
 
     name: P${{ matrix.php }} - ${{ matrix.os }}
 
@@ -181,8 +183,16 @@ Various screenshots can be viewed in [the docs](docs/screenshots.md).
 
 ## Testing
 
+The suite uses PHPUnit 12.5 and snapshot assertions 5.4. CI covers PHP 8.3–8.6. PHP 8.0–8.2 are no longer supported.
+
 ```bash
-./vendor/bin/phpunit
+composer test
+```
+
+Snapshot creation is disabled by default, and skipped or incomplete tests fail the suite. To intentionally create or update snapshots, run the following, then review the changes and run `composer test` again:
+
+```bash
+CREATE_SNAPSHOTS=true ./vendor/bin/update-snapshots
 ```
 
 ## Changelog
