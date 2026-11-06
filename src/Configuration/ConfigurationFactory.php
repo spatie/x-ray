@@ -57,11 +57,13 @@ class ConfigurationFactory
 
     protected function searchConfigFiles(?string $configDirectory = null): string
     {
-        if (! isset(self::$cache[$configDirectory])) {
-            self::$cache[$configDirectory] = $this->searchConfigFilesOnDisk($configDirectory);
+        $cacheKey = $configDirectory ?? '';
+
+        if (! isset(self::$cache[$cacheKey])) {
+            self::$cache[$cacheKey] = $this->searchConfigFilesOnDisk($configDirectory);
         }
 
-        return self::$cache[$configDirectory];
+        return self::$cache[$cacheKey];
     }
 
     protected function searchConfigFilesOnDisk(?string $configDirectory = null): string

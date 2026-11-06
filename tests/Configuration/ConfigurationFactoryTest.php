@@ -37,6 +37,37 @@ class ConfigurationFactoryTest extends TestCase
     }
 
     #[Test]
+    public function it_loads_and_caches_settings_from_the_current_or_an_explicit_directory(): void
+    {
+        $directory = sys_get_temp_dir().'/x-ray-'.bin2hex(random_bytes(8));
+        mkdir($directory);
+        mkdir($directory.'/explicit');
+        file_put_contents($directory.'/x-ray.yml', 'functions: {include: [ray]}');
+        file_put_contents($directory.'/explicit/x-ray.yml', 'functions: {include: [rd]}');
+
+        $workingDirectory = getcwd();
+        $cache = ConfigurationFactory::$cache;
+        ConfigurationFactory::$cache = [];
+
+        try {
+            chdir($directory);
+            $factory = new ConfigurationFactory;
+
+            $this->assertSame(['functions' => ['include' => ['ray']]], $factory->getSettingsFromConfigFile());
+            $this->assertSame(['functions' => ['include' => ['rd']]], $factory->getSettingsFromConfigFile($directory.'/explicit'));
+            $this->assertSame(['functions' => ['include' => ['ray']]], $factory->getSettingsFromConfigFile());
+            $this->assertSame(['functions' => ['include' => ['rd']]], $factory->getSettingsFromConfigFile($directory.'/explicit'));
+        } finally {
+            chdir($workingDirectory);
+            ConfigurationFactory::$cache = $cache;
+            unlink($directory.'/explicit/x-ray.yml');
+            unlink($directory.'/x-ray.yml');
+            rmdir($directory.'/explicit');
+            rmdir($directory);
+        }
+    }
+
+    #[Test]
     public function it_throws_an_exception_when_validating_the_configuration_if_the_filename_does_not_exist()
     {
         $filename = [realpath(__DIR__.'/../fixtures/missing.php')];
