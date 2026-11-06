@@ -5,6 +5,24 @@ All notable changes to `x-ray` will be documented in this file.
 
 ---
 
+## 1.3.0 - 2026-11-06
+
+### Compatibility
+
+* **Requires PHP 8.3 or later. PHP 8.0, 8.1, and 8.2 are no longer supported.** This floor increase is intentional in this minor release.
+* Symfony constraints remain `^5.3|^6.0|^7.0|^8.0`, subject to each Symfony version's PHP requirements. X-Ray remains a standalone CLI with no Laravel requirement.
+* CLI output, Ray detection, options, and success/failure exit-code semantics are preserved; all existing output snapshots remain unchanged.
+
+### What's Changed
+
+* Upgrade development snapshot assertions from 4 to 5.4 and PHPUnit from 9 to 12.5; migrate test discovery and coverage configuration. Missing, changed, skipped, or incomplete snapshots cannot silently pass CI. See https://github.com/spatie/x-ray/pull/76.
+* Avoid PHP 8.5+ null-array-offset deprecations while preserving default/current-directory and explicit-directory configuration discovery and caching. Add a regression covering initial and repeated reads, plus CLI exit-code boundary assertions.
+* Expand CI coverage to PHP 8.4, 8.5, and 8.6, retaining PHP 8.3 as the minimum. See https://github.com/spatie/x-ray/pull/77.
+* Apply Laravel Pint formatting without runtime behavior changes. See https://github.com/spatie/x-ray/pull/72.
+* Update GitHub Actions dependencies and harden the Dependabot auto-merge author/repository guard; use a native GitHub Actions status badge.
+
+**Full Changelog**: https://github.com/spatie/x-ray/compare/1.2.2...1.3.0
+
 ## 1.2.2 - 2026-02-09
 
 ### What's Changed
