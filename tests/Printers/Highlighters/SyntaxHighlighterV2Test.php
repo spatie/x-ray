@@ -4,6 +4,7 @@ namespace Spatie\XRay\Tests\Printers\Highlighters;
 
 use Permafrost\CodeSnippets\Bounds;
 use Permafrost\CodeSnippets\CodeSnippet;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 use Spatie\XRay\Printers\Highlighters\SyntaxHighlighterV2;
@@ -13,7 +14,7 @@ class SyntaxHighlighterV2Test extends TestCase
 {
     use MatchesSnapshots;
 
-    /** @test */
+    #[Test]
     public function it_highlights_snippets()
     {
         $highlighter = new SyntaxHighlighterV2(new FakeConsoleColor);

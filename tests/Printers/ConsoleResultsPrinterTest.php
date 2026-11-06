@@ -2,6 +2,7 @@
 
 namespace Spatie\XRay\Tests\Printers;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 use Spatie\XRay\CodeScanner;
@@ -15,7 +16,7 @@ class ConsoleResultsPrinterTest extends TestCase
     use CreatesTestConfiguration;
     use MatchesSnapshots;
 
-    /** @test */
+    #[Test]
     public function it_prints_a_summary_with_a_table()
     {
         $path = __DIR__.'/../fixtures/fixture1.php';
@@ -31,7 +32,7 @@ class ConsoleResultsPrinterTest extends TestCase
         $this->assertMatchesSnapshot($output->writtenData);
     }
 
-    /** @test */
+    #[Test]
     public function it_prints_a_summary_without_a_table()
     {
         $path = __DIR__.'/../fixtures/fixture1.php';
@@ -47,7 +48,7 @@ class ConsoleResultsPrinterTest extends TestCase
         $this->assertMatchesSnapshot($output->writtenData);
     }
 
-    /** @test */
+    #[Test]
     public function it_prints_a_summary_with_github_annotation()
     {
         $path = __DIR__.'/../fixtures/fixture1.php';

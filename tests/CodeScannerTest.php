@@ -3,6 +3,7 @@
 namespace Spatie\XRay\Tests;
 
 use Permafrost\PhpCodeSearch\Support\File;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Spatie\XRay\CodeScanner;
 use Spatie\XRay\Configuration\Configuration;
@@ -14,7 +15,7 @@ class CodeScannerTest extends TestCase
         return new Configuration([__DIR__], false, false, false);
     }
 
-    /** @test */
+    #[Test]
     public function it_scans_a_file()
     {
         $file = new File(__DIR__.'/fixtures/fixture1.php');
@@ -29,7 +30,7 @@ class CodeScannerTest extends TestCase
         $this->assertEquals(2, $results->results[0]->location->startLine);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_an_error_for_parsing_errors()
     {
         $file = new File(__DIR__.'/fixtures/fixture2.php');

@@ -2,12 +2,13 @@
 
 namespace Spatie\XRay\Tests\Support;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Spatie\XRay\Support\Str;
 
 class StrTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_checks_if_a_string_starts_with_another_string()
     {
         $this->assertTrue(Str::startsWith('ABC', 'A'));
@@ -16,7 +17,7 @@ class StrTest extends TestCase
         $this->assertFalse(Str::startsWith('ABC', 'a'));
     }
 
-    /** @test */
+    #[Test]
     public function it_gets_the_str_after_the_last_instance_of_a_substr()
     {
         $this->assertEquals('test', Str::afterLast('this is a test', 'a '));
